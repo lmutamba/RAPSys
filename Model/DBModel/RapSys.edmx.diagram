@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6cba6bb0dd1d4ace8fcfb9fbfdf1a754" Name="Diagram1">
+        <EntityTypeShape EntityType="RAPSystemModel.T_Approval" Width="1.5" PointX="10.5" PointY="113" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Approver" Width="1.5" PointX="7.5" PointY="118.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_AssetRate" Width="1.5" PointX="5.25" PointY="118.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_AssetType" Width="1.5" PointX="11.25" PointY="121.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Attachment" Width="1.5" PointX="7.5" PointY="103.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_CultureDiversity" Width="1.5" PointX="11.25" PointY="125.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_CultureTool" Width="1.5" PointX="13.5" PointY="123.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Delegation" Width="1.5" PointX="10.75" PointY="117.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Department" Width="1.5" PointX="7.5" PointY="122.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_EconomicActivity" Width="1.5" PointX="16.5" PointY="100.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Employee" Width="1.5" PointX="5.25" PointY="112.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_EmployeeRole" Width="1.5" PointX="5.25" PointY="89.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_ExchangeRate" Width="1.5" PointX="3" PointY="126.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Good" Width="1.5" PointX="3" PointY="62.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHold" Width="1.5" PointX="8.25" PointY="112.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseholdAttachment" Width="1.5" PointX="13.5" PointY="113.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseholdCulture" Width="1.5" PointX="13.5" PointY="117.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCultureLastMonths" Width="1.5" PointX="3" PointY="66.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseholdCultureLastSeason" Width="1.5" PointX="15.75" PointY="119" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCultureTool" Width="1.5" PointX="15.75" PointY="115.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldGood" Width="1.5" PointX="5.25" PointY="93.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldMembers" Width="1.5" PointX="8.25" PointY="86.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldProperty" Width="1.5" PointX="8.25" PointY="96.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseholdResidence" Width="1.5" PointX="6" PointY="65.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldRevenue" Width="1.5" PointX="3" PointY="70.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_LAC" Width="1.5" PointX="5.25" PointY="97.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_LACRequest" Width="1.5" PointX="10.5" PointY="107.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Land" Width="1.5" PointX="6" PointY="60.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_List" Width="1.5" PointX="0.75" PointY="63.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Location" Width="1.5" PointX="8.25" PointY="108.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_MarketSurveyProduct" Width="1.5" PointX="11.25" PointY="92" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAP" Width="1.5" PointX="13.5" PointY="107.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPAttachment" Width="1.5" PointX="15.75" PointY="108.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPEconomicActivity" Width="1.5" PointX="18.75" PointY="108.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPLAC" Width="1.5" PointX="7.5" PointY="81.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPLACAttachment" Width="1.5" PointX="9.75" PointY="79" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPResidence" Width="1.5" PointX="15.75" PointY="104.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Parameter" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Person" Width="1.5" PointX="3" PointY="111.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Point" Width="1.5" PointX="8.25" PointY="61.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Product" Width="1.5" PointX="9" PointY="74.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Property" Width="1.5" PointX="13.5" PointY="84" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PropertyAttachment" Width="1.5" PointX="15.75" PointY="88.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Region" Width="1.5" PointX="3.75" PointY="58.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Request" Width="1.5" PointX="10.5" PointY="87.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_RequestAttachment" Width="1.5" PointX="15.75" PointY="85" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Residence" Width="1.5" PointX="6" PointY="108.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_UOM" Width="1.5" PointX="3" PointY="118.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Village" Width="1.5" PointX="9" PointY="57.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_WorkFlow" Width="1.5" PointX="10.5" PointY="82.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_LandVillage" Width="1.5" PointX="11.25" PointY="61.25" IsExpanded="true" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Approval_T_Employee_Approver" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Approval_T_Request_RequestId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Approver_T_Employee_EmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Delegation_T_Approver_ApproverId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_AssetRate_T_Product_ProductId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_AssetRate_T_UOM_PriceUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_AssetRate_T_UOM_UOMId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdCulture_T_AssetType_AssetTypeId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_AssetType_PropertyType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdAttachment_T_Attachment_AttachmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPAttachment_T_Attachment_AttachmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPLACAttachment_T_Attachment_AttachmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PropertyAttachment_T_Attachment_AttachmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_RequestAttachment_T_RequestAttachment_AttachmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdCulture_T_CultureDiversity_CultureDiversityId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldCultureTool_T_CultureTool_CultureToolId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Delegation_T_Employee_EmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Department_T_Employee_Manager" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Employee_T_Person_DepartmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPEconomicActivity_T_EconomicActivity_EconomicActivityId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Employee_T_Person_PersonId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LACRequest_T_Employee_ContactPerson" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Employee_Investigator" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Employee_TopographerId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Request_T_Employee_Requestor" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_WorkFlow_T_Employee_Handler" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_EmployeeRole_T_List_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_EmployeeRole_T_Person_EmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Good_T_List_GoodType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldGood_T_Good_Good" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHold_T_Person_HouseHoldResponsible" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHold_T_Residence_ResidenceId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdAttachment_T_HouseHold_HouseholdId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdCulture_T_HouseHold_HouseholdId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldGood_T_HouseHold_HouseholdId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldProperty_T_HouseHold_HouseholdId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdResidence_T_HouseHold_HouseholdId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldRevenue_T_HouseHold_HouseHoldId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAP_T_HouseHold_HouseHoldId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdCulture_T_UOM_AreaUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldCultureLastMonths_T_HouseholdCulture_HouseholdCultureId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdCultureLastSeason_T_HouseholdCulture_HouseholdCultureId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldCultureTool_T_HouseholdCulture_HouseholdCultureId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldCultureLastMonths_T_List_CultureActionType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdCultureLastSeason_T_UOM_RevenueUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdCultureLastSeason_T_UOM_SoldUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdCultureLastSeason_TUOM_HarvestUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldGood_T_UOM_QuantityUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_Activity1" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_Activity2" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_Competency1" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_Competency2" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_EducationLevel" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_FrenchLevel" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_LastWeekDesease" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_MosquitoNetSource" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_MosquitoNetUser" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_Relationship" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_SavingType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_List_TabletsSource" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_Person_PersonId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldMembers_T_Residence_ResidenceId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldProperty_T_Land_LandId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldProperty_T_List_PropertySource" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldProperty_T_List_PropertyWorkerType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldProperty_T_UOM_CultivatedAreaUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldProperty_T_UOM_DistanceUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldProperty_T_UOM_FallowAreaUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdResidence_T_List_ArrivalReason" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdResidence_T_List_ToiletType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseholdResidence_T_Residence_ResidenceId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_HouseHoldRevenue_T_List_RevenueSource" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LAC_T_LACRequest_LACRequestId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LAC_T_Land_RAP" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LAC_T_List_LACStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LAC_T_UOM_AreaRequestedUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LAC_T_UOM_AuthorizedAreaSizeUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPLAC_T_Lac_LACId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_LAC_LACId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LACRequest_T_Location_LocationId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LACRequest_T_Request_RequestId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Land_T_LACRequest_LACRequestId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Land_T_List_LandCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Land_T_Region_RegionId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LandVillage_T_Land_LandId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Point_T_Land_LandId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Land_LandId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_MarketSurveyProduct_T_List_Market" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPLAC_T_List_PaymentPreference" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Person_T_List_VulnerabilityTypeId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_List_CultureOccupationType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_List_RoofType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_List_SoilType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_List_TreeMaturity" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Property_WallType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Request_T_List_RequestType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_UOM_T_List_UOMType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_WorkFlow_T_List_ActionType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_WorkFlow_T_List_RequestType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Region_T_Location_LocationId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_MarketSurveyProduct_T_Product_ProductId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_MarketSurveyProduct_T_UOM_UOMId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAP_T_Person_PersonId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAP_T_Person_Spouse" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPAttachment_T_PAP_PAPId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPEconomicActivity_T_PAP_PAPId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPLAC_T_PAP_PAPId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPResidence_T_PAP_PAPId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_PAP_Owner" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_PAP_User" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPLACAttachment_T_PAPLAC_PAPLACId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PAPResidence_T_Residence_ResidenceId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Person_T_Person_Father" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Person_T_Person_Mother" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Point_InvestigatorPoint" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Point_TopographerPoint" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Property_StructureUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_UOM_SurfaceUOM" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Village_VillageId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_PropertyAttachment_T_Property_PropertyId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Village_T_Region_RegionId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_RequestAttachment_T_Request_RequestId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_UOM_T_UOM_UOMReference" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_LandVillage_T_Village_VillageId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

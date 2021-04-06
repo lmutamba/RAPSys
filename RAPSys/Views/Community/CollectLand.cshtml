@@ -1,0 +1,663 @@
+﻿@model RapModel.ViewModel.PAPViewModel
+@{
+    ViewBag.Title = "Collect Land Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PAP Details</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-xlg">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h4 class="card-title text-primary fw-semi-bold">Details</h4>
+                    <a href="#" class="btn btn-primary btn-rounded-f" id="editPAPDetails"><i class="fas fa-edit"></i> Edit Details </a>
+                </div>
+                <hr />
+                <div class="form-row">
+                    <div style="display:none">
+                        <input type="text" id="papIdField" value="@Model.PAPId" />
+                        <input type="text" id="personIdField" value="@Model.PersonId" />
+                        <input type="text" id="papLacIdField" value="@Model.PAPLACId" />
+                        <input type="text" id="lacIdField" value="@Model.LACId" />
+                        <input type="text" id="fileIDField" value="@Model.FileNumber" />
+                        <input type="text" id="houseHoldIDField" value="@Model.HouseHoldId" />
+                    </div>
+                    <div class="col-md-2" style="border-radius:15px;">
+                        <div><img style="border-radius:15px" class="rounded" src="@Model.Picture" width="190" height="190" /></div>
+                        @*<div><p>File Number : <strong>@Model.FileNumber</strong></p></div>*@
+                    </div>
+                    <div class="col-md-3" style="border-left:2px solid black; border-radius:5px">
+                        <table>
+                            <tr>
+                                <td><p>First Name</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.FirstName</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>Last Name</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.LastName</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>Middle Name</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.MiddleName</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>Card ID</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.IdCard</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>IN</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.PAPId</strong></p></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-3" style="border-left:2px solid black; border-radius:5px">
+                        <table>
+                            <tr>
+                                <td><p>Primary Address</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.ResidenceName</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>Email</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.Email</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>Cell Phone</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.Mobile</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>DOB</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.DateOfBirthString</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>POB</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.PlaceOfBirth</strong></p></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4" style="border-left:2px solid black; border-radius:5px">
+                        <table>
+                            <tr>
+                                <td><p>Spouse</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.SpouseName</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>Father</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.FatherName</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>Mother</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.MotherName</strong></p></td>
+
+                            </tr>
+                            <tr>
+                                <td><p>Vulnerability Type</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.VulnerabilityTypeName</strong></p></td>
+                            </tr>
+                            <tr>
+                                <td><p>Vulnerability Details</p></td>
+                                <td><p> : </p></td>
+                                <td><p><strong>@Model.VulnerabilityDetail</strong></p></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-xlg">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h4 class="card-title text-primary fw-semi-bold">Properties</h4>
+                    <a href="#" class="btn btn-dark btn-rounded-f" id="addProperty"><i class="fas fa-seedling"></i> Add Property </a>
+                </div>
+                <hr />
+                <div class="dataTables_wrapper form-inline no-footer">
+                    <table class="table table-striped table-hover no-footer nowrap" id="tablePAPProperties">
+                        <thead class="no-bd">
+                            <tr>
+                                <th>Action</th>
+                                <th>GPS ID</th>
+                                <th>Property Type</th>
+                                <th>Property Name</th>
+                                <th>LAC</th>
+                                <th>User Type</th>
+                                <th>Owner IN</th>
+                                <th>Picture</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ADD PAP *@
+<div class="modal" id="addPAPModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="container">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="modal-title" id="addPAPModalTitle"><string>Add PAP</string></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="papDetailsError"></div>
+                    <div class="form-row col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group row" style="display:none">
+                                <label for="personID" class="col-md-4 form-control-label text-md-right">First Name</label>
+                                <div class="col-md-8 row">
+                                    <input type="text" id="personID" class="form-control col-md-6" data-placement="top" placeholder="Person ID">
+                                    <input type="text" id="papID" class="form-control col-md-6" data-placement="top" placeholder="PAP ID">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="firstName" class="col-md-4 form-control-label text-md-right">First Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="firstName" class="form-control reset" data-placement="top" placeholder="Add here the First Name..">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="lastName" class="col-md-4 form-control-label text-md-right">Last Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="lastName" class="form-control reset" data-placement="top" placeholder="Add here the Last Name..">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="middleName" class="col-md-4 form-control-label text-md-right">Middle Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="middleName" class="form-control reset" data-placement="top" placeholder="Add here the Middle Name..">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="cardNumber" class="col-md-4 form-control-label text-md-right">Card Number</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="cardNumber" class="form-control reset" data-placement="top" placeholder="Add here the Card Number">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="cellPhone" class="col-md-4 form-control-label text-md-right">Cell Phone</label>
+                                <div class="col-md-8">
+                                    <input type="tel" id="cellPhone" class="form-control reset" data-placement="top" placeholder="Add here Cell Phone Number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-md-4 form-control-label text-md-right">Email</label>
+                                <div class="col-md-8">
+                                    <input type="email" id="email" class="form-control reset" data-placement="top" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="dob" class="col-md-4 form-control-label text-md-right">DOB</label>
+                                <div class="col-md-8">
+                                    <input type="date" id="dob" class="form-control reset" data-placement="top" placeholder="DOB">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pob" class="col-md-4 form-control-label text-md-right">POB</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="pob" class="form-control reset" data-placement="top" placeholder="Place of Birth">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="gender" class="col-md-4 form-control-label text-md-right">Gender</label>
+                                <div class="col-md-8">
+                                    <label><input type="radio" name="gender" value="M" />Male</label>
+                                    <label><input type="radio" name="gender" value="F" />Female</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="primaryResidence" class="col-md-4 form-control-label text-md-right">Residence</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control reset" id="primaryResidence" data-placement="top" placeholder="Primary Location" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="vulnerabilityType" class="col-md-4 form-control-label text-md-right">Vulnerability Type</label>
+                                <div class="col-md-8">
+                                    <select class="form-control" id="vulnerabilityType" data-placement="top" data-placeholder="Vulnerability Type"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="vulnerabilityDetails" class="col-md-4 form-control-label text-md-right">Vulnerability Detail</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="vulnerabilityDetails" class="form-control reset" data-placement="top" placeholder="Vulnerability Detail">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="papSpouse" class="col-md-4 form-control-label text-md-right">Spouse</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="papSpouse" class="form-control reset" data-placement="top" placeholder="Spouse Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="papMother" class="col-md-4 form-control-label text-md-right">Mother</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="papMother" class="form-control reset" data-placement="top" placeholder="Mother Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="papfather" class="col-md-4 form-control-label text-md-right">Father</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="papfather" class="form-control reset" data-placement="top" placeholder="Father Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pictureID" class="col-md-4 form-control-label text-md-right">Picture ID</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="pictureID" class="form-control reset" data-placement="top" placeholder="Picture ID">
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:none" id="papPicture">
+                                <label for="picture" class="col-md-4 form-control-label text-md-right">Picture</label>
+                                <div class="col-md-8" id="picture" style="border-radius:5px">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row" id="divPAPPhoto">
+                            <label for="PAPphoto" class="col-md-2 form-control-label text-md-right">PAP Picture</label>
+                            <div class="col-md-10">
+                                <input id="PAPphoto" name="PAPphoto" type="file" class="file" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#PAPphoto-errors">
+                            </div>
+                            <div id="PAPphoto-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" id="divLinkPAPToLAC">
+                        <input type="checkbox" id="addpaplacDetails" value="Add" />
+                        <label for="addpaplacDetails">Add this PAP to LAC</label>
+
+                        <div id="papLacDetails" class="col-md-12 form-row" style="border-radius:5px">
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <select class="form-control" id="lacID" data-placement="top" data-placeholder="Select LAC"></select>
+                                </div>
+                                <div class="form-group row">
+                                    <select class="form-control" id="paymentPreference" data-placement="top" data-placeholder="Payment Preference"></select>
+                                </div>
+                                <div class="form-group row">
+                                    <input type="date" id="submissionDate" class="form-control reset" data-placement="top">
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <input type="date" id="presurveyDate" class="form-control" data-placement="top">
+                                </div>
+                                <div class="form-group row">
+                                    <input type="text" id="presurveyorCode" class="form-control reset" data-placement="top" placeholder="Presurveyor">
+                                </div>
+                                <div class="form-group row">
+                                    <input type="date" id="surveyDate" class="form-control" data-placement="top">
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <input type="text" id="surveyorCode" class="form-control reset" data-placement="top" placeholder="Surveyor">
+                                </div>
+                                <div class="form-group row">
+                                    <input type="text" id="fileId" class="form-control reset" data-placement="top" placeholder="File ID">
+                                </div>
+                                <div class="form-group row">
+                                    <textarea id="papLacComment" class="form-control reset" data-placement="top" placeholder="Comment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="loader" style="display:none"></div>
+            <div class="modal-footer">
+                <div>
+                    <button type="button" class='btn btn-primary' id="saveNewPap">Save</button>
+                    <button type="button" class="btn btn-primary" id="updatePap">Update</button>
+                    <button type="button" class='btn btn-secondary' data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ADD PAP PROPERTY *@
+<div class="modal" id="editPropertiesModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="container">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="modal-title" id="editPropertiesModalTitle"><string>Edit Property</string></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="presurveyorCode" class="col-md-2 form-control-label text-md-right">Topograph</label>
+                    <div class="col-md-10 row">
+                        <input type="text" id="topographCode" class="form-control col-md-2 topo" data-placement="top" placeholder="Topograph" required>
+                        <input type="date" id="topoDate" class="form-control col-md-3 topo" data-placement="top" placeholder="Date..">
+                        <input type="text" id="topoTrimbleCode" class="form-control col-md-2 topo" data-placement="top" placeholder="Trimble" required>
+                        <input type="text" id="trimbleFile" class="form-control col-md-5 topo" data-placement="top" placeholder="Trimble File" required>
+                    </div>
+                </div>
+                
+                <hr />
+                <div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6><i class="fas fa-coins"></i> Property Details</h6>
+                    </div>
+                    <hr>
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="tableGoodsError"></div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label>GPS ID</label>
+                            <input type="text" id="gpsID" class="form-control reset" data-placement="top" placeholder="GPS ID">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Easting</label>
+                            <input type="text" id="pointEasting" class="form-control reset" data-placement="top" placeholder="Easting" maxlength="9" pattern="\d*">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Northing</label>
+                            <input type="text" id="pointNorthing" class="form-control reset" data-placement="top" placeholder="Northing" maxlength="10" pattern="\d*">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Elevation</label>
+                            <input type="text" id="pointElevation" class="form-control reset" data-placement="top" placeholder="Elevation" maxlength="7" pattern="\d*">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label>Photo ID</label>
+                            <input type="text" id="goodPictureID" class="form-control reset" placeholder="Photo" />
+                        </div>
+                        <div class="col-md-8">
+                            <label>Upload Culture Photo</label>
+                            <input id="goodPhoto" name="goodPhoto" type="file" class="file reset" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#goodPhoto-errors">
+                            <div id="goodPhoto-errors"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-7">
+                            <label class="form-control-label" for="goodType">Goods Type</label>
+                            <select class="form-control reset" id="goodType" data-placeholder="Goods Type"></select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-control" for="ownershipType" style="visibility:hidden"> </label>
+                            <label> <input id="ownershipType" type="radio" name="owner" value="U" /> Is User</label>
+                            <label> <input id="ownershipType" type="radio" name="owner" value="P" /> is Owner</label>
+                        </div>
+                    </div>
+
+                    @* OWNER ZONE DETAILS *@
+                    <div id="ownerDetails" style="display:none" class="hiden">
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-portrait"></i> Owner Details</strong></p>
+                        <div class="form-group row">
+                            <div class="col-md-5">
+                                <label>First Name</label>
+                                <input type="hidden" id="ownerPersonId" class="form-control reset" data-placement="top" placeholder="First Name">
+                                <input type="text" id="ownerFirstName" class="form-control reset" data-placement="top" placeholder="First Name">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Middle</label>
+                                <input type="text" id="ownerMiddleName" class="form-control reset" placeholder="Middle" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-control-label" for="goodType">Last Name</label>
+                                <input type="text" id="ownerLastName" class="form-control reset" placeholder="Last Name" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label>Owner Picture</label>
+                                <input id="ownerPicture" name="ownerPicture" type="file" class="file reset" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#ownerPicture-errors">
+                                <div id="ownerPicture-errors"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* CULTURE ZONE *@
+                    <div id="cultureDetails" style="display:none" class="hiden">
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-seedling"></i> Culture </strong></p>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label>Culture Name</label>
+                                <input type="text" id="cultureName" class="form-control reset" data-placement="top" placeholder="Culture Name">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Surface(m2)</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control reset" aria-label="" id="cultureSurface">
+                                    <select class="form-control bootstrap-select btn-primary reset" id="cultureSurfaceUOM">
+                                        <option value="-1">UOM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>GPS ID</label>
+                                <input type="text" id="cultureGpsID" class="form-control reset" data-placement="top" placeholder="GPS ID">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Easting</label>
+                                <input type="text" id="cultureEasting" class="form-control reset" data-placement="top" placeholder="Easting">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-2">
+                                <label>Northing</label>
+                                <input type="text" id="cultureNorthing" class="form-control reset" data-placement="top" placeholder="Northing">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Starting</label>
+                                <input type="number" id="cultureSince" class="form-control reset" data-placement="top" placeholder="Year">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-control-label" for="fieldsPAP">Field Type</label>
+                                <select class="form-control reset" id="fieldType" data-placeholder="Field Type"></select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="culturePointArray" class="col-form-label">Culture Points</label>
+                                <input id="culturePointArray" name="culturePointArray" type="file" class="file form-control reset" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["csv"]'>
+                            </div>
+                            <div class="col-md-1">
+                                <label><br /></label>
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addCulture">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* STRUCTURE ZONE *@
+                    <div id="structureDetails" style="display:none" class="hiden">
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-house-user"></i> Culture </strong></p>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>Structure</label>
+                                <div class="form-row ">
+                                    <select class="form-control col-md-4 reset" id="structureCode" data-placeholder="Structure Code"></select>
+                                    <input type="text" class="form-control col-md-8 reset" id="structureName" placeholder="Structure Name" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Roof</label>
+                                <select class="form-control reset" id="toitCode" data-placeholder="Toiture"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Wall</label>
+                                <select class="form-control reset" id="murCode" data-placeholder="Mur"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Floor</label>
+                                <select class="form-control reset" id="solCode" data-placeholder="Sol Code"></select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="structureLength">LengthxWidth</label>
+                                <div class="form-row">
+                                    <input type="number" class="form-control col-md-4 reset" id="structureLength" placeholder="Length" />
+                                    <input type="number" class="form-control col-md-4 reset" id="structureWidth" placeholder="Width" />
+                                    <input type="number" class="form-control col-md-4 reset" id="structurePiece" placeholder="pieces" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label></label>
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addStructure">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* TREES ZONE *@
+                    <div id="treeDetails" style="display:none" class="hiden">
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-tree"></i> Tree </strong></p>
+                        <div class="form-group row">
+                            <div class="col-md-5">
+                                <label>Tree Name</label>
+                                <input type="text" class="form-control reset" id="treeName" placeholder="Tree Name" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>Maturity</label>
+                                <select class="form-control reset" id="treeMaturity" placeholder="Maturity"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Qty</label>
+                                <input type="number" class="form-control reset" id="treeQty" placeholder="Qty" />
+                            </div>
+                            <div class="col-sm-2">
+                                <label></label>
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addTree">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* GOODS TABLE DIV *@
+                    <div id="tableGoodsArray">
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-layer-group"></i> All goods </strong></p>
+                        <div class="form-group row col-md-12">
+                            <table class="table table-striped table-hover nowrap no-footer" id="propertiesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>GPS</th>
+                                        <th style="display:none">Northing</th>
+                                        <th style="display:none">Easting</th>
+                                        <th>Photo</th>
+                                        <th style="display:none">Photo Url</th>
+                                        <th style="display:none">Good Type ID</th>
+                                        <th>Good Type</th>
+                                        <th>Good Name</th>
+                                        <th>User</th>
+                                        <th style="display:none">First Name</th>
+                                        <th style="display:none">Middle Name</th>
+                                        <th style="display:none">Last Name</th>
+                                        <th style="display:none">Surface</th>
+                                        <th style="display:none">Inner GPS</th>
+                                        <th style="display:none">Inner Northing</th>
+                                        <th style="display:none">Inner Easting</th>
+                                        <th style="display:none">Start Date</th>
+                                        <th style="display:none">Field ID</th>
+                                        <th style="display:none">Field Name</th>
+                                        <th style="display:none">Points Url</th>
+                                        <th style="display:none">Structure ID</th>
+                                        <th style="display:none">Structure Code</th>
+                                        <th style="display:none">Roof ID</th>
+                                        <th style="display:none">Roof Code</th>
+                                        <th style="display:none">Wall ID</th>
+                                        <th style="display:none">Wall Code</th>
+                                        <th style="display:none">Soil ID</th>
+                                        <th style="display:none">Soil Code</th>
+                                        <th style="display:none">Length</th>
+                                        <th style="display:none">Width</th>
+                                        <th style="display:none">Room</th>
+                                        <th style="display:none">Maturity ID</th>
+                                        <th style="display:none">Maturity Name</th>
+                                        <th style="display:none">Tree Qty</th>
+                                        <th style="display:none">Comments</th>
+                                        <th style="display:none">Surface UOM</th>
+                                        <th style="display:none">Surface UOM Name</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="propertyTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="loader" style="display:none"></div>
+            <div class="modal-footer">
+                <div>
+                    <button type="button" class='btn btn-primary btn-add' id="cancelProperty" onclick="resetModal('addPAPPropertiesModal')">Cancel</button>
+                    <button type="button" class='btn btn-primary' id="savePapProperties">Save</button>
+                    <button type="button" class='btn btn-secondary' data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var lacID = GetURLParameter("lacID");//$("#lacIdField").val();
+            var papID = $("#papIdField").val();
+            var papLacID = $("#papLacIdField").val();
+            let fileID = $("#fileIDField").val();
+            let houseHoldID = $("#houseHoldIDField").val();
+            LoadPAPLACProperties(papID, lacID);
+        });
+
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+
+    </script>
+}

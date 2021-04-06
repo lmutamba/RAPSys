@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Properties";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of Properties</h2>
+
+<section class="widget">
+    <header class="d-flex justify-content-between flex-wrap">
+        <a href="/Community/Index" class="btn btn-default" type="button" id="goBack"><i class="fas fa-arrow-left"></i> </a>
+    </header>
+
+    <hr />
+    <div class="widget-body">
+        <div class="mt">
+            <div id="datatable-table_wrapper" class="dataTables_wrapper form-inline no-footer">
+                <table id="datatableProperties" class="table table-striped table-hover dataTable no-footer table-responsive nowrap">
+                    <thead>
+                        <tr role="row">
+                            <th>Action</th>
+                            <th>PAP IN</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>LAC Name</th>
+                            <th>ID Card</th>
+                            <th>File ID</th>
+                            <th>Mobile</th>
+                            <th>Residence</th>
+                            <th>Picture</th>
+                            <th>DOB</th>
+                            <th>POB</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            PropertiesList();
+        });
+    </script>
+}

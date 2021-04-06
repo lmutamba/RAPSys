@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Page Under Construction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-wrap d-flex flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <span class="display-1 d-block"><img src="~/Content/Images/construction1.jpg" /></span>
+                <div class="mb-4 lead">The page you are looking for is under construction.</div>
+                @Html.ActionLink("GO TO HOME PAGE", "Index", new { controller = "Home" }, new { @class = "btn btn-large btn-dark" })
+            </div>
+        </div>
+    </div>
+</div>
