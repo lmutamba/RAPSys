@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1">
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" />
+    <meta charset="utf-8" />
+    <meta name="description" content="RAP Managment System" />
+
+    <title>RAPSys - @ViewBag.Title</title>
+
+    @Styles.Render("~/bundles/Content/cssFiles")
+    @Scripts.Render("~/bundles/modernizr")
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-36759672-9');
+    </script>
+</head>
+<body>
+    @{
+        Repository.HelpersRepository helpers = new Repository.HelpersRepository();
+        RapModel.ViewModel.PersonViewModel Person = helpers.GetLogInPerson(User.Identity.Name);
+        string _userID = Person.TFMID;
+        string _userName = Person.FirstName + " " + Person.LastName;
+    }
+    @while (_userID.Length < 10)
+    {
+        _userID = "0" + _userID;
+    }
+
+    <nav id="sidebar" class="sidebar " role="navigation">
+        <!-- need this .js class to initiate slimscroll sidebar-eighth-->
+        <div class="js-sidebar-content">
+            <header class="logo d-none d-md-block">
+                <a href="#"><span>RAPSys</span></a>
+            </header>
+            <div class="sidebar-status d-md-none">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="thumb-sm avatar float-right">
+                        <img class="rounded-circle" src="@Url.Content("~/Images/"+ _userID +".jpg")" alt="...">
+                    </span>&nbsp;<strong>@_userName</strong>
+                </a>
+            </div>
+            <!-- main notification links are placed inside of .sidebar-nav -->
+            <ul class="sidebar-nav">
+                <li class=" active ">
+                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    <a href="@Url.Action("Index","Home")">
+                        <span class="icon bg-dark">
+                            <i class="fas fa-house-user"></i>
+                        </span>
+                        Home
+                    </a>
+                </li>
+            </ul>
+            <ul class="sidebar-nav">
+                @*<li class="">
+                    <a class="collapsed" href="#sidebar-comp" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="fas fa-compass"></i>
+                        </span>
+                        Land Acquisition
+                        <i class="toggle fas fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-comp" class="collapse ">
+                    </ul>
+                </li>*@
+                <li class="">
+                    <a href="@Url.Action("Index","Land")">
+                        <span class="icon">
+                            <i class="fas fa-globe-africa"></i>
+                        </span>
+                        Land Acquisition
+                    </a>
+                </li>
+                <li class="">
+                    <a href="@Url.Action("Index","Community")">
+                        <span class="icon">
+                            <i class="fas fa-people-arrows"></i>
+                        </span>
+                        Persons and Properties
+                    </a>
+                </li>
+                <li class="">
+                    <a href="@Url.Action("Index","Cost")">
+                        <span class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </span>
+                        Real Cost and Compensation
+                    </a>
+                </li>
+                <li class="">
+                    <a href="@Url.Action("Ressetlment","Land")">
+                        <span class="icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </span>
+                        Livelihood Restoration
+                    </a>
+                </li>
+                <li class="">
+                    <a href="@Url.Action("Ressetlment","Land")">
+                        <span class="icon">
+                            <i class="fas fa-bell"></i>
+                        </span>
+                        Physical Resettlement
+                    </a>
+                </li>
+                <li class="">
+                    <a href="@Url.Action("Ressetlment","Land")">
+                        <span class="icon">
+                            <i class="fas fa-comment-dollar"></i>
+                        </span>
+                        Grievance
+                    </a>
+                </li>
+                <li class="">
+                    <a class="collapsed" href="#sidebar-general" data-toggle="collapse" data-parent="#sidebar">
+                        <span class="icon">
+                            <i class="fas fa-layer-group"></i>
+                        </span>
+                        General Data
+                        <i class="toggle fas fa-angle-down"></i>
+                    </a>
+                    <ul id="sidebar-general" class="collapse ">
+                        <li class=""><a href="#">Master Data</a></li>
+                        <li class=""><a href="#">Settings</a></li>
+                        <li class=""><a href="#">User Management</a></li>
+                        <li class=""><a href="#">Reports</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="page-controls navbar navbar-dashboard navbar-floating-type navbar-eighth">
+        <div class="container-fluid">
+            <!-- .navbar-header contains links seen on xs & sm screens -->
+            <div class="navbar-header mr-md-3">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->
+                        <a class="d-none d-lg-block nav-link" id="nav-state-toggle" href="#">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                        <!-- shown on xs & sm screen. collapses and expands navigation -->
+                        <a class="d-lg-none nav-link" id="nav-collapse-toggle" href="#">
+                            <span class="square square-lg d-md-none"><i class="fas fa-bars"></i></span>
+                            <i class="fas fa-bars d-none d-md-block"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="d-none d-lg-block nav-link" id="nav-state-toggle" href="@Url.Action("Index","Home")">
+                            <i class="fas fa-home"></i>
+                        </a>
+                        <a class="d-lg-none nav-link" id="nav-collapse-toggle" href="@Url.Action("Index","Home")">
+                            <span class="square square-lg d-md-none"><i class="fas fa-home"></i></span>
+                            <i class="fas fa-home d-none d-md-block"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right d-md-none">
+                    <li class="nav-item">
+                        <span class="thumb-sm avatar float-left">
+                            <img class="rounded-circle" src="@Url.Content("~/Images/"+ _userID +".jpg")" alt="...">
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("MyRequest","Land")">
+                            <span class="square square-lg"><i class="fas fa-list"></i></span>
+                        </a>
+                    </li>
+                    @*<li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("MyApproval","Land")">
+                            <span class="square square-lg fa-stack">
+                                <i class="fas fa-check fa-stack-2x"></i>
+                                <i class="fas fa-times fa-stack" style="color:tomato"></i>
+                            </span>
+                        </a>
+                    </li>*@
+                </ul>
+                <!-- xs & sm screen logo -->
+                <a class="navbar-brand d-md-none" href="#">
+                    <i class="fas fa-circle text-gray mr-n-sm"></i>
+                    <i class="fas fa-circle text-warning"></i>
+                    &nbsp;TFM RAPSys &nbsp;
+                    <i class="fas fa-circle text-warning mr-n-sm"></i>
+                    <i class="fas fa-circle text-gray"></i>
+                </a>
+            </div>
+
+            <!-- this part is hidden for xs screens -->
+            <div class="navbar-header mobile-hidden">
+                <form class="navbar-form" role="search">
+                    <div class="form-group">
+
+                    </div>
+                </form>
+                <ul class="nav navbar-nav float-right">
+                    <li class=" nav-item">
+                        <span class="thumb-sm avatar float-left">
+                            <img class="rounded-circle" src="@Url.Content("~/Images/"+ _userID +".jpg")" alt="...">
+                        </span>
+                        &nbsp; <strong>@_userName</strong>&nbsp;
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a href="@Url.Action("MyRequest","Land")" class="no-caret nav-link">
+                            <i class="fas fa-list"></i>
+                        </a>
+                    </li>
+                    @*<li class="dropdown nav-item">
+                        <a href="@Url.Action("MyApproval","Land")" class="no-caret nav-link">
+                            <span class="square square-lg fa-stack">
+                                <i class="fas fa-check fa-stack-2x"></i>
+                                <i class="fas fa-times fa-stack" style="color:tomato"></i>
+                            </span>
+                        </a>
+                    </li>*@
+                    <li class="dropdown nav-item">
+                        <a href="#" class="no-caret nav-link" data-toggle="dropdown">
+                            <i class="fas fa-cog"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a class="dropdown-item" href="#">English</a></li>
+                            <li><a class="dropdown-item" href="#">French </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content-wrap">
+        <main id="content" class="content" role="main">
+            @RenderBody()
+            <footer class="content-footer">
+                <strong>Copyright &copy; @System.DateTime.Today.Year TFM MIS. </strong> All rights reserved.
+            </footer>
+        </main>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/Content/otherJS")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

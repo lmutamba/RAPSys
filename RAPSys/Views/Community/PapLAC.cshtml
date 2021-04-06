@@ -1,0 +1,1814 @@
+﻿
+@{
+    ViewBag.Title = "Paps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string powerUser = "d-none";
+    string topograph = "d-none";
+    string surveyor = "d-none";
+
+    if (Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-ADM") || Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-LO") || Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-POWER"))
+    {
+        powerUser = "";
+    }
+
+    if (Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-ADM") || Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-LO") || Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-TOPO") || Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-POWER"))
+    {
+        topograph = "";
+    }
+
+    if (Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-ADM") || Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-INV") || Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-LO") || Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-AUDIT") || Roles.IsUserInRole(HttpContext.Current.User.Identity.Name, "CMOCTFM\\SG-FGM-RAP-POWER"))
+    {
+        surveyor = "";
+    }
+}
+
+<h2>List of PAP</h2>
+
+<section class="widget">
+    <header class="d-flex justify-content-between flex-wrap">
+        <a href="/Community/Index" class="btn btn-default" type="button" id="goBack"><i class="fas fa-arrow-left"></i></a>
+        <a href="#" id="addPAP" class="btn btn-primary" type="button" title="Add PAP"><i class="fas fa-address-card"></i></a>
+    </header>
+    <div class="hide" style="display:none">
+        <input type="hidden" value=@powerUser id="poweruser" />
+        <input type="hidden" value=@surveyor id="surveyor" />
+        <input type="hidden" value=@topograph id="topograph" />
+    </div>
+    <hr />
+    <div class="widget-body">
+        <div class="mt">
+            <div id="datatable-table_wrapper" class="dataTables_wrapper form-inline no-footer table-responsive">
+                <table id="datatableLacPapList" class="table table-striped table-hover dataTable no-footer table-responsive-lg nowrap">
+                    <thead>
+                        <tr role="row">
+                            <th>Action</th>
+                            <th>PAP IN</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>LAC</th>
+                            <th>File #</th>
+                            <th>ID Card</th>
+                            <th>Mobile</th>
+                            <th>Residence</th>
+                            <th>Picture</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ADD PAP *@
+<div class="modal" id="addPAPModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="container">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="modal-title" id="addPAPModalTitle"><string>Add PAP</string></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="papDetailsError"></div>
+                    <div class="form-row col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group row" style="display:none">
+                                <label for="personID" class="col-md-4 form-control-label text-md-right">First Name</label>
+                                <div class="col-md-8 row">
+                                    <input type="text" id="personID" class="form-control col-md-6" data-placement="top" placeholder="Person ID">
+                                    <input type="text" id="papID" class="form-control col-md-6" data-placement="top" placeholder="PAP ID">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="firstName" class="col-md-4 form-control-label text-md-right">First Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="firstName" class="form-control reset" data-placement="top" placeholder="Add here the First Name..">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="lastName" class="col-md-4 form-control-label text-md-right">Last Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="lastName" class="form-control reset" data-placement="top" placeholder="Add here the Last Name..">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="middleName" class="col-md-4 form-control-label text-md-right">Middle Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="middleName" class="form-control reset" data-placement="top" placeholder="Add here the Middle Name..">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="cardNumber" class="col-md-4 form-control-label text-md-right">Card Number</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="cardNumber" class="form-control reset" data-placement="top" placeholder="Add here the Card Number">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="cellPhone" class="col-md-4 form-control-label text-md-right">Cell Phone</label>
+                                <div class="col-md-8">
+                                    <input type="tel" id="cellPhone" class="form-control reset" data-placement="top" placeholder="Add here Cell Phone Number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-md-4 form-control-label text-md-right">Email</label>
+                                <div class="col-md-8">
+                                    <input type="email" id="email" class="form-control reset" data-placement="top" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="dob" class="col-md-4 form-control-label text-md-right">DOB</label>
+                                <div class="col-md-8">
+                                    <input type="date" id="dob" class="form-control" data-placement="top" placeholder="DOB">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pob" class="col-md-4 form-control-label text-md-right">POB</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="pob" class="form-control reset" data-placement="top" placeholder="Place of Birth">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="gender" class="col-md-4 form-control-label text-md-right">Gender</label>
+                                <div class="col-md-8">
+                                    <label><input type="radio" name="gender" value="M" />Male</label>
+                                    <label><input type="radio" name="gender" value="F" />Female</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="primaryResidence" class="col-md-4 form-control-label text-md-right">Residence</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control reset" id="primaryResidence" data-placement="top" placeholder="Primary Location" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="vulnerabilityType" class="col-md-4 form-control-label text-md-right">Vulnerability Type</label>
+                                <div class="col-md-8">
+                                    <select class="form-control" id="vulnerabilityType" data-placement="top" data-placeholder="Vulnerability Type"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="vulnerabilityDetails" class="col-md-4 form-control-label text-md-right">Vulnerability Detail</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="vulnerabilityDetails" class="form-control reset" data-placement="top" placeholder="Vulnerability Detail">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="papSpouse" class="col-md-4 form-control-label text-md-right">Spouse</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="papSpouse" class="form-control reset" data-placement="top" placeholder="Spouse Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="papMother" class="col-md-4 form-control-label text-md-right">Mother</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="papMother" class="form-control reset" data-placement="top" placeholder="Mother Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="papfather" class="col-md-4 form-control-label text-md-right">Father</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="papfather" class="form-control reset" data-placement="top" placeholder="Father Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pictureID" class="col-md-4 form-control-label text-md-right">Picture ID</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="pictureID" class="form-control reset" data-placement="top" placeholder="Picture ID">
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:none" id="papPicture">
+                                <label for="picture" class="col-md-4 form-control-label text-md-right">Picture</label>
+                                <div class="col-md-8" id="picture" style="border-radius:5px">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row" id="divPAPPhoto">
+                            <label for="PAPphoto" class="col-md-2 form-control-label text-md-right">PAP Picture</label>
+                            <div class="col-md-10">
+                                <input id="PAPphoto" name="PAPphoto" type="file" class="file" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#PAPphoto-errors">
+                            </div>
+                            <div id="PAPphoto-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" id="divLinkPAPToLAC">
+                        <input type="checkbox" id="addpaplacDetails" value="Add" />
+                        <label for="addpaplacDetails">Add this PAP to LAC</label>
+
+                        <div id="papLacDetails" class="col-md-12 form-row" style="border-radius:5px">
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <select class="form-control" id="lacID" data-placement="top" data-placeholder="Select LAC"></select>
+                                </div>
+                                <div class="form-group row">
+                                    <select class="form-control" id="paymentPreference" data-placement="top" data-placeholder="Payment Preference"></select>
+                                </div>
+                                <div class="form-group row">
+                                    <input type="date" id="submissionDate" class="form-control reset" data-placement="top">
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <input type="date" id="presurveyDate" class="form-control" data-placement="top">
+                                </div>
+                                <div class="form-group row">
+                                    <input type="text" id="presurveyorCode" class="form-control reset" data-placement="top" placeholder="Presurveyor">
+                                </div>
+                                <div class="form-group row">
+                                    <input type="date" id="surveyDate" class="form-control" data-placement="top">
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <input type="text" id="surveyorCode" class="form-control reset" data-placement="top" placeholder="Surveyor">
+                                </div>
+                                <div class="form-group row">
+                                    <input type="text" id="fileId" class="form-control reset" data-placement="top" placeholder="File ID">
+                                </div>
+                                <div class="form-group row">
+                                    <textarea id="papLacComment" class="form-control reset" data-placement="top" placeholder="Comment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="loader" style="display:none"></div>
+            <div class="modal-footer">
+                <div>
+                    <button type="button" class='btn btn-primary' id="saveNewPap">Save</button>
+                    <button type="button" class="btn btn-primary" id="updatePap">Update</button>
+                    <button type="button" class='btn btn-secondary' data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* LINK A PAP TO A LAC *@
+<div class="modal" id="linkPAPLACModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="container">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="modal-title" id="addPAPLACModalTitle"><string>Add PAP to LAC</string></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="linkPAPLACModalError"></div>
+                    <div class="form-group row hiden" style="display:none">
+                        <label for="papID" class="col-md-4 form-control-label text-md-right">PAP ID</label>
+                        <div class="col-md-8">
+                            <input type="text" id="linkPAPID" class="form-control" data-placement="top" placeholder="PAP ID">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lacID" class="col-md-4 form-control-label text-md-right">LAC Name</label>
+                        <div class="col-md-8">
+                            <select class="form-control" id="lacID" data-placement="top" data-placeholder="Select LAC"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="paymentPreference" class="col-md-4 form-control-label text-md-right">Payment Preference</label>
+                        <div class="col-md-8">
+                            <select class="form-control" id="paymentPreference" data-placement="top" data-placeholder="Payment Preference"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="submissionDate" class="col-md-4 form-control-label text-md-right">Submission Date</label>
+                        <div class="col-md-8">
+                            <input type="date" id="submissionDate" class="form-control" data-placement="top">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="presurveyDate" class="col-md-4 form-control-label text-md-right">Presurvey Date</label>
+                        <div class="col-md-8">
+                            <input type="date" id="presurveyDate" class="form-control" data-placement="top">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="presurveyorCode" class="col-md-4 form-control-label text-md-right">Presurveyor Code</label>
+                        <div class="col-md-8">
+                            <input type="text" id="linkpresurveyorCode" class="form-control" data-placement="top" placeholder="Presurveyor">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="surveyDate" class="col-md-4 form-control-label text-md-right">Survey Date</label>
+                        <div class="col-md-8">
+                            <input type="date" id="surveyDate" class="form-control" data-placement="top">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="surveyorCode" class="col-md-4 form-control-label text-md-right">Surveyor Code</label>
+                        <div class="col-md-8">
+                            <input type="text" id="linksurveyorCode" class="form-control" data-placement="top" placeholder="Surveyor">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="papfileId" class="col-md-4 form-control-label text-md-right">File ID</label>
+                        <div class="col-md-8">
+                            <input type="text" id="papfileId" class="form-control" data-placement="top" placeholder="File ID">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="papLacComment" class="col-md-4 form-control-label text-md-right">Comment</label>
+                        <div class="col-md-8">
+                            <textarea id="papLacComment" class="form-control" data-placement="top" placeholder="Comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="loader" style="display:none"></div>
+            <div class="modal-footer">
+                <div>
+                    <button type="button" class='btn btn-primary' id="savePapLac">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* SOCIO-ECONOMIC SURVEY MODAL *@
+<div class="modal" id="surveyPAPModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="container">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="modal-title" id="surveyPAPModalTitle"><string>Socio-Economic Survey</string></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="w-100 text-center">
+                        <div class='step'></div>
+                        <div class='step'></div>
+                        <div class='step'></div>
+                        <div class='step'></div>
+                        <div class='step'></div>
+                        <div class='step'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div style="display:none">
+                    <input type="hidden" id="papId" />
+                    <input type="hidden" id="lacId" />
+                    <input type="hidden" id="paplacId" />
+                </div>
+                <div class='wizard-tab' stepname='step1'>
+                    <div class="form-group row">
+                        <label class="col-md-2 form-control-label text-md-right">Region</label>
+                        <div class="col-md-10 row">
+                            <select class="form-control col-md-5" id="surveyRegion" name="surveyRegion" data-placement="top" data-placeholder="Region"></select>
+                            <label class="col-md-2 form-control-label text-md-right">Village</label>
+                            <select class="form-control col-md-5" id="surveyVillage" data-placement="top" data-placeholder="Village"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="presurveyorCode" class="col-md-2 form-control-label text-md-right">Survey</label>
+                        <div class="col-md-10 row">
+                            <input type="text" id="surveyCode" class="form-control col-md-2" data-placement="top" placeholder="Surveyor" required>
+                            <input type="date" id="surveyDate" class="form-control col-md-3" data-placement="top" placeholder="Date..">
+                            <input type="text" id="fileID" class="form-control col-md-1" data-placement="top" placeholder="File ID" required disabled>
+                            <div class="col-md-3">
+                                <label for="surveyCompleted">Surveyed</label><input type="checkbox" id="surveyCompleted" value="Yes" />
+                            </div>
+                            <input type="text" id="surveyfileID" class="form-control col-md-1" data-placement="top" placeholder="File ID" disabled>
+                            <select class="form-control col-md-2" id="surveylacID" data-placement="top" data-placeholder="LAC ID" disabled></select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="papSurveyError"></div>
+                    <div class="col-md-12">
+                        <div class="col-md-12 form-group row">
+                            <label for="interviewedName" class="col-md-2 form-control-label text-md-right">Interviewed</label>
+                            <div class="col-md-10 row">
+                                <input type="text" id="interviewedName" class="form-control col-md-5" data-placement="top" placeholder="Person Name">
+                                <div class="col-md-7">
+                                    <label><input type="radio" name="interviewedType" value="Responsible" /> HH Responsible</label>
+                                    <label><input type="radio" name="interviewedType" value="Spouse" /> Spouse</label>
+                                    <label><input type="radio" name="interviewedType" value="Other" /> Other</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="form-group col-md-3">
+                                <label for="hhRelation" class="form-control-label">Relationship</label>
+                                <select class="form-control" id="hhRelation" data-placement="top" data-placeholder="Relationship"></select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhfirstName" class="form-control-label">First Name</label>
+                                <input type="text" id="hhfirstName" class="form-control" data-placement="top" placeholder="First Name..">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhmiddleName" class="form-control-label">Middle Name</label>
+                                <input type="text" id="hhmiddleName" class="form-control" data-placement="top" placeholder="Middle Name..">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhlastName" class="form-control-label">Last Name</label>
+                                <input type="text" id="hhlastName" class="form-control" data-placement="top" placeholder="Last Name..">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-3">
+                                <label for="hhGender" class="form-control-label">Gender</label><br />
+                                <label><input type="radio" name="gender" value="M" id="male" /> Male </label>
+                                <label><input type="radio" name="gender" value="F" id="female" /> Female </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhMaritalStatus" class="form-control-label">Marital Status</label>
+                                <select class="form-control" id="hhMaritalStatus" data-placement="top" data-placeholder="Marital Status">
+                                    <option value="-1"> Marital Status</option>
+                                    <option value="Single"> Single</option>
+                                    <option value="Married"> Married</option>
+                                    <option value="Divorced"> Divorced</option>
+                                    <option value="Widowed"> Widowed</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhdob" class="form-control-label">Birthdate</label>
+                                <input type="date" id="hhdob" class="form-control reset" data-placement="top" placeholder="DOB">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhCardID" class="form-control-label">Card ID</label>
+                                <input type="text" id="hhCardID" class="form-control reset" data-placement="top" placeholder="Card ID..">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-3">
+                                <label for="surveyCompleted">Studying? </label><br />
+                                <input type="checkbox" id="hhStudying" value="Studying" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhSchoolLevel" class="form-control-label">School Level</label>
+                                <select class="form-control" id="hhSchoolLevel" data-placement="top" data-placeholder="School Level"></select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhFrenchLevel" class="form-control-label">French Level</label>
+                                <select class="form-control" id="hhFrenchLevel" data-placement="top" data-placeholder="French Level"></select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhResidence" class="form-control-label">Residence</label>
+                                <input type="text" id="hhResidence" class="form-control" data-placement="top" placeholder="Residence">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-3">
+                                <label for="hhActivity" class="form-control-label">Activities</label>
+                                <select class="select2 form-control" id="hhActivity" multiple data-placeholder="Activities"> </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhSkill" class="form-control-label">Skills</label>
+                                <select class="form-control select2" id="hhSkill" data-placement="top" data-placeholder="Skills" multiple></select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhVulnerability" class="form-control-label">Handicap</label>
+                                <select class="form-control" id="hhVulnerability" data-placement="top" data-placeholder="Handicap"></select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhHandicapDetails" class="form-control-label">Handicap Details</label>
+                                <input type="text" id="hhHandicapDetails" class="form-control" data-placement="top" placeholder="Handicap Details" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-3">
+                                <label for="hhPhotoID" class="form-control-label">Photo</label>
+                                <input type="text" id="hhPhotoID" class="form-control" data-placement="top" placeholder="Picture ID">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="hhPhoto" class="form-control-label">Household Picture</label>
+                                <input id="hhPhoto" name="hhPhoto" type="file" class="file" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#hhPhoto-errors">
+                                <div id="hhPhoto-errors"></div>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label></label>
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addHouseHold">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-users"></i> Household members </strong></p>
+                        <div class="form-group row col-md-12">
+                            <table id="hhTable" class="table table-striped table-hover nowrap no-footer dataTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none">Relationship ID</th>
+                                        <th>Relation</th>
+                                        <th>First Name</th>
+                                        <th style="display:none">Middle Name</th>
+                                        <th>Last Name</th>
+                                        <th style="display:none">M/F</th>
+                                        <th style="display:none">Marital</th>
+                                        <th>DOB</th>
+                                        <th style="display:none">Card ID</th>
+                                        <th style="display:none">Student?</th>
+                                        <th style="display:none">School Level ID</th>
+                                        <th style="display:none">School Level</th>
+                                        <th style="display:none">French Level ID</th>
+                                        <th>French</th>
+                                        <th>Photo ID</th>
+                                        <th style="display:none">Photo Path</th>
+                                        <th style="display:none">Residence</th>
+                                        <th style="display:none">Activities ID</th>
+                                        <th style="display:none">Activities</th>
+                                        <th style="display:none">Skills ID</th>
+                                        <th style="display:none">Skills</th>
+                                        <th style="display:none">Handicap ID</th>
+                                        <th style="display:none">Handicap</th>
+                                        <th style="display:none">Details</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class='wizard-tab' stepname='step2'>
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="papHHDetailsError"></div>
+                    <div class="form-group row">
+                        <label for="presurveyorCode" class="col-md-2 form-control-label text-md-right">HH Resp.</label>
+                        <div class="col-md-10 row">
+                            <input type="text" id="cdmFatherName" class="form-control col-md-3" data-placement="top" placeholder="Father">
+                            <input type="text" id="cdmMotherName" class="form-control col-md-3" data-placement="top" placeholder="Mother">
+                            <input type="text" id="cdmParentPOB" class="form-control col-md-3" data-placement="top" placeholder="POB">
+                            <input type="text" id="cdmParentPhone" class="form-control col-md-3" data-placement="top" placeholder="Phone">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="presurveyorCode" class="col-md-2 form-control-label text-md-right">HH Spouse</label>
+                        <div class="col-md-10 row">
+                            <input type="text" id="spouseFatherName" class="form-control col-md-3" data-placement="top" placeholder="Father">
+                            <input type="text" id="spouseMotherName" class="form-control col-md-3" data-placement="top" placeholder="Mother">
+                            <input type="text" id="spouseParentPOB" class="form-control col-md-3" data-placement="top" placeholder="POB">
+                            <input type="text" id="spouseParentPhone" class="form-control col-md-3" data-placement="top" placeholder="Phone">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label for="hhFishMeat">Did HH eat fish or meat yesterday?</label><input type="checkbox" id="hhFishMeat" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="hhEnoughFood">Did HH have enough food last year?</label><input type="checkbox" id="hhEnoughFood" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="hhDoctor">Did HH see a Doctor or purchase medecines last 6 months?</label><input type="checkbox" id="hhDoctor" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label for="medecineLocation" class="form-control-label">Where?</label><br />
+                            <label><input type="checkbox" name="medecineLocation" value="Pharmacy" /> Pharmacy </label><br />
+                            <label><input type="checkbox" name="medecineLocation" value="Hospital" /> Hospital </label><br />
+                            <label><input type="checkbox" name="medecineLocation" value="FGM/Tenke Pharmacy" /> FGM /Tenke Pharmacy </label><br />
+                            <label><input type="checkbox" name="medecineLocation" value="Market" /> Market </label><br />
+                            @*<label><input type="checkbox" name="medecineLocation" value="No Consult/Nothing Paid" /> No Consult/Nothing Paid </label><br />*@
+                        </div>
+                        <div class="col-md-4">
+                            <label for="hhChildren" class="form-control-label">Last Week, one of 0-4 years old children got:</label><br />
+                            <label><input type="checkbox" name="hhChildren" value="Diarrhea" /> Diarrhea </label><br />
+                            <label><input type="checkbox" name="hhChildren" value="Fever" /> Fever </label><br />
+                            @*<label><input type="checkbox" name="hhChildren" value="Nothing" /> Nothing </label><br />*@
+                            <label><input type="checkbox" name="hhChildren" value="N/A" /> N/A </label><br />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="hhChildSkin">Is there one of child having a skin disease?</label><input type="checkbox" id="hhChildSkin" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label for="hhMosquito" class="form-control-label">Are you using Mosquito Net?</label><br />
+                            <label><input type="checkbox" name="hhMosquito" value="NGO" /> NGO </label><br />
+                            <label><input type="checkbox" name="hhMosquito" value="TFM" /> TFM </label><br />
+                            <label><input type="checkbox" name="hhMosquito" value="Purchased" /> Purchased </label><br />
+                            <label><input type="checkbox" name="hhMosquito" value="Impregnated" /> Impregnated </label><br />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="hhMosquitoUsage" class="form-control-label">Who is using it</label><br />
+                            <label><input type="checkbox" name="hhMosquitoUsage" value="0-4" /> 0-4 years </label><br />
+                            <label><input type="checkbox" name="hhMosquitoUsage" value="5-17" /> 5-17 years </label><br />
+                            <label><input type="checkbox" name="hhMosquitoUsage" value="Adults" /> Adult </label><br />
+                            <label><input type="checkbox" name="hhMosquitoUsage" value="Everyone" /> Everyone </label><br />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="hhParticipation">Is there any member participating/participated:</label><br />
+                            <label><input type="checkbox" name="hhParticipation" value="Tontine" /> Tontine </label><br />
+                            <label><input type="checkbox" name="hhParticipation" value="Savings Fund" /> Saving Funds </label><br />
+                            <label><input type="checkbox" name="hhParticipation" value="Bank Account" /> Bank Account </label><br />
+                            @*<label><input type="checkbox" name="hhParticipation" value="None" /> None </label>*@
+                        </div>
+                    </div>
+                </div>
+                <div class='wizard-tab' stepname='step3'>
+                    <p class="help-block"><strong><i class="fas fa-wallet"></i> Household Properties and Revenues </strong></p>
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="papResidenceError"></div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="form-group col-md-2">
+                                <label for="hhResidenceLocation" class="form-control-label">Location</label>
+                                <input type="text" id="hhResidenceLocation" class="form-control" data-placement="top" placeholder="Location">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhRoof" class="form-control-label">Roof</label>
+                                <select class="form-control" id="hhRoof" data-placement="top" data-placeholder="Roof"></select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhWall" class="form-control-label">Wall</label>
+                                <select class="form-control" id="hhWall" data-placement="top" data-placeholder="Wall"></select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhFloor" class="form-control-label">Floor</label>
+                                <select class="form-control" id="hhFloor" data-placement="top" data-placeholder="Floor"></select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhOwnership" class="form-control-label">Ownership</label><br />
+                                <label><input type="radio" name="hhOwnership" value="P" id="owner" /> P </label>
+                                <label><input type="radio" name="hhOwnership" value="U" id="user" /> U </label>
+                                <label><input type="radio" name="hhOwnership" value="PU" id="pu" /> PU </label>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhStatus" class="form-control-label">Usage</label><br />
+                                <label><input type="radio" name="hhStatus" value="Permanent" id="permanent" /> Perm. </label>
+                                <label><input type="radio" name="hhStatus" value="Temporary" id="temporary" /> Temp. </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-2">
+                                <label for="hhRoomQty" class="form-control-label">Room Qty</label><br />
+                                <input type="number" id="hhRoomQty" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            
+                            <div class="form-group col-md-2">
+                                <label for="hhRent" class="form-control-label">Rent/Month</label>
+                                <input type="number" id="hhRent" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhArrivalDate" class="form-control-label">Arrival Year</label>
+                                <input type="number" id="hhArrivalDate" class="form-control" data-placement="top" placeholder="Arrival Date">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhReason" class="form-control-label">Reason</label>
+                                <select class="form-control" id="hhReason" data-placement="top" data-placeholder="Reason"></select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhLatrine" class="form-control-label">Latrine</label>
+                                <select class="form-control" id="hhLatrine" data-placement="top" data-placeholder="Latrine"></select>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="form-control-label"></label><br />
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addResidence">Add</button>
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-12">
+                            <table id="hhResidence" class="table table-striped table-hover nowrap no-footer dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Location</th>
+                                        <th style="display:none">Roof ID</th>
+                                        <th>Roof</th>
+                                        <th style="display:none">Wall ID</th>
+                                        <th>Wall</th>
+                                        <th style="display:none">Floor ID</th>
+                                        <th>Floor</th>
+                                        <th>Ownership</th>
+                                        <th>Status</th>
+                                        <th style="display:none">Rent</th>
+                                        <th style="display:none">Arrived</th>
+                                        <th style="display:none">Reason ID</th>
+                                        <th style="display:none">Reason</th>
+                                        <th style="display:none">Latrine ID</th>
+                                        <th style="display:none">Latrine</th>
+                                        <th style="display:none">Room Qty</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <div class="form-group row">
+                            <div class="form-group col-md-1">
+                                <label for="hhNoneRevenue" class="form-control-label"></label>
+                                <label><input type="checkbox" id="hhNoneRevenue" value="None" /> None </label>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="hhRevenueSource" class="form-control-label">Revenue Source</label>
+                                <select class="form-control" id="hhRevenueSource" data-placement="top" data-placeholder="Revenue Source"></select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhMonthlyRevenue" class="form-control-label">Revenue/Month</label>
+                                <input type="number" id="hhMonthlyRevenue" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhMonthCounts" class="form-control-label">Months #</label>
+                                <input type="number" id="hhMonthCounts" class="form-control" data-placement="top" placeholder="0" min="1" max="12">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="form-control-label"></label><br />
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addRevenue">Add</button>
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-12">
+                            <table id="hhRevenue" class="table table-striped table-hover nowrap no-footer dataTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none">Revenue ID</th>
+                                        <th>Revenue Name</th>
+                                        <th>Monthly Revenue</th>
+                                        <th>Month Count</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class='wizard-tab' stepname='step4'>
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="papRevenueError"></div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="hhLastWeekExpense" class="form-control-label">Last week expenses for feeding (K Fc)</label> <input type="number" id="hhLastWeekExpense" class="form-control" data-placement="top" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="form-group col-md-3">
+                                <label for="hhNeverCompensed" class="form-control-label"></label>
+                                <label>Never compensed by TFM <input type="checkbox" id="hhNeverCompensed" /></label>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhYearCompensed" class="form-control-label">Year</label>
+                                <input type="number" id="hhYearCompensed" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhAmountCompensed" class="form-control-label">Amount</label>
+                                <input type="number" id="hhAmountCompensed" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhSurfaceCompensed" class="form-control-label">Count(x25m Square)</label>
+                                <input type="number" id="hhSurfaceCompensed" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="form-control-label"></label><br />
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addCompensation">Add</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <input type="text" id="hhCompensedMoneyUtilisation" class="form-control col-md-12" data-placement="top" placeholder="What have you done with money?" />
+                            <table id="hhTFMCompensed" class="table table-striped table-hover nowrap no-footer dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Amount</th>
+                                        <th>Surface (x25m2)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <div class="form-group row">
+                            <div class="form-group col-md-2">
+                                <label>No Equipment <input type="checkbox" id="hhNoEquipment" value="None" /></label>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="hhEquipmentName" class="form-control-label">Equipment</label>
+                                <select class="form-control" id="hhEquipmentName" data-placement="top" data-placeholder="Equipment"></select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhEquipmentDescription" class="form-control-label">Name</label>
+                                <input type="text" id="hhEquipmentDescription" class="form-control" data-placement="top" placeholder="Description">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhEquipmentCount" class="form-control-label">Quantity</label>
+                                <input type="number" id="hhEquipmentCount" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="form-control-label"></label><br />
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addEquipment">Add</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <table id="hhEquipment" class="table table-striped table-hover nowrap no-footer dataTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none">Equipment ID</th>
+                                        <th>Equipment Name</th>
+                                        <th>Equipment Description</th>
+                                        <th>Quantity</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <div class="form-group row">
+                            <div class="form-group col-md-2">
+                                <label>No Animal <input type="checkbox" id="hhNoAnimal" value="None" /></label>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="hhAnimalName" class="form-control-label">Animal Name</label>
+                                <select class="form-control" id="hhAnimalName" data-placement="top" data-placeholder="Animal"></select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhAnimalDesc" class="form-control-label">Description</label>
+                                <input type="text" id="hhAnimalDesc" class="form-control" data-placement="top" placeholder="Description">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhAnimalCount" class="form-control-label">Quantity</label>
+                                <input type="number" id="hhAnimalCount" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="form-control-label"></label><br />
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addAnimal">Add</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <table id="hhAnimals" class="table table-striped table-hover nowrap no-footer dataTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none">Animal ID</th>
+                                        <th>Animal Name</th>
+                                        <th>Animal Description</th>
+                                        <th>Quantity</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class='wizard-tab' stepname='step5'>
+                    <p class="help-block"><strong><i class="fas fa-seedling"></i> Household Cultures </strong></p>
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="papCultureError"></div>
+                    <hr />
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="hhNoCulture" class="form-control-label"></label>
+                            <label>Doesn't have Culture <input type="checkbox" id="hhNoCulture" /></label>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-4">
+                                <label for="hhCultureLocation" class="form-control-label">Location</label>
+                                <input type="text" id="hhCultureLocation" class="form-control" data-placement="top" placeholder="Field Location">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhCultureDistance" class="form-control-label">Distance</label>
+                                <input type="number" id="hhCultureDistance" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhCultureWorker" class="form-control-label">Worker</label>
+                                <select class="select2 form-control" id="hhCultureWorker" data-placement="top" data-placeholder="Worker" multiple></select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhCultureCultivated" class="form-control-label">Cultivated(x25m2)</label>
+                                <input type="number" id="hhCultureCultivated" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhCultureFallow" class="form-control-label">Fallow(x25m2)</label>
+                                <input type="number" id="hhCultureFallow" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-2">
+                                <label for="hhCultureOwnership" class="form-control-label">Ownership</label><br />
+                                <label><input type="radio" name="hhCultureOwnership" value="P" /> P </label>
+                                <label><input type="radio" name="hhCultureOwnership" value="U" /> U </label>
+                                <label><input type="radio" name="hhCultureOwnership" value="PU" /> PU </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhCultureRent" class="form-control-label">Rent(KFc)</label>
+                                <input type="number" id="hhCultureRent" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhCultureAcquired" class="form-control-label">Acquired from</label><br />
+                                <label><input type="radio" name="hhCultureAcquired" value="TFM" /> TFM </label>
+                                <label><input type="radio" name="hhCultureAcquired" value="Local" /> Local </label>
+                                <label><input type="radio" name="hhCultureAcquired" value="Purchased" /> Purchased </label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhCultureAcquisitionYear" class="form-control-label">Acquisition Year</label>
+                                <input type="number" id="hhCultureAcquisitionYear" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+
+                            <div class="form-group col-md-1">
+                                <label class="form-control-label"></label><br />
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addCulture">Add</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <table id="hhCultures" class="table table-striped table-hover nowrap no-footer dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Location</th>
+                                        <th style="display:none">Distance</th>
+                                        <th style="display:none">Worker ID</th>
+                                        <th>Worker</th>
+                                        <th>Cultivated</th>
+                                        <th style="display:none">Fallow</th>
+                                        <th>Ownership</th>
+                                        <th style="display:none">Rent</th>
+                                        <th>Acquired</th>
+                                        <th style="display:none">Year</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <label class="help-block">Purchased and Sold Cultures for the last 12 months</label>
+                        <div class="form-group row">
+                            <div class="form-group col-md-4">
+                                <label for="hhCultureName" class="form-control-label">Culture Name</label>
+                                <select class="form-control" id="hhCultureName" data-placement="top" data-placeholder="Culture"></select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="hhCultureDesc" class="form-control-label">Description</label>
+                                <input type="text" id="hhCultureDesc" class="form-control" data-placement="top" placeholder="Description">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="hhCultureCAV" class="form-control-label">Culture CAV</label><br />
+                                <label><input type="checkbox" name="hhCultureCAV" value="C" /> C </label>
+                                <label><input type="checkbox" name="hhCultureCAV" value="A" /> A </label>
+                                <label><input type="checkbox" name="hhCultureCAV" value="V" /> V </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-4">
+                                <label for="hhCultureArea" class="form-control-label">Cultivate Area(x25m2)</label>
+                                <input type="number" id="hhCultureArea" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hhCultureHarvest" class="form-control-label">Harvest (Meka)</label>
+                                <input type="number" id="hhCultureHarvest" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhCultureSold" class="form-control-label">Sold (Meka)</label>
+                                <input type="number" id="hhCultureSold" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="hhCultureRevenue" class="form-control-label">Revenue</label>
+                                <input type="number" id="hhCultureRevenue" class="form-control" data-placement="top" placeholder="0">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="form-control-label"></label><br />
+                                <button class="btn btn-default btn-rounded-f" type="button" id="addCultureSold">Add</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <table id="hhCultureSold" class="table table-striped table-hover nowrap no-footer dataTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none">Culture ID</th>
+                                        <th>Culture Name</th>
+                                        <th style="display:none">Culture Description</th>
+                                        <th>CAV</th>
+                                        <th>Culture Area</th>
+                                        <th>Harvest</th>
+                                        <th>Sold</th>
+                                        <th>Revenue</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class='wizard-tab' stepname='step6'>
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="papCultureSoldError"></div>
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <div class="form-group col-md-6">
+                                    <label for="hhCultureTool" class="form-control-label">Culture Tools</label>
+                                    <select class="select2 form-control" id="hhCultureTool" multiple data-placement="top"></select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="hhCulturePaid" class="form-control-label">Paid Labor Count</label>
+                                    <input type="number" class="form-control" id="hhCulturePaid" data-placement="top" placeholder="0" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="hhCulturePaidTime" class="form-control-label">Paid Labor Times</label>
+                                    <label><input type="radio" name="hhCulturePaidTime" value="Occasionally" /> Occasionally </label>
+                                    <label><input type="radio" name="hhCulturePaidTime" value="Continuously" /> Continuously </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="col-md-12">
+                            <label for="hhFile" class="form-control-label">Household File</label>
+                            <input id="hhFile" name="hhFile" type="file" class="file" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["pdf"]' data-el-Error-Container="#hhfile-errors">
+                            <div id="hhfile-errors"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="hhComments" class="form-control-label">Comments</label>
+                                <textarea id="hhComments" class="form-control col-md-12" placeholder="Add comment here"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="loader" style="display:none"></div>
+            <div class="modal-footer">
+                <div>
+                    <button type="button" class='btn btn-primary btn-add' id="cancelPAP" onclick="resetModal('surveyPAPModal')">Cancel</button>
+                    <button type="button" class='btn btn-secondary btn-prev'>Previous</button>
+                    <button type="button" class='btn btn-primary btn-next'>Next</button>
+                    <button type="submit" class='btn btn-primary btn-end' id="saveSurvey">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- COLLECT LAND DATA -->
+<div class="modal" id="collectLandModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="container">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="modal-title" id="collectLandModalTitle"><string>Collect Land Details on LAC</string></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="w-100 text-center">
+                        <div class='step'></div>
+                        <div class='step'></div>
+                        <div class='step'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-row alert alert-danger hiden" style="display:none" id="papSurveyorError"></div>
+                <div class='wizard-tab' stepname='step1'>
+                    <div class="form-group row">
+                        <label for="presurveyorCode" class="col-md-2 form-control-label text-md-right">Topograph</label>
+                        <div class="col-md-10 row">
+                            <input type="text" id="topographCode" class="form-control col-md-2 topo" data-placement="top" placeholder="Topograph" required>
+                            <input type="date" id="topoDate" class="form-control col-md-3 topo" data-placement="top" placeholder="Date..">
+                            <input type="text" id="topoTrimbleCode" class="form-control col-md-2 topo" data-placement="top" placeholder="Trimble" required>
+                            <input type="text" id="trimbleFile" class="form-control col-md-5 topo" data-placement="top" placeholder="Trimble File" required>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6><i class="fas fa-user"></i> PAP Details</h6>
+                        <span class="small">#1</span>
+                    </div>
+                    <hr>
+                    <div class="form-row col-md-12" id="divContent">
+                        <div class="col-md-6">
+                            <div class="form-group row" style="display:none">
+                                <label for="personID" class="col-md-4 form-control-label text-md-right">First Name</label>
+                                <div class="col-md-8 row">
+                                    <input type="text" id="collectPapID" class="form-control col-md-3" data-placement="top" placeholder="PAP ID">
+                                    <input type="text" id="collectPersonID" class="form-control col-md-3" data-placement="top" placeholder="PAP ID">
+                                    <input type="text" id="collectHouseholdID" class="form-control col-md-2" data-placement="top" placeholder="HouseHold ID">
+                                    <input type="text" id="collectLacID" class="form-control col-md-2" data-placement="top" placeholder="LAC ID">
+                                    <input type="text" id="collectFileID" class="form-control col-md-2" data-placement="top" placeholder="File ID">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="collectFirstName" class="col-md-4 form-control-label text-md-right">First Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectFirstName" class="form-control topo" data-placement="top" placeholder="First Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="lastName" class="col-md-4 form-control-label text-md-right">Last Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectLastName" class="form-control topo" data-placement="top" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="middleName" class="col-md-4 form-control-label text-md-right">Middle Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectMiddleName" class="form-control topo" data-placement="top" placeholder="Middle Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="cardNumber" class="col-md-4 form-control-label text-md-right">Card Number</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectCardNumber" class="form-control topo" data-placement="top" placeholder="Card Number">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="cellPhone" class="col-md-4 form-control-label text-md-right">Cell Phone</label>
+                                <div class="col-md-8">
+                                    <input type="tel" id="collectCellPhone" class="form-control topo" data-placement="top" placeholder="Phone Number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-md-4 form-control-label text-md-right">Email</label>
+                                <div class="col-md-8">
+                                    <input type="email" id="collectEmail" class="form-control topo" data-placement="top" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="dob" class="col-md-4 form-control-label text-md-right">DOB</label>
+                                <div class="col-md-8">
+                                    <input type="date" id="collectDob" class="form-control topo" data-placement="top" placeholder="DOB">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pob" class="col-md-4 form-control-label text-md-right">POB</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectPob" class="form-control topo" data-placement="top" placeholder="Place of Birth">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="gender" class="col-md-4 form-control-label text-md-right">Gender</label>
+                                <div class="col-md-8">
+                                    <label><input type="radio" name="gender" value="M" class="topo" />Male</label>
+                                    <label><input type="radio" name="gender" value="F" class="topo" />Female</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="primaryResidence" class="col-md-4 form-control-label text-md-right">Residence</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control topo" id="collectPrimaryResidence" data-placement="top" placeholder="Primary Location" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="vulnerabilityType" class="col-md-4 form-control-label text-md-right">Vulnerability Type</label>
+                                <div class="col-md-8">
+                                    <select class="form-control topo" id="collectVulnerabilityType" data-placement="top" data-placeholder="Vulnerability Type"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="vulnerabilityDetails" class="col-md-4 form-control-label text-md-right">Vulnerability Detail</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectVulnerabilityDetails" class="form-control topo" data-placement="top" placeholder="Vulnerability Detail">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="papSpouse" class="col-md-4 form-control-label text-md-right">Spouse</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectPapSpouse" class="form-control topo" data-placement="top" placeholder="Spouse Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="papMother" class="col-md-4 form-control-label text-md-right">Mother</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectPapMother" class="form-control topo" data-placement="top" placeholder="Mother Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="papfather" class="col-md-4 form-control-label text-md-right">Father</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectPapfather" class="form-control topo" data-placement="top" placeholder="Father Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pictureID" class="col-md-4 form-control-label text-md-right">Picture ID</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="collectPictureID" class="form-control topo" data-placement="top" placeholder="Picture ID">
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:none" id="papPicture">
+                                <label for="picture" class="col-md-4 form-control-label text-md-right">Picture</label>
+                                <div class="col-md-8" id="collectPicture" style="border-radius:5px">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group row" id="divPAPPhoto">
+                                <label for="collectPAPphoto" class="col-md-2 form-control-label text-md-right">PAP Picture</label>
+                                <div class="col-md-10">
+                                    <input id="collectPAPphoto" name="PAPphoto" type="file" class="file topo" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#PAPphoto-errors">
+                                </div>
+                                <div id="PAPphoto-errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='wizard-tab' stepname='step2'>
+                    <p class="help-block"><strong> Please select a property before edit details</strong></p>
+                    <div class="form-row dataTables_wrapper form-inline no-footer">
+                        <table class="table table-striped table-hover no-footer nowrap" id="tablePAPProperties">
+                            <thead class="no-bd">
+                                <tr>
+                                    <th style="display:none">ID</th>
+                                    <th>GPS ID</th>
+                                    <th>GPS ID</th>
+                                    <th>Type</th>
+                                    <th>Property Type</th>
+                                    <th>Property Name</th>
+                                    <th>User Type</th>
+                                    <th>Owner IN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+
+                    <div class="form-row alert alert-danger hiden" style="display:none" id="tableGoodsError"></div>
+                    <div class="form-group row">
+                        <div class="col-md-2" style="display:none">
+                            <label>Property ID</label>
+                            <input type="text" id="propertyID" class="form-control reset" data-placement="top" placeholder="GPS ID">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Inner GPS</label>
+                            <input type="text" id="gpsID" class="form-control reset" data-placement="top" placeholder="GPS ID">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Easting</label>
+                            <input type="text" id="pointEasting" class="form-control reset" data-placement="top" placeholder="Easting">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Northing</label>
+                            <input type="text" id="pointNorthing" class="form-control reset" data-placement="top" placeholder="Northing">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Photo ID</label>
+                            <input type="text" id="goodPictureID" class="form-control reset" placeholder="Photo" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-control-label" for="goodType">Goods Type</label>
+                            <select class="form-control reset" id="goodType" data-placeholder="Goods Type"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-5">
+                            <label class="form-control-label" for="goodComments">Comments</label>
+                            <input type="text" class="form-control reset col-md-12" id="goodComments" placeholder="Add comment" />
+                        </div>
+                        <div class="col-sm-5">
+                            <label>Upload picture</label>
+                            <input id="goodPhoto" name="goodPhoto" type="file" class="file reset" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#goodPhoto-errors">
+                            <div id="goodPhoto-errors"></div>
+                        </div>
+                        <div class="col-md-2">
+                            <label> <input id="ownershipType" type="radio" name="owner" value="U" /> Is User</label>
+                            <label> <input id="ownershipType" type="radio" name="owner" value="P" /> is Owner</label>
+                        </div>
+                    </div>
+
+                    @* OWNER ZONE DETAILS *@
+                    <div id="ownerDetails" style="display:none" class="hiden">
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-portrait"></i> Owner Details</strong></p>
+                        <div class="form-group row">
+                            <div class="col-md-5">
+                                <label>First Name</label>
+                                <input type="hidden" id="ownerPersonId" class="form-control reset" data-placement="top" placeholder="First Name">
+                                <input type="text" id="ownerFirstName" class="form-control reset" data-placement="top" placeholder="First Name">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Middle</label>
+                                <input type="text" id="ownerMiddleName" class="form-control reset" placeholder="Middle" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-control-label" for="goodType">Last Name</label>
+                                <input type="text" id="ownerLastName" class="form-control reset" placeholder="Last Name" />
+                            </div>
+                        </div>
+                    </div>
+
+                    @* CULTURE ZONE *@
+                    <div id="cultureDetails" style="display:none" class="hiden">
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-seedling"></i> Culture </strong></p>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label>Culture Name</label>
+                                <input type="text" id="cultureName" class="form-control reset" data-placement="top" placeholder="Culture Name">
+                            </div>
+                            <div class="col-md-5">
+                                <label>Surface(m2)</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control reset" aria-label="" id="cultureSurface">
+                                    <select class="form-control bootstrap-select btn-primary reset" id="cultureSurfaceUOM">
+                                        <option value="-1">UOM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Surface GPS</label>
+                                <input type="text" id="cultureGpsID" class="form-control reset" data-placement="top" placeholder="GPS ID">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label>Easting</label>
+                                <input type="text" id="cultureEasting" class="form-control reset" data-placement="top" placeholder="Easting">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Northing</label>
+                                <input type="text" id="cultureNorthing" class="form-control reset" data-placement="top" placeholder="Northing">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Starting</label>
+                                <input type="number" id="cultureSince" class="form-control reset" data-placement="top" placeholder="Year">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-control-label" for="fieldType">Field Type</label>
+                                <select class="form-control reset" id="fieldType" data-placeholder="Field Type"></select>
+                            </div>
+                            <div class="col-md-1">
+                                <label><br /></label>
+                                <button class="btn btn-dark btn-rounded-f" type="button" id="addCulture">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* STRUCTURE ZONE *@
+                    <div id="structureDetails" style="display:none" class="hiden">
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-house-user"></i> Culture </strong></p>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>Structure</label>
+                                <div class="form-row ">
+                                    <select class="form-control col-md-4 reset" id="structureCode" data-placeholder="Structure Code"></select>
+                                    <input type="text" class="form-control col-md-8 reset" id="structureName" placeholder="Structure Name" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Roof</label>
+                                <select class="form-control reset" id="toitCode" data-placeholder="Toiture"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Wall</label>
+                                <select class="form-control reset" id="murCode" data-placeholder="Mur"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Floor</label>
+                                <select class="form-control reset" id="solCode" data-placeholder="Sol Code"></select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="structureLength">LengthxWidth</label>
+                                <div class="form-row">
+                                    <input type="number" class="form-control col-md-4 reset" id="structureLength" placeholder="Length" />
+                                    <input type="number" class="form-control col-md-4 reset" id="structureWidth" placeholder="Width" />
+                                    <input type="number" class="form-control col-md-4 reset" id="structurePiece" placeholder="pieces" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><br /></label>
+                                <button class="btn btn-dark btn-rounded-f" type="button" id="addStructure">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* TREES ZONE *@
+                    <div id="treeDetails" style="display:none" class="hiden">
+                        <hr />
+                        <p class="help-block"><strong><i class="fas fa-tree"></i> Tree </strong></p>
+                        <div class="form-group row">
+                            <div class="col-md-5">
+                                <label>Tree Name</label>
+                                <input type="text" class="form-control reset" id="treeName" placeholder="Tree Name" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>Maturity</label>
+                                <select class="form-control reset" id="treeMaturity" placeholder="Maturity"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Qty</label>
+                                <input type="number" class="form-control reset" id="treeQty" placeholder="Qty" />
+                            </div>
+                            <div class="col-sm-2">
+                                <label><br /></label>
+                                <button class="btn btn-dark btn-rounded-f" type="button" id="addTree">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='wizard-tab' stepname='step3'>
+                    <div class="col-md-12">
+                        <label for="collectTrimble" class="form-control-label">Trimble File</label>
+                        <input id="collectTrimble" name="trimbleFile" type="file" class="file topo" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-el-Error-Container="#trimbleFile-errors">
+                        <div id="trimbleFile-errors"></div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="hhFile" class="form-control-label">Household File</label>
+                        <input id="hhFile" name="hhFile" type="file" class="file" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["pdf"]' data-el-Error-Container="#hhfile-errors">
+                        <div id="hhfile-errors"></div>
+                    </div>
+                    @* GOODS TABLE DIV *@
+                    <div id="tableGoodsArray">
+                        <p class="help-block"><strong><i class="fas fa-layer-group"></i> All edited goods </strong></p>
+                        <div class="form-group row col-md-12">
+                            <table class="table table-striped table-hover nowrap no-footer dataTable" id="propertiesTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none">Property ID</th>
+                                        <th>GPS</th>
+                                        <th style="display:none">Northing</th>
+                                        <th style="display:none">Easting</th>
+                                        <th>Photo</th>
+                                        <th style="display:none">Photo Url</th>
+                                        <th style="display:none">Good Type ID</th>
+                                        <th>Good Type</th>
+                                        <th>Good Name</th>
+                                        <th>User</th>
+                                        <th style="display:none">Owner ID</th>
+                                        <th style="display:none">First Name</th>
+                                        <th style="display:none">Middle Name</th>
+                                        <th style="display:none">Last Name</th>
+                                        <th style="display:none">Surface</th>
+                                        <th style="display:none">Inner GPS</th>
+                                        <th style="display:none">Inner Northing</th>
+                                        <th style="display:none">Inner Easting</th>
+                                        <th style="display:none">Start Date</th>
+                                        <th style="display:none">Field ID</th>
+                                        <th style="display:none">Field Name</th>
+                                        <th style="display:none">Points Url</th>
+                                        <th style="display:none">Structure ID</th>
+                                        <th style="display:none">Structure Code</th>
+                                        <th style="display:none">Roof ID</th>
+                                        <th style="display:none">Roof Code</th>
+                                        <th style="display:none">Wall ID</th>
+                                        <th style="display:none">Wall Code</th>
+                                        <th style="display:none">Soil ID</th>
+                                        <th style="display:none">Soil Code</th>
+                                        <th style="display:none">Length</th>
+                                        <th style="display:none">Width</th>
+                                        <th style="display:none">Room</th>
+                                        <th style="display:none">Maturity ID</th>
+                                        <th style="display:none">Maturity Name</th>
+                                        <th style="display:none">Tree Qty</th>
+                                        <th style="display:none">Comments</th>
+                                        <th style="display:none">Surface UOM</th>
+                                        <th style="display:none">Surface UOM Name</th>
+                                        <th style="display:none">Topograph</th>
+                                        <th style="display:none">Topo Date</th>
+                                        <th style="display:none">Trimble Code</th>
+                                        <th style="display:none">Trimble File</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="propertyTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="loader" style="display:none"></div>
+            <div class="modal-footer">
+                <div>
+                    <button type="button" class='btn btn-primary btn-add' id="cancelPAP" onclick="resetModal('collectLandModal')">Cancel</button>
+                    <button type="button" class='btn btn-secondary btn-prev'>Previous</button>
+                    <button type="button" class='btn btn-primary btn-next'>Next</button>
+                    <button class='btn btn-success btn-end' type="submit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            LoadLACPAPList();
+            
+            $('#surveyPAPModal #hhActivity, #surveyPAPModal #hhSkill').select2({
+                maximumSelectionLength: 2,
+                closeOnSelect: false,
+                width: "100%"
+            });
+
+            $('#surveyPAPModal #hhCultureWorker, #surveyPAPModal #hhCultureTool').select2({
+                closeOnSelect: false,
+                width: "100%"
+            });
+
+            $('#surveyPAPModal').wizard({
+                autohideprev: true,
+                onnext: function (stepname, i) {
+                    if (!$('form')[0].reportValidity())
+                        return false;
+
+                    let errors = [];
+                    switch (stepname) {
+                        case 'step1':
+                            // Not accepting the progress to the next step    surveyRegion      surveyVillage
+                            let surveyDate = $('#surveyPAPModal #surveyDate').val();
+                            let surveyDate2 = new Date(surveyDate);
+                            let hhRelation = $('#surveyPAPModal input[name="interviewedType"]:checked').val();
+                            let hhCount = $('#surveyPAPModal #hhTable > tbody').children().length;
+
+                            if ($('#surveyPAPModal #surveyCode').val() == null || $('#surveyPAPModal #surveyCode').val() == "")
+                                errors.push("Please add Surveyor Code");
+                            if ($('#surveyPAPModal #fileID').val() == null || $('#surveyPAPModal #fileID').val() == "")
+                                errors.push("Please add the file ID");
+                            if ($('#surveyPAPModal #surveyRegion').val() < 1 || $('#surveyPAPModal #surveyRegion').val() == "")
+                                errors.push("Please choose Surveyed Region");
+                            if ($('#surveyPAPModal #surveyVillage').val() < 1 || $('#surveyPAPModal #surveyVillage').val() == "")
+                                errors.push("Please choose Surveyed Village");
+                            if (surveyDate2 > new Date())
+                                errors.push("Survey Date can't be in the future");
+                            if (!new Date($('#surveyPAPModal #surveyDate').val()))
+                                errors.push("Survey Date is not valid");
+                            if (($('#surveyPAPModal #interviewedName').val() == null || $('#surveyPAPModal #interviewedName').val() == "") && (hhRelation == "Other"))
+                                errors.push("You must add Interviewed Person Name");
+                            if (hhRelation == "" || hhRelation == null)
+                                errors.push("You did not give relation between Interviewed person and the Household");
+                            if (hhCount < 1)
+                                errors.push("You must define at least one Household member");
+
+                            if (errors.length > 0) {
+                                var errorMessage = "<ul>";
+
+                                $.each(errors, function (index, value) {
+                                    errorMessage += "<li>" + value + "</li>";
+                                });
+                                errorMessage += "</ul>";
+                                $("#surveyPAPModal #papSurveyError").html(errorMessage).show(250);
+                                return false;
+                            }
+                            break;
+                        case 'step2':
+                            let doctor = $('#surveyPAPModal #hhDoctor').prop('checked');
+                            let doctorLocation = $('#surveyPAPModal input[name="medecineLocation"]:checked').val();
+                            let chilDisease = $('#surveyPAPModal input[name="hhChildren"]:checked').val();
+                            let mosquito = $('#surveyPAPModal input[name="hhMosquito"]:checked').val();
+                            let mosquitoUsage = $('#surveyPAPModal input[name="hhMosquitoUsage"]:checked').val();
+
+                            if (doctor && (doctorLocation == "" || doctorLocation == null))
+                                errors.push("You need to specify the location where you bought medecine");
+                            if (chilDisease == "" || chilDisease == null)
+                                errors.push("Please choose a child disease, if any");
+                            if (mosquito != null && (mosquitoUsage == "" || mosquitoUsage == null))
+                                errors.push("Please choose who is using mosquito");
+
+                            if (errors.length > 0) {
+                                var errorMessage = "<ul>";
+
+                                $.each(errors, function (index, value) {
+                                    errorMessage += "<li>" + value + "</li>";
+                                });
+                                errorMessage += "</ul>";
+                                $("#surveyPAPModal #papHHDetailsError").html(errorMessage).show(250);
+                                return false;
+                            }
+                            break;
+                        case 'step3':
+                            let hhResidenceCount = $('#surveyPAPModal #hhResidence > tbody').children().length;
+                            let noRevenue = $('#surveyPAPModal #hhNoneRevenue').prop('checked');
+                            let hhRevenueCount = $('#surveyPAPModal #hhRevenue > tbody').children().length;
+
+                            if (hhResidenceCount < 1)
+                                errors.push('Please add at least one residence');
+                            if (noRevenue == false && hhRevenueCount < 1)
+                                errors.push("You need to add at least one Revenue source");
+
+                            if (errors.length > 0) {
+                                var errorMessage = "<ul>";
+
+                                $.each(errors, function (index, value) {
+                                    errorMessage += "<li>" + value + "</li>";
+                                });
+                                errorMessage += "</ul>";
+                                $("#surveyPAPModal #papResidenceError").html(errorMessage).show(250);
+                                return false;
+                            }
+                            break;
+                        case 'step4':
+                            let lastWeekExpenses = $('#surveyPAPModal #hhLastWeekExpense').val();
+                            let hhCompensed = $('#surveyPAPModal #hhCompensedMoneyUtilisation').val();
+                            let neverCompensed = $('#surveyPAPModal #hhNeverCompensed').prop('checked');
+                            let noEquipment = $('#surveyPAPModal #hhNoEquipment').prop('checked');
+                            let noAnimal = $('#surveyPAPModal #hhNoAnimal').prop('checked');
+                            let hhTFMCompensedCount = $('#surveyPAPModal #hhTFMCompensed > tbody').children().length;
+                            let hhEquipmentCount = $('#surveyPAPModal #hhEquipment > tbody').children().length;
+                            let hhAnimalCount = $('#surveyPAPModal #hhAnimals > tbody').children().length;
+
+                            if (lastWeekExpenses == "" || lastWeekExpenses == null)
+                                errors.push('You need to add last week expenses');
+                            if (neverCompensed == false && hhTFMCompensedCount < 1)
+                                errors.push('You need to add at least one TFM compensation before going to the next tab');
+                            if (!neverCompensed && (hhCompensed < 1 || hhCompensed == null))
+                                errors.push('Please specify what you did with the previous compensation');
+                            if (noEquipment == false && hhEquipmentCount < 1)
+                                errors.push('You need to add at least one Equipment');
+                            if (noAnimal == false && hhAnimalCount < 1)
+                                errors.push('Please add at least one animal');
+
+                            if (errors.length > 0) {
+                                var errorMessage = "<ul>";
+
+                                $.each(errors, function (index, value) {
+                                    errorMessage += "<li>" + value + "</li>";
+                                });
+                                errorMessage += "</ul>";
+                                $("#surveyPAPModal #papRevenueError").html(errorMessage).show(250);
+                                return false;
+                            }
+                            break;
+                        case 'step5':
+                            let noCulture = $('#surveyPAPModal #hhNoCulture').prop('checked');
+                            let hhTFMCultureCount = $('#surveyPAPModal #hhCultures > tbody').children().length;
+                            let hhCultureSoldCount = $('#surveyPAPModal #hhCultureSold > tbody').children().length;
+
+                            if (hhCultureSoldCount < 1)
+                                errors.push('You need at least one Culture that has been Cultivated or Sold');
+                            if (hhTFMCultureCount < 1 && !noCulture)
+                                errors.push('You need to add at least one Culture');
+
+                            if (errors.length > 0) {
+                                var errorMessage = "<ul>";
+
+                                $.each(errors, function (index, value) {
+                                    errorMessage += "<li>" + value + "</li>";
+                                });
+                                errorMessage += "</ul>";
+                                $("#surveyPAPModal #papCultureError").html(errorMessage).show(250);
+                                return false;
+                            }
+                            break;
+                    }
+                    return true;
+                },
+                onend: function () {
+                    let errors = [];
+                    let paidTime = $('#surveyPAPModal input[name="hhCulturePaidTime"]:checked').val();
+                    if ($('#surveyPAPModal #hhCultureTool').val() == "" || $('#surveyPAPModal #hhCultureTool').val() == null)
+                        errors.push('Please choose the Culture Tools');
+                    if ($('#surveyPAPModal #hhCulturePaid').val() < 0 || $('#surveyPAPModal #hhCulturePaid').val() == null)
+                        errors.push('Please add paid labor count');
+                    if ($('#surveyPAPModal #hhCulturePaid').val() > 0 && (paidTime == "" || paidTime == null))
+                        errors.push('Please add the paid time');
+                    if ($("#surveyPAPModal #hhFile").val() == "" || $("#surveyPAPModal #hhFile").val() == null)
+                        errors.push('Please attach the scan of this household form');
+
+                    if (errors.length > 0) {
+                        var errorMessage = "<ul>";
+
+                        $.each(errors, function (index, value) {
+                            errorMessage += "<li>" + value + "</li>";
+                        });
+                        errorMessage += "</ul>";
+                        $("#surveyPAPModal #papCultureSoldError").html(errorMessage).show(250);
+                        return false;
+                    }
+                    else {
+                        savePAPSurvey();
+                    }
+                }
+            });
+
+            $('#collectLandModal').wizard({
+                autohideprev: true,
+                onnext: function (stepname, i) {
+                    if (!$('form')[0].reportValidity())
+                        return false;
+
+                    let errors = [];
+                    switch (stepname) {
+                        case 'step1':
+                            let topographDate = $("#collectLandModal #topoDate").val();
+                            let topograph = $("#collectLandModal #topographCode").val();
+                            let topoTrimpleCode = $("#collectLandModal #topoTrimbleCode").val();
+                            let topoTrimpleFile = $("#collectLandModal #trimbleFile").val();
+                            
+                            let currentDate = new Date();
+                            let topoDate2 = new Date(topographDate);
+                            let firstName = $('#collectLandModal #collectFirstName').val();
+                            let lastName = $('#collectLandModal #collectLastName').val();
+                            let pictureID = $('#collectLandModal #collectPictureID').val();
+                            let email = $('#collectLandModal #collectEmail').val();
+                            let primaryResidenceName = $('#collectLandModal #collectPrimaryResidence').val();
+                            let dob = $('#collectLandModal #collectDob').val();
+                            let dob2 = new Date(dob);
+                            let gender = $('#collectLandModal input[type=radio]:checked').val();
+
+                            let expr = /^[\w-\.]+@@([\w-]+\.)+[\w-]{2,4}$/;
+                            if (firstName == null || firstName == "")
+                                errors.push("Please add the First Name");
+                            if (lastName == null || lastName == "")
+                                errors.push("Please fill the Last Name of the PAP");
+                            if (primaryResidenceName == null || primaryResidenceName == "")
+                                errors.push("You did not specify the Primary Residence");
+                            if (pictureID == null || pictureID == "")
+                                errors.push("You did not put Picture ID");
+                            if (dob2 > currentDate)
+                                errors.push("Date of birth can't be in the future");
+                            if (gender == "" || gender == null)
+                                errors.push("Please specify PAP's gender");
+                            if (email != "" && email != null && !expr.test(email))
+                                errors.push("You entered an invalid email address");
+
+                            if (topograph == null || topograph == "")
+                                errors.push("Please specify topograph Code");
+                            if (topoTrimpleCode == null || topoTrimpleCode == "")
+                                errors.push("Please specify Trimble Equipment Code");
+                            if (topoTrimpleFile == null || topoTrimpleFile == "")
+                                errors.push("Please specify Trimble File");
+                            if (topoDate2 > currentDate)
+                                errors.push("Collect Land Data can't be in the future");
+
+                            if (errors.length > 0) {
+                                var errorMessage = "<ul>";
+
+                                $.each(errors, function (index, value) {
+                                    errorMessage += "<li>" + value + "</li>";
+                                });
+                                errorMessage += "</ul>";
+                                $("#collectLandModal #papSurveyorError").html(errorMessage).show(250);
+                                return false;
+                            }
+                            break;
+                        case 'step2':
+                            var propertiesArray = convertTableToArray("#collectLandModal #propertiesTable");
+                            var properties = convertTableToArray("#collectLandModal #tablePAPProperties");
+
+                            if (propertiesArray.length < 1)
+                                errors.push("You need to edit at least one properties for this PAP");
+                            if (properties.length < 1)
+                                errors.push("This PAP doesn't have properties. Please refresh the page and try again!");
+                            if (propertiesArray.length > properties.length)
+                                errors.push("You can not add more properties than surveyed. Please start again");
+
+                            if (errors.length > 0) {
+                                var errorMessage = "<ul>";
+
+                                $.each(errors, function (index, value) {
+                                    errorMessage += "<li>" + value + "</li>";
+                                });
+                                errorMessage += "</ul>";
+                                if (propertiesArray.length > properties.length) {
+                                    $("#collectLandModal #propertiesTable tbody").children().remove();
+                                }
+                                $("#collectLandModal #tableGoodsError").html(errorMessage).show(250);
+                                return false;
+                            }
+                            break;
+                    }
+                    return true;
+                },
+                onstep: function (stepname, i) {
+                    if (!$('form')[0].reportValidity())
+                        return false;
+
+                    let errors = [];
+                    switch (stepname) {
+                        case 'step2':
+                            $("#collectLandModal #gpsID, #collectLandModal #pointEasting, #collectLandModal #pointNorthing, #collectLandModal #goodPictureID, #collectLandModal #goodType, #collectLandModal #goodComments, #collectLandModal #goodPhoto, #collectLandModal #ownershipType").prop('disabled', true);
+                            break;
+                    }
+                    return true;
+                },
+                onend: function () {
+                    insertLandData();
+                }
+            });
+        });
+    </script>
+}

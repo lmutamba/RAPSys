@@ -1,0 +1,386 @@
+﻿@model RapModel.ViewModel.PropertiesViewModel
+@{
+    ViewBag.Title = "Property Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Property Detail</h2>
+
+<div class="row">
+    <div class="card mb-xlg col-md-12">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h4 class="card-title text-primary fw-semi-bold">Details</h4>
+            </div>
+            <hr />
+            <div class="card-body">
+                <div style="display:none">
+                    <input type="text" id="propertyField" value="@Model.PropertyId" />
+                    <input type="text" id="landIdField" value="@Model.LandId" />
+                    <input type="text" id="lacId" value="@Model.LACId" />
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div><img style="border-radius:15px" src="@Model.PictureName" width="190" height="190" /></div>
+                    </div>
+                    <div class="col-md-10 row">
+                        <div class="col-md-4" style="border-left:2px solid black; border-radius:5px">
+                            <table>
+                                <tbody class="card-text">
+                                    <tr style="display:none">
+                                        <td><p>Property ID </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong> </strong>@Html.DisplayFor(model => model.PropertyId)</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Property Type </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.PropertyTypeName) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Property Name </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.PropertyName) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>LAC Name</p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.LACName) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Investigator </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.InvestigatorCode) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Investigator Point </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.IPointName) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Topographer </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.TopographerCode) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Topographer Point </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.TPointName) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Inventory Date </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.InventoryDateString) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>GPS Device </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.GPSDevice) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Measurement Date </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.MeasurementDateString) </strong> </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Comments </p></td>
+                                        <td><p> : </p></td>
+                                        <td><p><strong>@Html.DisplayFor(model => model.Comments) </strong> </p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-4" style="border-left:2px solid black; border-radius:5px">
+                            <div class="row">
+                                <div class="col-8">
+                                    @if (Model.User == Model.Owner)
+                                    {
+                                        <p class="fw-semi-bold">Owner and User</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="fw-semi-bold">Owner</p>
+                                    }
+
+                                    <table>
+                                        <tbody class="card-text">
+                                            <tr>
+                                                <td><p>Owner IN</p></td>
+                                                <td><p> : </p></td>
+                                                <td><p><strong>@Html.DisplayFor(model => model.Owner) </strong> </p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p>First Name</p></td>
+                                                <td><p> : </p></td>
+                                                <td><p><strong>@Html.DisplayFor(model => model.OwnerFirstName) </strong> </p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p>Last Name</p></td>
+                                                <td><p> : </p></td>
+                                                <td><p><strong>@Html.DisplayFor(model => model.OwnerLastName) </strong> </p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p>File Number</p></td>
+                                                <td><p> : </p></td>
+                                                <td><p><strong>@Html.DisplayFor(model => model.OwnerFileNumber) </strong> </p></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-4">
+                                    <div><img style="border-radius:5px" src="@Model.OwnerPictureName" width="100" height="100" /></div>
+                                </div>
+                            </div>
+                            <hr />
+
+                            @if (Model.User != Model.Owner)
+                            {
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p class="fw-semi-bold">User</p>
+                                        <table>
+                                            <tbody class="card-text">
+                                                <tr>
+                                                    <td><p>User IN</p></td>
+                                                    <td><p> : </p></td>
+                                                    <td><p><strong>@Html.DisplayFor(model => model.User) </strong> </p></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><p>First Name</p></td>
+                                                    <td><p> : </p></td>
+                                                    <td><p><strong>@Html.DisplayFor(model => model.UserFirstName) </strong> </p></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><p>Last Name</p></td>
+                                                    <td><p> : </p></td>
+                                                    <td><p><strong>@Html.DisplayFor(model => model.UserLastName) </strong> </p></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><p>File Number</p></td>
+                                                    <td><p> : </p></td>
+                                                    <td><p><strong>@Html.DisplayFor(model => model.UserFileNumber) </strong> </p></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-4">
+                                        <div><img style="border-radius:5px" src="@Model.UserPictureName" width="100" height="100" /></div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <div class="col-md-4" style="border-left:2px solid black; border-radius:5px">
+                            <p class="fw-semi-bold">@Model.PropertyTypeName Details</p>
+                            @if (Model.PropertyTypeName == "Tree")
+                            {
+                                <table>
+                                    <tbody class="card-text">
+                                        <tr>
+                                            <td><p>Name</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.PropertyName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Maturity</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.TreeMaturityName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Quantity</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.TreeQty) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="fw-bold" align="center">Points Details</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <table>
+                                                    <tr>
+                                                        <th colspan="2"><p></p></th>
+                                                        <th><p> Pre-Survey </p></th>
+                                                        <th><p> | </p></th>
+                                                        <th><p> Survey</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><p>GPS Point</p></td>
+                                                        <td><p> : </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.IPointName) </strong> </p></td>
+                                                        <td><p> | </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.TPointName)</strong></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><p>Latitude</p></td>
+                                                        <td><p> : </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.IPointLatitude) </strong> </p></td>
+                                                        <td><p> | </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.TPointLatitude) </strong> </p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><p>Longitude</p></td>
+                                                        <td><p> : </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.IPointLongitude) </strong> </p></td>
+                                                        <td><p> | </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.TPointLongitude) </strong> </p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><p>Elevation</p></td>
+                                                        <td><p> : </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.IPointElevation) </strong> </p></td>
+                                                        <td><p> | </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.TPointElevation) </strong> </p></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                            else if (Model.PropertyTypeName == "Structure")
+                            {
+                                <table>
+                                    <tbody class="card-text">
+                                        <tr>
+                                            <td><p>Name</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.PropertyName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Type</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.StructureTypeName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Wall</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.WallTypeName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Roof</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.RoofTypeName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Floor</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.SoilTypeName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Length</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.StructureLength) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Width</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.StructureWidth) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Usage</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.StructureUsageName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Qty</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.RoomQty) </strong> </p></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                            else if (Model.PropertyTypeName == "Culture")
+                            {
+                                <table>
+                                    <tbody class="card-text">
+                                        <tr>
+                                            <td><p>Name</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.PropertyName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Surface</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.SurfaceString) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Start Date</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.CultureStartDateString) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>Culture Type</p></td>
+                                            <td><p> : </p></td>
+                                            <td><p><strong>@Html.DisplayFor(model => model.CultureOccupationName) </strong> </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="fw-bold" align="center">Points Details</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <table>
+                                                    <tr>
+                                                        <th colspan="2"><p></p></th>
+                                                        <th><p> Pre-Survey </p></th>
+                                                        <th><p> | </p></th>
+                                                        <th><p> Survey</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><p>GPS Point</p></td>
+                                                        <td><p> : </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.IPointName) </strong> </p></td>
+                                                        <td><p> | </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.TPointName)</strong></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><p>Latitude</p></td>
+                                                        <td><p> : </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.IPointLatitude) </strong> </p></td>
+                                                        <td><p> | </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.TPointLatitude) </strong> </p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><p>Longitude</p></td>
+                                                        <td><p> : </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.IPointLongitude) </strong> </p></td>
+                                                        <td><p> | </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.TPointLongitude) </strong> </p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><p>Elevation</p></td>
+                                                        <td><p> : </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.IPointElevation) </strong> </p></td>
+                                                        <td><p> | </p></td>
+                                                        <td><p><strong>@Html.DisplayFor(model => model.TPointElevation) </strong> </p></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-center">
+                <p>
+                    <a href="@Url.Action("PapDetails","Community",  new { @id = Model.User})" class="btn btn-dark btn-rounded-f"><i class="fas fa-backward"></i> Back </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
