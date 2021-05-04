@@ -39,7 +39,12 @@ namespace RAPSys.Models.Model
         public Nullable<decimal> LastWeekExpense { get; set; }
         public bool FishOrMeat { get; set; }
         public bool EnoughFood { get; set; }
+        public int TabletsSource { get; set; }
+        public int LastWeekDesease { get; set; }
         public bool SkinDesease { get; set; }
+        public int MosquitoNetSource { get; set; }
+        public int MosquitoNetUser { get; set; }
+        public int SavingType { get; set; }
         public int PaidWorkersQty { get; set; }
         public string PaidWorkersTimes { get; set; }
         public System.DateTime Created { get; set; }

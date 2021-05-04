@@ -18,7 +18,7 @@ namespace Repository
     {
         readonly RAPSystemEntities db = new RAPSystemEntities();
         public string loggedUser;
-        public const string folderRoot = /*@"\\FGMDSSDBX01\Data\RAPSys\"; //*/@"\\fgmfp2\data\RAP\RAPSys\";
+        public const string folderRoot = @"C:\RapSys\";//@"\\FGMDSSDBX01\Data\RAPSys\"; //*/@"\\fgmfp2\data\RAP\RAPSys\";
 
         public HelpersRepository()
         {

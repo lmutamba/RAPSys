@@ -15,7 +15,8 @@ namespace RAPSys.Models.Model
     public partial class T_MarketSurveyProduct
     {
         public int MarketSurveyProductId { get; set; }
-        public int Market { get; set; }
+        public int MarketSurveyId { get; set; }
+        public int MarketId { get; set; }
         public System.DateTime SurveyDate { get; set; }
         public int ProductId { get; set; }
         public int UOMId { get; set; }
@@ -31,6 +32,7 @@ namespace RAPSys.Models.Model
         public string UpdatedBy { get; set; }
     
         public virtual T_List T_List { get; set; }
+        public virtual T_MarketSurvey T_MarketSurvey { get; set; }
         public virtual T_Product T_Product { get; set; }
         public virtual T_UOM T_UOM { get; set; }
     }

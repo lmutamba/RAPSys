@@ -73,4 +73,13 @@ namespace RapModel.ViewModel
         public string SocioElementValue { get; set; }
         public int HouseHoldId { get; set; }
     }
+
+    public class RequestViewModel{
+        public string Draw { get; set; }
+        public string Start { get; set; }
+        public string Length { get; set; }
+        public string SortColumn { get; set; }
+        public string SortColumnDir { get; set; }
+        public string SearchValue { get; set; }
+    }
 }

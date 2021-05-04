@@ -44,7 +44,7 @@ namespace RAPSys.Models.Model
         public System.DateTime Updated { get; set; }
         public string UpdatedBy { get; set; }
     
-        public virtual T_ExchangeRate T_ExchangeRate { get; set; }
+        public virtual T_AnnualRate T_AnnualRate { get; set; }
         public virtual T_Product T_Product { get; set; }
         public virtual T_UOM T_UOM { get; set; }
         public virtual T_UOM T_UOM1 { get; set; }

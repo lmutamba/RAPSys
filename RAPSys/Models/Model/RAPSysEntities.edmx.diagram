@@ -4,70 +4,74 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7ec55414f03147db965cd3813f3e5212" Name="Diagram1">
-        <EntityTypeShape EntityType="RAPSystemModel.T_Approval" Width="1.5" PointX="6" PointY="81.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Approver" Width="1.5" PointX="7.5" PointY="135.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_AssetRate" Width="1.5" PointX="5.25" PointY="147" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_AssetType" Width="1.5" PointX="14.25" PointY="122.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Attachment" Width="1.5" PointX="3" PointY="76.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_CultureDiversity" Width="1.5" PointX="8.25" PointY="155.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_CultureTool" Width="1.5" PointX="11.25" PointY="135.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Delegation" Width="1.5" PointX="10.75" PointY="139" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Department" Width="1.5" PointX="7.5" PointY="147.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_EconomicActivity" Width="1.5" PointX="13.5" PointY="131.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Employee" Width="1.5" PointX="5.25" PointY="140.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_ExchangeRate" Width="1.5" PointX="3" PointY="155.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Good" Width="1.5" PointX="3" PointY="81.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHold" Width="1.5" PointX="8.25" PointY="139.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldAttachment" Width="1.5" PointX="5.25" PointY="77.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCompensation" Width="1.5" PointX="13.5" PointY="145.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCulture" Width="1.5" PointX="10.5" PointY="149.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCultureLastMonths" Width="1.5" PointX="3" PointY="85.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCultureLastSeason" Width="1.5" PointX="12.75" PointY="149.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCultureTool" Width="1.5" PointX="13.5" PointY="141.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldGood" Width="1.5" PointX="5.25" PointY="115.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldMembers" Width="1.5" PointX="5.25" PointY="108.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldProperty" Width="1.5" PointX="8.25" PointY="113.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldPropertyWorker" Width="1.5" PointX="10.5" PointY="97.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldResidence" Width="1.5" PointX="6" PointY="86.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldRevenue" Width="1.5" PointX="9" PointY="85" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldSocioElements" Width="1.5" PointX="3" PointY="89.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_LAC" Width="1.5" PointX="11.25" PointY="112.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_LACRequest" Width="1.5" PointX="10.5" PointY="143.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Land" Width="1.5" PointX="8.25" PointY="120" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_LandLAC" Width="1.5" PointX="13.5" PointY="118.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_LandVillage" Width="1.5" PointX="10.5" PointY="120.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_List" Width="1.5" PointX="0.75" PointY="78.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Location" Width="1.5" PointX="6" PointY="121.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Log" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_MarketSurveyProduct" Width="1.5" PointX="8.25" PointY="108" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_PAP" Width="1.5" PointX="13.5" PointY="135.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_PAPAttachment" Width="1.5" PointX="8.25" PointY="77.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_PAPEconomicActivity" Width="1.5" PointX="15.75" PointY="136.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_PAPLAC" Width="1.5" PointX="13.5" PointY="109.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_PAPLACAttachment" Width="1.5" PointX="5.25" PointY="73.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_PAPResidence" Width="1.5" PointX="18.75" PointY="136.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Parameter" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Person" Width="1.5" PointX="3" PointY="139.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_PersonRole" Width="1.5" PointX="11.25" PointY="108.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Point" Width="1.5" PointX="10.5" PointY="124.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Product" Width="1.5" PointX="6" PointY="98.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Property" Width="1.5" PointX="16.5" PointY="112.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_PropertyAttachment" Width="1.5" PointX="8.25" PointY="73.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Region" Width="1.5" PointX="8.25" PointY="151.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Request" Width="1.5" PointX="10.5" PointY="102.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_RequestAttachment" Width="1.5" PointX="8.25" PointY="81.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_RequestLog" Width="1.5" PointX="12.75" PointY="91.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Residence" Width="1.5" PointX="6" PointY="131.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_UOM" Width="1.5" PointX="3" PointY="147.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_Village" Width="1.5" PointX="12.75" PointY="100.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RAPSystemModel.T_WorkFlow" Width="1.5" PointX="7.5" PointY="103.375" IsExpanded="true" />
+      <Diagram DiagramId="83b19f617d4647ee8a58356b990d9f41" Name="Diagram1">
+        <EntityTypeShape EntityType="RAPSystemModel.T_AnnualRate" Width="1.5" PointX="3" PointY="72.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Approval" Width="1.5" PointX="6" PointY="86.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Approver" Width="1.5" PointX="7.5" PointY="137.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_AssetRate" Width="1.5" PointX="5.25" PointY="111.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_AssetType" Width="1.5" PointX="14.25" PointY="127" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Attachment" Width="1.5" PointX="3" PointY="81" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_CultureDiversity" Width="1.5" PointX="8.25" PointY="159.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_CultureTool" Width="1.5" PointX="11.25" PointY="138.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Delegation" Width="1.5" PointX="10.75" PointY="141.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Department" Width="1.5" PointX="7.5" PointY="151.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_EconomicActivity" Width="1.5" PointX="13.5" PointY="134.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Employee" Width="1.5" PointX="5.25" PointY="143.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Good" Width="1.5" PointX="3" PointY="85.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHold" Width="1.5" PointX="8.25" PointY="142.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldAttachment" Width="1.5" PointX="5.25" PointY="81.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCompensation" Width="1.5" PointX="13.5" PointY="148.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCulture" Width="1.5" PointX="10.5" PointY="151.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCultureLastMonths" Width="1.5" PointX="3" PointY="89.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCultureLastSeason" Width="1.5" PointX="12.75" PointY="152.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldCultureTool" Width="1.5" PointX="13.5" PointY="143.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldGood" Width="1.5" PointX="5.25" PointY="119.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldMembers" Width="1.5" PointX="8.25" PointY="112.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldProperty" Width="1.5" PointX="8.25" PointY="121.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldPropertyWorker" Width="1.5" PointX="10.5" PointY="103.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldResidence" Width="1.5" PointX="6" PointY="91.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldRevenue" Width="1.5" PointX="9" PointY="89.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_HouseHoldSocioElements" Width="1.5" PointX="3" PointY="93.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_LAC" Width="1.5" PointX="11.25" PointY="116.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_LACRequest" Width="1.5" PointX="10.5" PointY="145.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Land" Width="1.5" PointX="5.25" PointY="124.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_LandLAC" Width="1.5" PointX="13.5" PointY="122.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_LandVillage" Width="1.5" PointX="10.5" PointY="130.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_List" Width="1.5" PointX="0.75" PointY="82.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Location" Width="1.5" PointX="3" PointY="126.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Log" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_MarketSurvey" Width="1.5" PointX="3" PointY="135.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_MarketSurveyProduct" Width="1.5" PointX="11.25" PointY="124.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAP" Width="1.5" PointX="13.5" PointY="137.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPAttachment" Width="1.5" PointX="8.25" PointY="81.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPEconomicActivity" Width="1.5" PointX="15.75" PointY="138.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPLAC" Width="1.5" PointX="13.5" PointY="112.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPLACAttachment" Width="1.5" PointX="5.25" PointY="77.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PAPResidence" Width="1.5" PointX="18.75" PointY="138.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Parameter" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Person" Width="1.5" PointX="3" PointY="142.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PersonRole" Width="1.5" PointX="8.25" PointY="108.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Point" Width="1.5" PointX="7.5" PointY="129.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Product" Width="1.5" PointX="3" PointY="112.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_ProductRate" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_ProductType" Width="1.5" PointX="0.75" PointY="114" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Property" Width="1.5" PointX="16.5" PointY="116.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_PropertyAttachment" Width="1.5" PointX="8.25" PointY="77.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Region" Width="1.5" PointX="8.25" PointY="155.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Request" Width="1.5" PointX="13.5" PointY="107.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_RequestAttachment" Width="1.5" PointX="8.25" PointY="85.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_RequestLog" Width="1.5" PointX="15.75" PointY="95.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Residence" Width="1.5" PointX="6" PointY="155.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_UOM" Width="1.5" PointX="3" PointY="150.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_Village" Width="1.5" PointX="10.75" PointY="107.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAPSystemModel.T_WorkFlow" Width="1.5" PointX="16.5" PointY="112.125" IsExpanded="true" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_AnnualRate_T_List_RateType" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Approval_T_Employee_Approver" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Approval_T_List_ApprovalStatus" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Approval_T_Request_RequestId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Approver_T_Employee_EmployeeId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Delegation_T_Approver_ApproverId" ManuallyRouted="false" />
-        <AssociationConnector Association="RAPSystemModel.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_AssetRate_T_Product_ProductId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_AssetRate_T_UOM_PriceUOM" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_AssetRate_T_UOM_UOMId" ManuallyRouted="false" />
@@ -162,8 +166,9 @@
         <AssociationConnector Association="RAPSystemModel.FK_T_Point_T_Land_LandId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Land_LandId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_LandVillage_T_Village_VillageId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK__T_MarketS__Statu__1EF99443" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_EmployeeRole_T_List_Role" ManuallyRouted="false" />
-        <AssociationConnector Association="RAPSystemModel.FK_T_MarketSurveyProduct_T_List_Market" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_MarketSurveyProduct_T_List_MarketId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_PAPLAC_T_List_PaymentPreference" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Person_T_List_Status" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Person_T_List_VulnerabilityTypeId" ManuallyRouted="false" />
@@ -185,6 +190,7 @@
         <AssociationConnector Association="RAPSystemModel.FK_T_WorkFlow_T_List_ActionType" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_WorkFlow_T_List_RequestType" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Location_T_Region_RegionId" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_MarketSurveyProduct_T_MarketSurvey_MarketSurveyId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_MarketSurveyProduct_T_Product_ProductId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_MarketSurveyProduct_T_UOM_UOMId" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_PAP_T_Person_PersonId" ManuallyRouted="false" />
@@ -204,6 +210,7 @@
         <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Point_InvestigatorPoint" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Point_TopographerPoint" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Village_T_Point_Village_Point" ManuallyRouted="false" />
+        <AssociationConnector Association="RAPSystemModel.FK_T_Product_T_ProductType_ProductType" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_UOM_StructureUOM" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_UOM_SurfaceUOM" ManuallyRouted="false" />
         <AssociationConnector Association="RAPSystemModel.FK_T_Property_T_Village_VillageId" ManuallyRouted="false" />

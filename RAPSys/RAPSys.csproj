@@ -176,6 +176,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RAPSysEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Model\T_AnnualRate.cs">
+      <DependentUpon>RAPSysEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model\T_Approval.cs">
       <DependentUpon>RAPSysEntities.tt</DependentUpon>
     </Compile>
@@ -207,9 +210,6 @@
       <DependentUpon>RAPSysEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model\T_Employee.cs">
-      <DependentUpon>RAPSysEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model\T_ExchangeRate.cs">
       <DependentUpon>RAPSysEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model\T_Good.cs">
@@ -281,6 +281,9 @@
     <Compile Include="Models\Model\T_Log.cs">
       <DependentUpon>RAPSysEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Model\T_MarketSurvey.cs">
+      <DependentUpon>RAPSysEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model\T_MarketSurveyProduct.cs">
       <DependentUpon>RAPSysEntities.tt</DependentUpon>
     </Compile>
@@ -315,6 +318,12 @@
       <DependentUpon>RAPSysEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model\T_Product.cs">
+      <DependentUpon>RAPSysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model\T_ProductRate.cs">
+      <DependentUpon>RAPSysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model\T_ProductType.cs">
       <DependentUpon>RAPSysEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model\T_Property.cs">
@@ -460,6 +469,12 @@
     <Content Include="Content\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\webfonts\fa-solid-900.woff" />
     <Content Include="Content\webfonts\fa-solid-900.woff2" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
     <EntityDeploy Include="Models\Model\RAPSysEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>RAPSysEntities.Designer.cs</LastGenOutput>
@@ -467,12 +482,6 @@
     <Content Include="Models\Model\RAPSysEntities.edmx.diagram">
       <DependentUpon>RAPSysEntities.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Properties\PublishProfiles\Publish to Prod Server.pubxml" />
     <None Include="Properties\PublishProfiles\Publish To Test.pubxml" />
     <Content Include="Scripts\bootstrap.min.js.map" />

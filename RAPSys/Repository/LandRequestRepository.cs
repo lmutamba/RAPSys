@@ -44,8 +44,6 @@ namespace Repository
                         error.Add("Contact Person can't be empty or null");
                     if (LandRequest.AccessScheduledDate < DateTime.Today)
                         error.Add("Project Access date is less than today");
-                    if (string.IsNullOrWhiteSpace(LandRequest.ProjectCostCode))
-                        error.Add("Please provide the Project Cost Code");
 
                     if (error.Count > 1)
                         return error;
@@ -231,8 +229,6 @@ namespace Repository
                         error.Add("Project Access date is less than today");
                     if (LandRequest.Attachments.Length < 1 || LandRequest.Attachments == null)
                         error.Add("Please provide attachement");
-                    if (string.IsNullOrWhiteSpace(LandRequest.ProjectCostCode))
-                        error.Add("Please provide the Project Cost Code");
 
                     if (error.Count > 1)
                         return error;
@@ -243,11 +239,6 @@ namespace Repository
                         contactEmployeeID = contactEmployeeID.Substring(0, contactEmployeeID.Length - 1);
                         LandRequest.ContactPersonId = db.T_Employee.FirstOrDefault(e => e.TFMID == contactEmployeeID).EmployeeId;
                         LandRequest.RegionName = db.T_Region.FirstOrDefault(l => l.RegionId == LandRequest.RegionId).RegionName;
-
-                        int deptId = Helpers.GetLogInPerson().DepartmentId;
-                        int approverId = db.T_Department.Find(deptId).Manager;
-                        var dept = db.T_Department.Find(deptId);
-                        string approverName = dept.T_Employee.T_Person.FirstName + " " + dept.T_Employee.T_Person.LastName;
 
                         using (TransactionScope scope = new TransactionScope())
                         {
@@ -285,17 +276,6 @@ namespace Repository
                                 land.UpdatedBy = loggedUser;
                                 db.Entry(land).State = EntityState.Modified;
 
-                                //GET AND DELETE ATTACHMENTS LIST
-                                var requestAttachments = db.T_RequestAttachment.Where(r => r.RequestId == LandRequest.RequestId);
-
-                                foreach (var i in requestAttachments)
-                                {
-                                    var att = db.T_Attachment.Find(i.AttachmentId);
-                                    fileToDelete.Add(att.RequestAttachementPath);
-                                    db.Entry(att).State = EntityState.Deleted;
-                                }
-                                db.T_RequestAttachment.RemoveRange(requestAttachments);
-
                                 //Insert into T_Attachement
                                 List<PointViewModel> Points = new List<PointViewModel>();
                                 List<int> attachementId = new List<int>();
@@ -332,12 +312,6 @@ namespace Repository
 
                                 db.SaveChanges();
 
-                                //DELETE OLD FILES BEFORE SAVING NEW FILES
-                                foreach (var file in fileToDelete)
-                                {
-                                    if (File.Exists(file))
-                                        File.Delete(file);
-                                }
                                 success.Add("The Land Request has been updated");
                                 scope.Complete();
                                 return success;
@@ -745,183 +719,182 @@ namespace Repository
             List<string> error = new List<string> { "Error" };
             List<string> success = new List<string> { "Success", "LAC created successfuly!" };
 
-            if (Roles.IsUserInRole(loggedUser, "CMOCTFM\\SG-FGM-RAP-ADM") || Roles.IsUserInRole(loggedUser, "SG-FGM-RAP-POWER") || Roles.IsUserInRole(loggedUser, "CMOCTFM\\SG-FGM-RAP-REQ"))
+            if (Roles.IsUserInRole(loggedUser, "CMOCTFM\\SG-FGM-RAP-ADM") || Roles.IsUserInRole(loggedUser, "CMOCTFM\\SG-FGM-RAP-POWER") || Roles.IsUserInRole(loggedUser, "CMOCTFM\\SG-FGM-RAP-LO"))
             {
 
+                //if (LacViewModel.AreaRequestedUOM == -1 || LacViewModel.AreaRequestedUOM < 1)
+                //    error.Add("Requested Area UOM is mandatory");
+                if (string.IsNullOrWhiteSpace(LacViewModel.LACName))
+                    error.Add("Please specify the name for this LAC");
+                if (LacViewModel.LACRequestId == -1 || LacViewModel.LACRequestId < 1)
+                    error.Add("Please specify valid LAC ID. Please refresh the page and try again");
+                //if (LacViewModel.AreaRequested == -1 || LacViewModel.AreaRequested <1)
+                //    error.Add("Please specify Requested Area Size");
+                //if (LacViewModel.CostEstimate == -1 || LacViewModel.CostEstimate < 1)
+                //    error.Add("Please specify the Estimated Cost");
+
+                if (error.Count > 1)
+                    return error;
+                else
+                {
+                    using (var dbTransaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var lacRequest = db.T_LACRequest.FirstOrDefault(l => l.LACRequestId == LacViewModel.LACRequestId);
+                            var existingLac = db.T_LAC.FirstOrDefault(l => l.LACRequestId == LacViewModel.LACRequestId);
+
+                            if (existingLac != null)
+                            {
+                                error.Add("There is already a LAC for this request. " + existingLac.LACName);
+                                return error;
+                            }
+                            else
+                            {
+                                var lac = new T_LAC()
+                                {
+                                    LAC_ID = "",
+                                    LACName = LacViewModel.LACName,
+                                    LACRequestId = LacViewModel.LACRequestId,
+                                    LACStatus = db.T_List.FirstOrDefault(l => l.ListName == "LAC Status" && l.ListValue == "LAC Created").ListId,
+                                    Realcosts = 0,
+                                    PAPs = 0,
+                                    AreaDescription = lacRequest.ProjectName,
+                                    AreaRequested = LacViewModel.AreaRequested,
+                                    AreaRequestedUOM = (LacViewModel.AreaRequestedUOM == -1 ? default : LacViewModel.AreaRequestedUOM),
+                                    CostEstimate = LacViewModel.CostEstimate,
+                                    Comment = LacViewModel.Comment,
+                                    Created = DateTime.Now,
+                                    CreatedBy = loggedUser,
+                                    Updated = DateTime.Now,
+                                    UpdatedBy = loggedUser
+                                };
+                                db.T_LAC.Add(lac);
+                                db.SaveChanges();
+                                int lacId = lac.LACId;
+
+                                lac.LAC_ID = "LAC" + lac.LACId;
+                                db.Entry(lac).State = EntityState.Modified;
+
+                                //UPDATE LACREQUEST
+                                lacRequest.Locked = true;
+                                lacRequest.Updated = DateTime.Now;
+                                lacRequest.UpdatedBy = loggedUser;
+                                db.Entry(lacRequest).State = EntityState.Modified;
+
+                                //UPDATE REQUEST
+                                var request = lacRequest.T_Request;
+                                request.RequestStatus = db.T_List.FirstOrDefault(l => l.ListName == "Request Status" && l.ListValue == "In progress").ListId;
+                                request.Locked = true;
+                                request.Updated = DateTime.Now;
+                                request.UpdatedBy = loggedUser;
+                                db.Entry(request).State = EntityState.Modified;
+
+                                //INSERT INTO T_REQUEST LOG
+                                db.T_RequestLog.Add(new T_RequestLog()
+                                {
+                                    RequestID = lacRequest.LACRequestId,
+                                    RequestType = db.T_List.FirstOrDefault(l => l.ListName == "Request Type" && l.ListValue == "Land Request").ListId,
+                                    ActionType = db.T_List.FirstOrDefault(l => l.ListName == "Action Type" && l.ListValue == "Create LAC").ListId,
+                                    Comment = LacViewModel.Comment,
+                                    Created = DateTime.Now,
+                                    CreatedBy = loggedUser
+                                });
+
+                                db.SaveChanges();
+
+                                //MOVE LAC REQUEST ATTACHMENTS AND PUT THEM IN LAC FOLDER
+                                var attachment = request.T_RequestAttachment;
+
+                                dbTransaction.Commit();
+
+                                //SEND EMAIL TO REQUESTOR
+                                string approverName = _person.FirstName + " " + _person.LastName;
+                                //string approverEmail = request.T_Employee.T_Department1.T_Employee.T_Person.Email;
+                                string filePathRequestedFor = HttpContext.Current.Server.MapPath("~/EmailTemplates/LandRequestStatusToRequestor.html");
+                                string filePathTopograph = HttpContext.Current.Server.MapPath("~/EmailTemplates/LandRequestToTopograph.html");
+                                string link = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Land/MyRequest";
+
+                                //Get Requestor details
+                                EmailNotificationViewModel notificationRequestedFor = new EmailNotificationViewModel();
+                                EmailNotificationViewModel notificationTopograph = new EmailNotificationViewModel();
+
+                                string requestorEmail = request.T_Employee.T_Person.Email;
+
+                                //if (approverEmail != null)
+                                //    notificationRequestedFor.Cc.Add(approverEmail);
+
+                                if (requestorEmail != null)
+                                    notificationRequestedFor.To.Add(requestorEmail);
+
+                                StreamReader strRequestedFor = new StreamReader(filePathRequestedFor);
+                                string mailTextRequestedFor = strRequestedFor.ReadToEnd();
+                                strRequestedFor.Close();
+
+                                StreamReader strRequested = new StreamReader(filePathTopograph);
+                                string mailTextTopograph = strRequested.ReadToEnd();
+                                strRequested.Close();
+
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[requestTitle]", "A NEW LAC " + lac.LACName + " (" + lac.LAC_ID + ") HAS BEEN CREATED");
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[requestorName]", request.T_Employee.T_Person.FirstName + " " + request.T_Employee.T_Person.LastName);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[requestType]", request.T_List1.ListValue);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[requestStatus]", request.T_List.ListValue);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[requestDate]", request.RequestedDate.ToString("dd/MMMM/yyyy"));
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[approverComment]", LacViewModel.Comment);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[approver]", approverName);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[projectName]", lacRequest.ProjectName);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[locationName]", lacRequest.T_Land.FirstOrDefault().T_Location.LocationName);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[scheduleDate]", lacRequest.AccessScheduledDate.ToString("dd/MMMM/yyyy"));
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[contactPerson]", lacRequest.T_Employee.T_Person.FirstName + " " + lacRequest.T_Employee.T_Person.LastName);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[requestDetails]", lacRequest.WorkDescription);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[requestLink]", link);
+                                mailTextRequestedFor = mailTextRequestedFor.Replace("[year]", DateTime.Now.Year.ToString());
+
+                                notificationRequestedFor.Body = mailTextRequestedFor;
+                                notificationRequestedFor.Subject = "Your Land request is converted to LAC";
+                                Helpers.SendEmail(notificationRequestedFor);
+
+                                //Mail to Topograph group
+                                List<string> to = new List<string> { "SG-FGM-RAP-POWER@tfm.cmoc.com", "SG-FGM-RAP-LO@tfm.cmoc.com", "SG-FGM-RAP-INV@tfm.cmoc.com" };
+                                notificationTopograph.Cc.Add("SG-FGM-RAP-MGT@tfm.cmoc.com");
+                                notificationTopograph.To = to;
+                                //notificationTopograph.To.Add("lmutamba@tfm.cmoc.com");
+
+                                mailTextTopograph = mailTextTopograph.Replace("[requestTitle]", "A NEW LAC " + lac.LACName + " (" + lac.LAC_ID + ") HAS BEEN CREATED");
+                                mailTextTopograph = mailTextTopograph.Replace("[requestorName]", request.T_Employee.T_Person.FirstName + " " + request.T_Employee.T_Person.LastName);
+                                mailTextTopograph = mailTextTopograph.Replace("[requestType]", "Land Request");//lacName
+                                mailTextTopograph = mailTextTopograph.Replace("[requestStatus]", request.T_List.ListValue);
+                                mailTextTopograph = mailTextTopograph.Replace("[requestDate]", request.RequestedDate.ToString("dd/MMMM/yyyy"));
+                                mailTextTopograph = mailTextTopograph.Replace("[approverComment]", LacViewModel.Comment);
+                                mailTextTopograph = mailTextTopograph.Replace("[approver]", approverName);
+                                mailTextTopograph = mailTextTopograph.Replace("[projectName]", lacRequest.ProjectName);
+                                mailTextTopograph = mailTextTopograph.Replace("[lacName]", lac.LACName + " (" + lac.LAC_ID + ")");
+                                mailTextTopograph = mailTextTopograph.Replace("[locationName]", lacRequest.T_Land.FirstOrDefault().T_Location.LocationName);
+                                mailTextTopograph = mailTextTopograph.Replace("[scheduleDate]", lacRequest.AccessScheduledDate.ToString("dd/MMMM/yyyy"));
+                                mailTextTopograph = mailTextTopograph.Replace("[contactPerson]", lacRequest.T_Employee.T_Person.FirstName + " " + lacRequest.T_Employee.T_Person.LastName);
+                                mailTextTopograph = mailTextTopograph.Replace("[requestDetails]", lacRequest.WorkDescription);
+                                mailTextTopograph = mailTextTopograph.Replace("[year]", DateTime.Now.Year.ToString());
+
+                                notificationTopograph.Body = mailTextTopograph;
+                                notificationTopograph.Subject = "A new LAC has been created!";
+                                Helpers.SendEmail(notificationTopograph);
+
+                                return success;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            dbTransaction.Rollback();
+                            List<string> exception = new List<string> { "Exception", e.Message };
+                            return exception;
+                        }
+                    }
+                }
             }
             else
             {
                 error.Add("You don't have sufficient permissions to perform this task.");
                 return error;
-            }
-
-            //if (LacViewModel.AreaRequestedUOM == -1 || LacViewModel.AreaRequestedUOM < 1)
-            //    error.Add("Requested Area UOM is mandatory");
-            if (string.IsNullOrWhiteSpace(LacViewModel.LACName))
-                error.Add("Please specify the name for this LAC");
-            if (LacViewModel.LACRequestId == -1 || LacViewModel.LACRequestId <1 )
-                error.Add("Please specify valid LAC ID. Please refresh the page and try again");
-            //if (LacViewModel.AreaRequested == -1 || LacViewModel.AreaRequested <1)
-            //    error.Add("Please specify Requested Area Size");
-            //if (LacViewModel.CostEstimate == -1 || LacViewModel.CostEstimate < 1)
-            //    error.Add("Please specify the Estimated Cost");
-
-            if (error.Count > 1)
-                return error;
-            else
-            {
-                using (var dbTransaction = db.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        var lacRequest = db.T_LACRequest.FirstOrDefault(l=>l.LACRequestId == LacViewModel.LACRequestId);
-                        var existingLac = db.T_LAC.FirstOrDefault(l => l.LACRequestId == LacViewModel.LACRequestId);
-
-                        if (existingLac != null)
-                        {
-                            error.Add("There is already a LAC for this request. " + existingLac.LACName);
-                            return error;
-                        } 
-                        else
-                        {
-                            var lac = new T_LAC()
-                            {
-                                LAC_ID = "",
-                                LACName = LacViewModel.LACName,
-                                LACRequestId = LacViewModel.LACRequestId,
-                                LACStatus = db.T_List.FirstOrDefault(l => l.ListName == "LAC Status" && l.ListValue == "LAC Created").ListId,
-                                Realcosts = 0,
-                                PAPs = 0,
-                                AreaDescription = lacRequest.ProjectName,
-                                AreaRequested = LacViewModel.AreaRequested,
-                                AreaRequestedUOM = (LacViewModel.AreaRequestedUOM == -1? default : LacViewModel.AreaRequestedUOM),
-                                CostEstimate = LacViewModel.CostEstimate,
-                                Comment = LacViewModel.Comment,
-                                Created = DateTime.Now,
-                                CreatedBy = loggedUser,
-                                Updated = DateTime.Now,
-                                UpdatedBy = loggedUser
-                            };
-                            db.T_LAC.Add(lac);
-                            db.SaveChanges();
-                            int lacId = lac.LACId;
-
-                            lac.LAC_ID = "LAC" + lac.LACId;
-                            db.Entry(lac).State = EntityState.Modified;
-
-                            //UPDATE LACREQUEST
-                            lacRequest.Locked = true;
-                            lacRequest.Updated = DateTime.Now;
-                            lacRequest.UpdatedBy = loggedUser;
-                            db.Entry(lacRequest).State = EntityState.Modified;
-
-                            //UPDATE REQUEST
-                            var request = lacRequest.T_Request;
-                            request.RequestStatus = db.T_List.FirstOrDefault(l=>l.ListName == "Request Status" && l.ListValue == "In progress").ListId;
-                            request.Locked = true;
-                            request.Updated = DateTime.Now;
-                            request.UpdatedBy = loggedUser;
-                            db.Entry(request).State = EntityState.Modified;
-
-                            //INSERT INTO T_REQUEST LOG
-                            db.T_RequestLog.Add(new T_RequestLog()
-                            {
-                                RequestID = lacRequest.LACRequestId,
-                                RequestType = db.T_List.FirstOrDefault(l => l.ListName == "Request Type" && l.ListValue == "Land Request").ListId,
-                                ActionType = db.T_List.FirstOrDefault(l => l.ListName == "Action Type" && l.ListValue == "Create LAC").ListId,
-                                Comment = LacViewModel.Comment,
-                                Created = DateTime.Now,
-                                CreatedBy = loggedUser
-                            });
-
-                            db.SaveChanges();
-
-                            //MOVE LAC REQUEST ATTACHMENTS AND PUT THEM IN LAC FOLDER
-                            var attachment = request.T_RequestAttachment;
-
-                            dbTransaction.Commit();
-
-                            //SEND EMAIL TO REQUESTOR
-                            string approverName = _person.FirstName + " " + _person.LastName;
-                            //string approverEmail = request.T_Employee.T_Department1.T_Employee.T_Person.Email;
-                            string filePathRequestedFor = HttpContext.Current.Server.MapPath("~/EmailTemplates/LandRequestStatusToRequestor.html");
-                            string filePathTopograph = HttpContext.Current.Server.MapPath("~/EmailTemplates/LandRequestToTopograph.html");
-                            string link = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Land/MyRequest";
-
-                            //Get Requestor details
-                            EmailNotificationViewModel notificationRequestedFor = new EmailNotificationViewModel();
-                            EmailNotificationViewModel notificationTopograph = new EmailNotificationViewModel();
-
-                            string requestorEmail = request.T_Employee.T_Person.Email;
-
-                            //if (approverEmail != null)
-                            //    notificationRequestedFor.Cc.Add(approverEmail);
-
-                            if (requestorEmail != null)
-                                notificationRequestedFor.To.Add(requestorEmail);
-
-                            StreamReader strRequestedFor = new StreamReader(filePathRequestedFor);
-                            string mailTextRequestedFor = strRequestedFor.ReadToEnd();
-                            strRequestedFor.Close();
-
-                            StreamReader strRequested = new StreamReader(filePathTopograph);
-                            string mailTextTopograph = strRequested.ReadToEnd();
-                            strRequested.Close();
-
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[requestTitle]", "A NEW LAC "+lac.LACName + " ("+lac.LAC_ID+") HAS BEEN CREATED");
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[requestorName]", request.T_Employee.T_Person.FirstName + " " + request.T_Employee.T_Person.LastName);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[requestType]", request.T_List1.ListValue);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[requestStatus]", request.T_List.ListValue);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[requestDate]", request.RequestedDate.ToString("dd/MMMM/yyyy"));
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[approverComment]", LacViewModel.Comment);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[approver]", approverName);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[projectName]", lacRequest.ProjectName);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[locationName]", lacRequest.T_Land.FirstOrDefault().T_Location.LocationName);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[scheduleDate]", lacRequest.AccessScheduledDate.ToString("dd/MMMM/yyyy"));
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[contactPerson]", lacRequest.T_Employee.T_Person.FirstName + " " + lacRequest.T_Employee.T_Person.LastName);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[requestDetails]", lacRequest.WorkDescription);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[requestLink]", link);
-                            mailTextRequestedFor = mailTextRequestedFor.Replace("[year]", DateTime.Now.Year.ToString());
-
-                            notificationRequestedFor.Body = mailTextRequestedFor;
-                            notificationRequestedFor.Subject = "Your Land request is converted to LAC";
-                            Helpers.SendEmail(notificationRequestedFor);
-
-                            //Mail to Topograph group
-                            List<string> to = new List<string> { "SG-FGM-RAP-POWER@tfm.cmoc.com", "SG-FGM-RAP-LO@tfm.cmoc.com", "SG-FGM-RAP-INV@tfm.cmoc.com" };
-                            notificationTopograph.Cc.Add("SG-FGM-RAP-MGT@tfm.cmoc.com");
-                            notificationTopograph.To = to;
-                            //notificationTopograph.To.Add("lmutamba@tfm.cmoc.com");
-
-                            mailTextTopograph = mailTextTopograph.Replace("[requestTitle]", "A NEW LAC " + lac.LACName + " ("+lac.LAC_ID+") HAS BEEN CREATED");
-                            mailTextTopograph = mailTextTopograph.Replace("[requestorName]", request.T_Employee.T_Person.FirstName + " " + request.T_Employee.T_Person.LastName);
-                            mailTextTopograph = mailTextTopograph.Replace("[requestType]", "Land Request");//lacName
-                            mailTextTopograph = mailTextTopograph.Replace("[requestStatus]", request.T_List.ListValue);
-                            mailTextTopograph = mailTextTopograph.Replace("[requestDate]", request.RequestedDate.ToString("dd/MMMM/yyyy"));
-                            mailTextTopograph = mailTextTopograph.Replace("[approverComment]", LacViewModel.Comment);
-                            mailTextTopograph = mailTextTopograph.Replace("[approver]", approverName);
-                            mailTextTopograph = mailTextTopograph.Replace("[projectName]", lacRequest.ProjectName);
-                            mailTextTopograph = mailTextTopograph.Replace("[lacName]", lac.LACName + " (" + lac.LAC_ID + ")");
-                            mailTextTopograph = mailTextTopograph.Replace("[locationName]", lacRequest.T_Land.FirstOrDefault().T_Location.LocationName);
-                            mailTextTopograph = mailTextTopograph.Replace("[scheduleDate]", lacRequest.AccessScheduledDate.ToString("dd/MMMM/yyyy"));
-                            mailTextTopograph = mailTextTopograph.Replace("[contactPerson]", lacRequest.T_Employee.T_Person.FirstName + " " + lacRequest.T_Employee.T_Person.LastName);
-                            mailTextTopograph = mailTextTopograph.Replace("[requestDetails]", lacRequest.WorkDescription);
-                            mailTextTopograph = mailTextTopograph.Replace("[year]", DateTime.Now.Year.ToString());
-
-                            notificationTopograph.Body = mailTextTopograph;
-                            notificationTopograph.Subject = "A new LAC has been created!";
-                            Helpers.SendEmail(notificationTopograph);
-
-                            return success;
-                        } 
-                    }
-                    catch (Exception e)
-                    {
-                        dbTransaction.Rollback();
-                        List<string> exception = new List<string> { "Exception", e.Message };
-                        return exception;
-                    }
-                }
             }
         }
 

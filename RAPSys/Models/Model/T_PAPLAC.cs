@@ -33,7 +33,7 @@ namespace RAPSys.Models.Model
         public Nullable<int> Surveyor { get; set; }
         public string SurveyGPS { get; set; }
         public string SurveyCamera { get; set; }
-        public int FileNumber { get; set; }
+        public string FileNumber { get; set; }
         public string Comments { get; set; }
         public System.DateTime Created { get; set; }
         public string CreatedBy { get; set; }

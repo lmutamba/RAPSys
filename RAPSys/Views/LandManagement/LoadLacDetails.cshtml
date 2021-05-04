@@ -445,31 +445,31 @@
                         <label for="firstName" class="col-md-4 form-control-label text-md-right">First Name</label>
                         <div class="col-md-8">
                             <input type="hidden" id="PersonId" class="form-control reset" data-placement="top" placeholder="First Name">
-                            <input type="text" id="firstName" class="form-control" data-placement="top" placeholder="Add here the First Name..">
+                            <input type="text" id="firstName" class="form-control reset" data-placement="top" placeholder="Add here the First Name..">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="lastName" class="col-md-4 form-control-label text-md-right">Last Name</label>
                         <div class="col-md-8">
-                            <input type="text" id="lastName" class="form-control" data-placement="top" placeholder="Add here the Last Name..">
+                            <input type="text" id="lastName" class="form-control reset" data-placement="top" placeholder="Add here the Last Name..">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="middleName" class="col-md-4 form-control-label text-md-right">Middle Name</label>
                         <div class="col-md-8">
-                            <input type="text" id="middleName" class="form-control" data-placement="top" placeholder="Add here the Middle Name..">
+                            <input type="text" id="middleName" class="form-control reset" data-placement="top" placeholder="Add here the Middle Name..">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="primaryResidence" class="col-md-4 form-control-label text-md-right">Primary Residence</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="primaryResidence" data-placement="top" placeholder="Primary Residence" />
+                            <input type="text" class="form-control" id="primaryResidence reset" data-placement="top" placeholder="Primary Residence" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="pictureID" class="col-md-4 form-control-label text-md-right">Picture ID</label>
                         <div class="col-md-8">
-                            <input type="text" id="pictureID" class="form-control" data-placement="top" placeholder="Picture ID">
+                            <input type="text" id="pictureID" class="form-control reset" data-placement="top" placeholder="Picture ID">
                         </div>
                     </div>
                     <div class="form-group row" id="divPAPPhoto">
@@ -482,7 +482,7 @@
                     <div class="form-group row">
                         <label for="fileID" class="col-md-4 form-control-label text-md-right">File ID</label>
                         <div class="col-md-8">
-                            <input type="text" id="fileID" class="form-control" data-placement="top" placeholder="File ID">
+                            <input type="text" id="fileID" class="form-control reset" data-placement="top" placeholder="File ID">
                         </div>
                     </div>
                 </div>
@@ -500,15 +500,15 @@
                         </div>
                         <div class="col-md-3">
                             <label>Easting</label>
-                            <input type="text" id="pointEasting" class="form-control reset" data-placement="top" placeholder="Easting">
+                            <input type="text" id="pointEasting" class="form-control reset" data-placement="top" placeholder="Easting" maxlength="9" pattern="\d*">
                         </div>
                         <div class="col-md-3">
                             <label>Northing</label>
-                            <input type="text" id="pointNorthing" class="form-control reset" data-placement="top" placeholder="Northing">
+                            <input type="text" id="pointNorthing" class="form-control reset" data-placement="top" placeholder="Northing" maxlength="10" pattern="\d*">
                         </div>
                         <div class="col-md-3">
                             <label>Elevation</label>
-                            <input type="text" id="pointElevation" class="form-control reset" data-placement="top" placeholder="Elevation">
+                            <input type="text" id="pointElevation" class="form-control reset" data-placement="top" placeholder="Elevation" maxlength="7" pattern="\d*">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -516,21 +516,28 @@
                             <label>Photo ID</label>
                             <input type="text" id="goodPictureID" class="form-control reset" placeholder="Photo" />
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
+                            <label>Upload Culture Photo</label>
+                            <input id="goodPhoto" name="goodPhoto" type="file" class="file reset" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#goodPhoto-errors">
+                            <div id="goodPhoto-errors"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-7">
                             <label class="form-control-label" for="goodType">Goods Type</label>
                             <select class="form-control reset" id="goodType" data-placeholder="Goods Type"></select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-5">
                             <label class="form-control" for="ownershipType" style="visibility:hidden"> </label>
-                            <input class="form-check-input" id="ownershipType" type="checkbox">
-                            <label> User</label>
+                            <label> <input id="ownershipType" type="radio" name="owner" value="U" /> Is User</label>
+                            <label> <input id="ownershipType" type="radio" name="owner" value="P" /> Is Owner</label>
                         </div>
                     </div>
 
                     @* OWNER ZONE DETAILS *@
                     <div id="ownerDetails" style="display:none" class="hiden">
                         <hr />
-                        <p class="help-block"><strong><i class="fas fa-portrait"></i> Owner Details</strong></p>
+                        <p class="help-block"><strong><i class="fas fa-portrait"></i> Person Details</strong></p>
                         <div class="form-group row">
                             <div class="col-md-5">
                                 <label>First Name</label>
@@ -549,7 +556,7 @@
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label>Primary Residence</label>
-                                <input type="text" class="form-control" id="ownerPrimaryResidence" data-placement="top" placeholder="Primary Residence" />
+                                <input type="text" class="form-control reset" id="ownerPrimaryResidence" data-placement="top" placeholder="Primary Residence" />
                             </div>
                             <div class="col-md-3">
                                 <label>Photo ID</label>
@@ -584,23 +591,19 @@
                             </div>
                             <div class="col-md-3">
                                 <label>Surface</label>
-                                <input type="number" id="cultureSurface" class="form-control reset" data-placement="top" placeholder="Surface">
-                                <p class="help-block">x 25m Square.</p>
+                                <div class="input-group">
+                                    <input type="number" class="form-control reset" aria-label="" id="cultureSurface">
+                                    <select class="form-control bootstrap-select btn-primary reset" id="cultureSurfaceUOM">
+                                        <option value="-1">UOM</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="form-group col-md-12">
+                            <div class="col-md-10">
                                 <input type="text" class="form-control reset col-md-12" id="goodComments" placeholder="Add comment" />
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-10">
-                                <label>Upload Culture Photo</label>
-                                <input id="goodPhoto" name="goodPhoto" type="file" class="file reset" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#goodPhoto-errors">
-                                <div id="goodPhoto-errors"></div>
-                            </div>
-                            <div class="col-sm-2">
-                                <label></label>
+                            <div class="col-md-2">
                                 <button class="btn btn-default btn-rounded-f" type="button" id="addGoods">Add</button>
                             </div>
                         </div>
@@ -643,18 +646,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="form-group col-md-12">
+                            <div class="col-md-10">
                                 <input type="text" class="form-control reset col-md-12" id="structureComments" placeholder="Add comment" />
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-10">
-                                <label>Structure Photo</label>
-                                <input id="structurePhoto" name="structurePhoto" type="file" class="file reset" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#structurePhoto-errors">
-                                <div id="structurePhoto-errors"></div>
-                            </div>
-                            <div class="col-sm-2">
-                                <label></label>
+                            <div class="col-md-2">
                                 <button class="btn btn-default btn-rounded-f" type="button" id="addStructure">Add</button>
                             </div>
                         </div>
@@ -679,18 +674,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="form-group col-md-12">
+                            <div class="col-md-10">
                                 <input type="text" class="form-control reset col-md-12" id="treeComments" placeholder="Add comment" />
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-10">
-                                <label>Tree Photo</label>
-                                <input id="treePhoto" name="treePhoto" type="file" class="file reset" data-show-preview="false" data-theme="fas" data-show-upload="false" data-show-cancel="false" data-allowed-file-extensions='["jpg","jpeg","png"]' data-el-Error-Container="#treePhoto-errors">
-                                <div id="treePhoto-errors"></div>
-                            </div>
-                            <div class="col-sm-2">
-                                <label> </label>
+                            <div class="col-md-2">
                                 <button class="btn btn-default btn-rounded-f" role="button" id="addTree">Add</button>
                             </div>
                         </div>
@@ -742,6 +729,8 @@
                                         <th style="display:none">Maturity Name</th>
                                         <th style="display:none">Tree Qty</th>
                                         <th style="display:none">Comments</th>
+                                        <th style="display:none">Surface UOM</th>
+                                        <th style="display:none">Surface UOM Name</th>
                                         <th></th>
                                     </tr>
                                 </thead>

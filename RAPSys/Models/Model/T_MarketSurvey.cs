@@ -12,36 +12,25 @@ namespace RAPSys.Models.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Product
+    public partial class T_MarketSurvey
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public T_Product()
+        public T_MarketSurvey()
         {
-            this.T_AssetRate = new HashSet<T_AssetRate>();
             this.T_MarketSurveyProduct = new HashSet<T_MarketSurveyProduct>();
         }
     
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
-        public Nullable<int> SecondaryCulture { get; set; }
-        public Nullable<int> PlantPerHa { get; set; }
-        public Nullable<int> ProductType { get; set; }
-        public Nullable<decimal> ProductPerKg { get; set; }
-        public Nullable<int> YearMaturity { get; set; }
-        public Nullable<decimal> SeedlingCost { get; set; }
-        public string English { get; set; }
-        public string Swahili { get; set; }
-        public string Sanga { get; set; }
-        public int AssetTypeId { get; set; }
+        public int MarketSurveyId { get; set; }
+        public string MarketSurveyName { get; set; }
+        public int Status { get; set; }
+        public Nullable<System.DateTime> ClosedDate { get; set; }
         public System.DateTime Created { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime Updated { get; set; }
         public string UpdatedBy { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<T_AssetRate> T_AssetRate { get; set; }
+        public virtual T_List T_List { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<T_MarketSurveyProduct> T_MarketSurveyProduct { get; set; }
-        public virtual T_ProductType T_ProductType { get; set; }
     }
 }

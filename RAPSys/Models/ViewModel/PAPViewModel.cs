@@ -58,8 +58,8 @@ namespace RapModel.ViewModel
         public string IdCard { get; set; }
         public int? Spouse { get; set; }
         public string SpouseName { get; set; }
-        public int? FileNumber { get; set; }
-        public int ResidenceID { get; set; }
+        public string FileNumber { get; set; }
+        public int? ResidenceID { get; set; }
         public string ResidenceName { get; set; }
         public DateTime Created { get; set; }
         public string CreatedBy { get; set; }

@@ -23,6 +23,7 @@ namespace RAPSys.Models.Model
         }
     
         public int LACId { get; set; }
+        public string LAC_ID { get; set; }
         public string LACName { get; set; }
         public int LACRequestId { get; set; }
         public int LACStatus { get; set; }
@@ -43,7 +44,6 @@ namespace RAPSys.Models.Model
         public string CreatedBy { get; set; }
         public System.DateTime Updated { get; set; }
         public string UpdatedBy { get; set; }
-        public string LAC_ID { get; set; }
     
         public virtual T_LACRequest T_LACRequest { get; set; }
         public virtual T_List T_List { get; set; }

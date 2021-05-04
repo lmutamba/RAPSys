@@ -15,7 +15,7 @@ namespace RapModel.ViewModel
         public string OwnerFirstName { get; set; }
         public string OwnerLastName { get; set; }
         public string OwnerMiddleName { get; set; }
-        public int? OwnerFileNumber { get; set; }
+        public string OwnerFileNumber { get; set; }
         public int? OwnerPictureId { get; set; }
         public string OwnerPictureName { get; set; }
         public int? OwnerPrimaryResidenceId { get; set; }
@@ -23,7 +23,7 @@ namespace RapModel.ViewModel
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
         public string UserMiddleName { get; set; }
-        public int UserFileNumber { get; set; }
+        public string UserFileNumber { get; set; }
         public string UserPictureName { get; set; }
         public int? UserPrimaryResidenceId { get; set; }
         public string UserPrimaryResidenceName { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
@@ -54,7 +55,25 @@ namespace RAPSys.Controllers
 
         public ActionResult LoadLACPAP(int PapID) => Json(Community.LoadPAPLAC(PapID), JsonRequestBehavior.AllowGet);
 
-        public ActionResult LoadLACPAPList() => Json(Community.LoadPAPLAC(), JsonRequestBehavior.AllowGet);
+        public ActionResult LoadLACPAPList() {
+            //var draw = HttpContext.Request.Form.GetValues("draw").FirstOrDefault();
+            //var start = HttpContext.Request.Form.GetValues("start").FirstOrDefault();
+            //var length = HttpContext.Request.Form.GetValues("length").FirstOrDefault();
+            //var sortColumn = HttpContext.Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            //var sortColumnDir = HttpContext.Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            //var searchValue = HttpContext.Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            //var request = new RequestViewModel() { 
+            //    Draw= draw,
+            //    Start = start,
+            //    Length = length,
+            //    SortColumn = sortColumn,
+            //    SortColumnDir = sortColumnDir,
+            //    SearchValue = searchValue
+            //};
+
+            return Json(Community.LoadPAPLAC(), JsonRequestBehavior.AllowGet);
+        } 
 
         public ActionResult LoadProperties() => Json(Community.LoadProperties(), JsonRequestBehavior.AllowGet);
 

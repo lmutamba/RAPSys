@@ -17,6 +17,7 @@ namespace RAPSys.Models.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public T_List()
         {
+            this.T_AnnualRate = new HashSet<T_AnnualRate>();
             this.T_Approval = new HashSet<T_Approval>();
             this.T_Attachment = new HashSet<T_Attachment>();
             this.T_Good = new HashSet<T_Good>();
@@ -40,6 +41,7 @@ namespace RAPSys.Models.Model
             this.T_LAC = new HashSet<T_LAC>();
             this.T_Land = new HashSet<T_Land>();
             this.T_Land1 = new HashSet<T_Land>();
+            this.T_MarketSurvey = new HashSet<T_MarketSurvey>();
             this.T_PersonRole = new HashSet<T_PersonRole>();
             this.T_MarketSurveyProduct = new HashSet<T_MarketSurveyProduct>();
             this.T_PAPLAC = new HashSet<T_PAPLAC>();
@@ -69,6 +71,8 @@ namespace RAPSys.Models.Model
         public string ListValue { get; set; }
         public string ListLabel { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<T_AnnualRate> T_AnnualRate { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<T_Approval> T_Approval { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -115,6 +119,8 @@ namespace RAPSys.Models.Model
         public virtual ICollection<T_Land> T_Land { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<T_Land> T_Land1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<T_MarketSurvey> T_MarketSurvey { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<T_PersonRole> T_PersonRole { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

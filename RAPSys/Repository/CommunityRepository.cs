@@ -110,6 +110,106 @@ namespace Repository
         public IEnumerable<PAPViewModel> LoadPAPLAC()
         {
             var plac = db.T_PAPLAC.Distinct().Select(p=>p.PAPId).ToList();
+
+            //using (db)
+            //{
+            //    //Paging Size (10,20,50,100)    
+            //    int pageSize = request.Length != null ? Convert.ToInt32(request.Length) : 0;
+            //    int skip = request.Start != null ? Convert.ToInt32(request.Start) : 0;
+            //    int recordsTotal = 0;
+
+            //    var pap = db.T_PAPLAC.ToList().Select(p => new PAPViewModel()
+            //    {
+            //        PAPLACId = p.PAPLACId,
+            //        PAPId = p.PAPId,
+            //        PersonId = p.T_PAP.T_Person.PersonId,
+            //        FirstName = p.T_PAP.T_Person.FirstName,
+            //        LastName = p.T_PAP.T_Person.LastName,
+            //        FileNumber = p.FileNumber,
+            //        LACId = p.LACId,
+            //        LACName = p.T_LAC?.LACName,
+            //        Mobile = p.T_PAP.T_Person.Mobile,
+            //        PaymentPreference = p.PaymentPreference ?? default(int?),
+            //        PaymentPreferenceName = p.T_List?.ListValue ?? default,
+            //        FormSubmissionDate = p.FormSubmissionDate ?? default,
+            //        FormSubmissionDateString = p.FormSubmissionDate?.ToString("dd/MMMM/yyyy"),
+            //        PresurveyDate = p.PresurveyDate ?? default,
+            //        PresurveyDateString = p.PresurveyDate?.ToString("dd/MMMM/yyyy"),
+            //        Presurveyor = p.Presurveyor ?? default(int?),
+            //        PresurveyorCode = p.T_Employee?.EmployeeCode,
+            //        PresurveyorName = p.T_Employee?.T_Person.FirstName + " " + p.T_Employee?.T_Person.LastName + " " + p.T_Employee?.T_Person.MiddleName,
+            //        SurveyDate = p.SurveyDate ?? default,
+            //        SurveyDateString = p.SurveyDate?.ToString("dd/MMMM/yyyy"),
+            //        Surveyor = p.Surveyor ?? default(int?),
+            //        SurveyorCode = p.T_Employee1?.EmployeeCode,
+            //        SurveyorName = p.T_Employee1?.T_Person.FirstName + " " + p.T_Employee1?.T_Person.LastName + " " + p.T_Employee1?.T_Person.MiddleName,
+            //        Comments = p.Comments,
+            //        IdCard = p.T_PAP.IdCard,
+            //        Picture = PictureLink(p.PAPId, "PAP"),
+            //        PictureBase64 = p.T_PAP.Picture,
+            //        PhotoID = int.Parse(p.T_PAP.Picture.Substring(p.T_PAP.Picture.LastIndexOf("\\") + 1).Split('.')[0]),
+            //        ResidenceID = p.T_PAP.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).ResidenceId,
+            //        ResidenceName = p.T_PAP.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).T_Residence.ResidenceAddress,
+            //        HouseHoldId = p.T_PAP.HouseHoldId
+            //    }).ToList();
+
+            //    var pap2 = db.T_PAP.Where(pp => !plac.Contains(pp.PAPId)).ToList().Select(p => new PAPViewModel()
+            //    {
+            //        PAPLACId = 0,
+            //        PAPId = p.PAPId,
+            //        PersonId = p.T_Person.PersonId,
+            //        FirstName = p.T_Person.FirstName,
+            //        LastName = p.T_Person.LastName,
+            //        FileNumber = null,
+            //        LACId = -1,
+            //        LACName = "Unassign",
+            //        Mobile = p.T_Person.Mobile,
+            //        PaymentPreference = default,
+            //        PaymentPreferenceName = default,
+            //        FormSubmissionDate = default,
+            //        FormSubmissionDateString = null,
+            //        PresurveyDate = default,
+            //        PresurveyDateString = null,
+            //        Presurveyor = default,
+            //        PresurveyorCode = null,
+            //        PresurveyorName = null,
+            //        SurveyDate = default,
+            //        SurveyDateString = null,
+            //        Surveyor = default,
+            //        SurveyorCode = null,
+            //        SurveyorName = null,
+            //        Comments = null,
+            //        IdCard = p.IdCard,
+            //        Picture = PictureLink(p.PAPId, "PAP"),
+            //        PictureBase64 = p.Picture,
+            //        PhotoID = int.Parse(p.Picture.Substring(p.Picture.LastIndexOf("\\") + 1).Split('.')[0]),
+            //        ResidenceID = p.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).ResidenceId,
+            //        ResidenceName = p.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).T_Residence.ResidenceAddress,
+            //        HouseHoldId = p.HouseHoldId
+            //    }).ToList();
+
+            //    var pa = pap.Union(pap2).OrderBy(pl => pl.LACId);
+
+            //    //Sorting    
+            //    if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
+            //    {
+            //        pa = pa.OrderBy(p => (request.SortColumn + " " + request.SortColumnDir));
+            //    }
+
+            //    //Search    
+            //    if (!string.IsNullOrEmpty(request.SearchValue))
+            //    {
+            //        pa = (IOrderedEnumerable<PAPViewModel>)pa.Where(p => p.PersonType == "PAP" && (p.FirstName.Contains(request.SearchValue) || p.LastName.Contains(request.SearchValue) || p.MiddleName.Contains(request.SearchValue) || p.IdCard.Contains(request.SearchValue) || p.Mobile.Contains(request.SearchValue)));
+            //    }
+
+            //    //total number of rows count     
+            //    recordsTotal = pa.Count();
+            //    //Paging     
+            //    var data = pa.Skip(skip).Take(pageSize).ToList();
+            //    //Returning Json Data    
+            //    return Json(new { draw = request.Draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+            //}
+
             var pap = db.T_PAPLAC.ToList().Select(p => new PAPViewModel()
             {
                 PAPLACId = p.PAPLACId,
@@ -143,9 +243,9 @@ namespace Repository
                 ResidenceID = p.T_PAP.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).ResidenceId,
                 ResidenceName = p.T_PAP.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).T_Residence.ResidenceAddress,
                 HouseHoldId = p.T_PAP.HouseHoldId
-            });
+            }).ToList();
 
-            var pap2 = db.T_PAP.Where(pp => !plac.Contains(pp.PAPId)).ToList().Select(p => new PAPViewModel()
+            var pap2 = db.T_PAP.Where(pp => !plac.Contains(pp.PAPId)).Take(100).ToList().Select(p => new PAPViewModel()
             {
                 PAPLACId = 0,
                 PAPId = p.PAPId,
@@ -178,9 +278,11 @@ namespace Repository
                 ResidenceID = p.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).ResidenceId,
                 ResidenceName = p.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).T_Residence.ResidenceAddress,
                 HouseHoldId = p.HouseHoldId
-            });
+            }).ToList();
 
-            return pap.Union(pap2).OrderBy(pl => pl.LACId); ;
+            var pa = pap.Union(pap2).OrderBy(pl => pl.LACId).ToList();
+
+            return pa;
         }
 
         public PAPViewModel GetPAPDetails(int PapID)
@@ -223,41 +325,46 @@ namespace Repository
 
         public PAPViewModel GetPAPDetails(int PersonID, int LacID)
         {
-            int PapID = db.T_PAP.FirstOrDefault(p => p.PersonId == PersonID).PAPId;
-            var pap = db.T_PAP.Where(p => p.PersonId == PersonID).ToList().Select(p => new PAPViewModel() 
+            var pa = db.T_PAP.FirstOrDefault(p => p.PersonId == PersonID);
+
+            var pap = db.T_Person.Where(p => p.PersonId == PersonID).ToList().Select(p => new PAPViewModel()
             {
-                PAPId = p.PAPId,
-                PersonId = p.T_Person.PersonId,
-                FirstName = p.T_Person.FirstName,
-                LastName = p.T_Person.LastName,
-                MiddleName = p.T_Person.MiddleName,
-                Mobile = p.T_Person.Mobile,
-                Email = p.T_Person.Email,
-                Gender = p.T_Person.Gender,
-                DateOfBirth = p.T_Person.DateOfBirth,
-                DateOfBirthString = p.T_Person.DateOfBirth?.ToString("dd/MMM/yyyy"),
-                PlaceOfBirth = p.T_Person.PlaceOfBirth,
-                Father = p.T_Person.Father,
-                FatherName = p.T_Person.Father.HasValue? p?.T_Person?.T_Person2?.FirstName + " " + p?.T_Person?.T_Person2?.LastName + "(" + p?.T_Person?.T_Person2?.PersonId + ")" : string.Empty,
-                Mother = p.T_Person.Mother,
-                MotherName = p.T_Person.Mother.HasValue ? p?.T_Person?.T_Person3?.FirstName + " " + p?.T_Person?.T_Person3?.LastName + "(" + p?.T_Person?.T_Person3?.PersonId + ")" : string.Empty,
-                Spouse = p.Spouse,
-                SpouseName = p.Spouse.HasValue? p.T_Person1?.FirstName + " " + p.T_Person1?.LastName + "(" + p.T_Person1?.PersonId + ")" : string.Empty,
-                VulnerabilityTypeId = p.T_Person.VulnerabilityTypeId ?? default,
-                VulnerabilityTypeName = (bool)p.T_Person.VulnerabilityTypeId.HasValue ? p.T_Person.T_List1.ListValue : "",
-                VulnerabilityDetail = p.T_Person.VulnerabilityDetail,
-                IdCard = p.IdCard,
-                Picture = PictureLink(p.PAPId, "PAP"),
-                PhotoID = int.Parse(p.Picture.Substring(p.Picture.LastIndexOf("\\") + 1).Split('.')[0]),
-                ResidenceID = p.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).ResidenceId,
-                ResidenceName = p.T_PAPResidence.FirstOrDefault(pr => pr.IsPermanent).T_Residence.ResidenceAddress,
-                FileNumber = p.T_PAPLAC?.FirstOrDefault(l=>l.LACId == LacID)?.FileNumber,
-                HouseHoldId = p.HouseHoldId
+                PersonId = p.PersonId,
+                FirstName = p.FirstName,
+                LastName = p.LastName,
+                MiddleName = p.MiddleName,
+                Mobile = p.Mobile,
+                Email = p.Email,
+                Gender = p.Gender,
+                DateOfBirth = p.DateOfBirth,
+                DateOfBirthString = p.DateOfBirth?.ToString("dd/MMM/yyyy"),
+                PlaceOfBirth = p.PlaceOfBirth,
+                Father = p.Father,
+                FatherName = p.Father.HasValue ? p.T_Person2?.FirstName + " " + p.T_Person2?.LastName + "(" + p.T_Person2?.PersonId + ")" : string.Empty,
+                Mother = p.Mother,
+                MotherName = p.Mother.HasValue ? p.T_Person3?.FirstName + " " + p.T_Person3?.LastName + "(" + p.T_Person3?.PersonId + ")" : string.Empty,
+                VulnerabilityTypeId = p.VulnerabilityTypeId ?? default,
+                VulnerabilityTypeName = p.VulnerabilityTypeId.HasValue ? p.T_List1.ListValue : "",
+                VulnerabilityDetail = p.VulnerabilityDetail,
+                IdCard = p.IdCard
             }).FirstOrDefault();
 
-            pap.FatherName = !string.IsNullOrWhiteSpace(pap?.FatherName) ? pap.FatherName == " ()" ? string.Empty : pap.FatherName : string.Empty;
-            pap.MotherName = !string.IsNullOrWhiteSpace(pap?.MotherName) ? pap.MotherName == " ()" ? string.Empty : pap.MotherName : string.Empty;
-            pap.SpouseName = !string.IsNullOrWhiteSpace(pap?.SpouseName) ? pap.SpouseName == " ()" ? string.Empty : pap.SpouseName : string.Empty;
+            if(pa != null)
+            {
+                pap.Spouse = pa.Spouse;
+                pap.SpouseName = (bool)pa?.Spouse.HasValue ? pa?.T_Person1?.FirstName + " " + pa?.T_Person1?.LastName + "(" + pa?.T_Person1?.PersonId + ")" : string.Empty;
+                pap.Picture = PictureLink((int)pa?.PAPId, "PAP");
+                pap.PhotoID = int.Parse(pa?.Picture.Substring(pa.Picture.LastIndexOf("\\") + 1).Split('.')[0]);
+                pap.ResidenceID = pa?.T_PAPResidence?.FirstOrDefault(pr => pr.IsPermanent)?.ResidenceId;
+                pap.ResidenceName = pa?.T_PAPResidence?.FirstOrDefault(pr => pr.IsPermanent)?.T_Residence?.ResidenceAddress;
+                pap.FileNumber = pa?.T_PAPLAC?.FirstOrDefault(l => l.LACId == LacID)?.FileNumber;
+                pap.HouseHoldId = pa?.HouseHoldId;
+            }
+
+            //pap.FatherName = (bool)(pap?.Father.HasValue) ? ((!string.IsNullOrWhiteSpace(pap?.FatherName) && pap?.FatherName == " ()") ? string.Empty : pap.FatherName) : string.Empty;
+            //pap.MotherName = (bool)(pap?.Mother.HasValue) ? ((!string.IsNullOrWhiteSpace(pap?.MotherName) && pap?.MotherName == " ()") ? string.Empty : pap.MotherName) : string.Empty;
+            //pap.SpouseName = (bool)(pap?.Spouse.HasValue) ? ((!string.IsNullOrWhiteSpace(pap?.SpouseName) && pap?.SpouseName == " ()") ? string.Empty : pap.SpouseName) : string.Empty;
+
             return pap;
         }
 
@@ -394,7 +501,7 @@ namespace Repository
                     UserFirstName = prop.T_PAP1?.T_Person.FirstName,
                     UserLastName = prop.T_PAP1?.T_Person.LastName,
                     UserMiddleName = prop.T_PAP1?.T_Person.MiddleName,
-                    UserFileNumber = (int)prop.T_PAP1?.T_PAPLAC.FirstOrDefault().FileNumber,
+                    UserFileNumber = prop.T_PAP1?.T_PAPLAC.FirstOrDefault().FileNumber,
                     UserPictureName = PictureLink((int)prop.T_PAP1?.PAPId, "PAPLAC"),
                     UserPrimaryResidenceId = prop.T_PAP1?.T_PAPResidence?.FirstOrDefault()?.ResidenceId,
                     UserPrimaryResidenceName = prop.T_PAP1?.T_PAPResidence?.FirstOrDefault().T_Residence?.ResidenceAddress,
@@ -494,8 +601,8 @@ namespace Repository
                     error.Add("Investigator Code can't be empty");
                 if (string.IsNullOrWhiteSpace(pap.PresurveyorGPS))
                     error.Add("Investigator GPS tools can't be empty");
-                if (pap.FileNumber < 1)
-                    error.Add("PAP File number is invalide");
+                if (string.IsNullOrWhiteSpace(pap.FileNumber) && int.Parse(pap.FileNumber) < 1)
+                    error.Add("PAP File number is invalid");
                 if (pap.LACId < 1)
                     error.Add("LAC Id is not valid. Please refresh the page and try again");
                 if (pap.PresurveyDate > DateTime.Now)
@@ -550,7 +657,7 @@ namespace Repository
                         if (property.StructureUsageID < 1)
                             error.Add("Specify the valid Structure usage");
                     }
-                    if (property.UserType == "U")
+                    if (property.UserType == "U" || property.UserType == "P")
                     {
                         if (!property.OwnerID.HasValue)
                         {
@@ -558,10 +665,11 @@ namespace Repository
                                 error.Add("Please add the Owner's Last Name");
                             if (string.IsNullOrWhiteSpace(property.OwnerLastName))
                                 error.Add("Please add the Owner's Last Name");
-                            if (string.IsNullOrWhiteSpace(property.OwnerPrimaryResidenceName) || property.OwnerPrimaryResidenceId < 1)
+                            if (string.IsNullOrWhiteSpace(property.OwnerPrimaryResidenceName) || property.OwnerPrimaryResidenceId < -1)
                                 error.Add("You did not choose the primary residence of the owner");
                         }
-                        if (property.OwnerFileNumber < 1)
+                        
+                        if (string.IsNullOrWhiteSpace(property.OwnerFileNumber) && int.Parse(property.OwnerFileNumber) < 1)
                             error.Add("Please specify a valid File Number for the owner");
                         if (property.OwnerFileNumber == pap.FileNumber)
                             error.Add("Owner file number can not be the same as User's File Number");
@@ -595,6 +703,15 @@ namespace Repository
                                 db.T_Person.Add(person);
                                 db.SaveChanges();
                             }
+                            else
+                            {
+                                person.PersonType = "PAP";
+                                person.Updated = DateTime.Now;
+                                person.UpdatedBy = loggedUser;
+                                db.Entry(person).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+
                             pap.PersonId = person.PersonId;
 
                             //Save PAP in PAP Table after checking if the pap already exists
@@ -681,7 +798,7 @@ namespace Repository
                                     Presurveyor = db.T_Employee.FirstOrDefault(e => e.EmployeeCode == pap.PresurveyorCode).EmployeeId,
                                     PresurveyCamera = pap.PresurveyorCamera,
                                     PresurveyGPS = pap.PresurveyorGPS,
-                                    FileNumber = pap.FileNumber.Value,
+                                    FileNumber = pap.FileNumber,
                                     Created = DateTime.Now,
                                     CreatedBy = loggedUser,
                                     Updated = DateTime.Now,
@@ -761,6 +878,7 @@ namespace Repository
                                         db.SaveChanges();
 
                                         //Save PAP Attachment in T_Attachement and then in PAPAttachment
+                                        ownerPapId = (prop.UserType == "U" ? ownerPAP.PAPId : ownerPapId);
                                         string ownerPictureName = ownerPAP.Picture.Split('\\')[2];
                                         string ownerServerPath = folderRoot + @"PAP\" + ownerPapId.ToString() + @"\";
                                         foreach (var file in attachments)
@@ -806,20 +924,22 @@ namespace Repository
                                         });
                                         db.SaveChanges();
                                     }
+                                    else
+                                        ownerPapId = (prop.UserType == "U" ? ownerPAP.PAPId : ownerPapId);
 
-                                    ownerPapId = ownerPAP.PAPId;
-                                    var paplac = db.T_PAPLAC.FirstOrDefault(p => p.PAPId == ownerPapId && p.LACId == pap.LACId);
+
+                                    var paplac = db.T_PAPLAC.FirstOrDefault(p => p.PAPId == ownerPAP.PAPId && p.LACId == pap.LACId);
                                     if (paplac == null)
                                     {
                                         db.T_PAPLAC.Add(new T_PAPLAC()
                                         {
                                             LACId = pap.LACId,
-                                            PAPId = ownerPapId,
+                                            PAPId = ownerPAP.PAPId,
                                             PresurveyDate = pap.PresurveyDate,
                                             Presurveyor = db.T_Employee.FirstOrDefault(e => e.EmployeeCode == pap.PresurveyorCode).EmployeeId,
                                             PresurveyGPS = pap.PresurveyorGPS,
                                             PresurveyCamera = pap.PresurveyorCamera,
-                                            FileNumber = prop.OwnerFileNumber.Value,
+                                            FileNumber = prop.OwnerFileNumber,
                                             Created = DateTime.Now,
                                             CreatedBy = loggedUser,
                                             Updated = DateTime.Now,
@@ -858,7 +978,7 @@ namespace Repository
                                 db.T_Property.Add(new T_Property()
                                 {
                                     Owner = (prop.UserType == "P" || prop.UserType == "PU") ? pap.PAPId : ownerPapId,
-                                    User = prop.UserType == "U" ? pap.PAPId : ownerPapId,
+                                    User = (prop.UserType == "U" || prop.UserType == "PU") ? pap.PAPId : ownerPapId,
                                     LandId = landId,
                                     LACId = pap.LACId,
                                     Investigator = db.T_Employee.FirstOrDefault(e => e.EmployeeCode == pap.PresurveyorCode).EmployeeId,
@@ -944,7 +1064,7 @@ namespace Repository
                     error.Add("Invalid Lac, please select a valid LAC");
                 if (string.IsNullOrWhiteSpace(pap.PAPId.ToString()))
                     error.Add("Please refresh the page and select PAP again.");
-                if (pap.FileNumber < 1 || string.IsNullOrWhiteSpace(pap.FileNumber.ToString()))
+                if (int.Parse(pap.FileNumber) < 1 && string.IsNullOrWhiteSpace(pap.FileNumber))
                     error.Add("You did not provide correct File Number");
                 if (string.IsNullOrWhiteSpace(pap.PresurveyorCode))
                     error.Add("You need to determine the pre-surveyor");
@@ -975,7 +1095,7 @@ namespace Repository
                                 Presurveyor = pap.Presurveyor,
                                 SurveyDate = pap.SurveyDate == DateTime.Today ? default : pap.SurveyDate,
                                 Surveyor = pap.Surveyor,
-                                FileNumber = pap.FileNumber.Value,
+                                FileNumber = pap.FileNumber,
                                 Comments = pap.Comments,
                                 Created = DateTime.Now,
                                 CreatedBy = loggedUser,
@@ -1038,7 +1158,7 @@ namespace Repository
                         error.Add("Pre-Survey date can't bee in the future");
                     if (string.IsNullOrWhiteSpace(pap.PresurveyorCode))
                         error.Add("Investigator Code can't be empty");
-                    if (pap.FileNumber < 1 || string.IsNullOrWhiteSpace(pap.FileNumber.ToString()))
+                    if (int.Parse(pap.FileNumber) < 1 && string.IsNullOrWhiteSpace(pap.FileNumber))
                         error.Add("PAP File number is invalide");
                 }
 
@@ -1251,7 +1371,7 @@ namespace Repository
                                     Presurveyor = pap.Presurveyor,
                                     SurveyDate = pap.SurveyDate == DateTime.Today ? default : pap.SurveyDate,
                                     Surveyor = pap.Surveyor,
-                                    FileNumber = pap.FileNumber.Value,
+                                    FileNumber = pap.FileNumber,
                                     Comments = pap.Comments,
                                     Created = DateTime.Now,
                                     CreatedBy = loggedUser,
@@ -1295,7 +1415,7 @@ namespace Repository
                     error.Add("Investigator Code can't be empty");
                 if (string.IsNullOrWhiteSpace(pap.PresurveyorGPS))
                     error.Add("Investigator GPS tools can't be empty");
-                if (pap.FileNumber < 1)
+                if (int.Parse(pap.FileNumber) < 1 && string.IsNullOrWhiteSpace(pap.FileNumber))
                     error.Add("PAP File number is invalide");
                 if (pap.LACId < 1)
                     error.Add("LAC Id is not valid. Please refresh the page and try again");
@@ -1364,7 +1484,7 @@ namespace Repository
                         }
                         if (property.OwnerFileNumber == pap.FileNumber)
                             error.Add("Owner file number can not be the same as User's File Number");
-                        if (property.OwnerFileNumber < 1)
+                        if (int.Parse(property.OwnerFileNumber) < 1 && string.IsNullOrWhiteSpace(property.OwnerFileNumber))
                             error.Add("Please specify a valid File Number for the owner");
                     }
                 }
@@ -1389,7 +1509,7 @@ namespace Repository
                                     Presurveyor = db.T_Employee.FirstOrDefault(e => e.EmployeeCode == pap.PresurveyorCode).EmployeeId,
                                     PresurveyCamera = pap.PresurveyorCamera,
                                     PresurveyGPS = pap.PresurveyorGPS,
-                                    FileNumber = pap.FileNumber.Value,
+                                    FileNumber = pap.FileNumber,
                                     Created = DateTime.Now,
                                     CreatedBy = loggedUser,
                                     Updated = DateTime.Now,
@@ -1518,7 +1638,7 @@ namespace Repository
                                             Presurveyor = db.T_Employee.FirstOrDefault(e => e.EmployeeCode == pap.PresurveyorCode).EmployeeId,
                                             PresurveyCamera = pap.PresurveyorCamera,
                                             PresurveyGPS = pap.PresurveyorGPS,
-                                            FileNumber = prop.OwnerFileNumber.Value,
+                                            FileNumber = prop.OwnerFileNumber,
                                             Created = DateTime.Now,
                                             CreatedBy = loggedUser,
                                             Updated = DateTime.Now,
@@ -2521,7 +2641,7 @@ namespace Repository
                                     Presurveyor = db.T_Employee.FirstOrDefault(e => e.EmployeeCode == pap.PresurveyorCode).EmployeeId,
                                     PresurveyGPS = pap.PresurveyorGPS,
                                     PresurveyCamera = pap.PresurveyorCamera,
-                                    FileNumber = pap.FileNumber.Value,
+                                    FileNumber = pap.FileNumber,
                                     Created = DateTime.Now,
                                     CreatedBy = loggedUser,
                                     Updated = DateTime.Now,
@@ -2764,7 +2884,7 @@ namespace Repository
                                                 Presurveyor = db.T_Employee.FirstOrDefault(e => e.EmployeeCode == pap.PresurveyorCode).EmployeeId,
                                                 PresurveyGPS = pap.PresurveyorGPS,
                                                 PresurveyCamera = pap.PresurveyorCamera,
-                                                FileNumber = prop.OwnerFileNumber.Value,
+                                                FileNumber = prop.OwnerFileNumber,
                                                 Created = DateTime.Now,
                                                 CreatedBy = loggedUser,
                                                 Updated = DateTime.Now,

@@ -5,6 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RAPSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_AnnualRate">
+          <Key>
+            <PropertyRef Name="ExchangeRateId" />
+          </Key>
+          <Property Name="ExchangeRateId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="RateType" Type="int" />
+          <Property Name="Created" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Updated" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
         <EntityType Name="T_Approval">
           <Key>
             <PropertyRef Name="ApprovalId" />
@@ -171,18 +184,6 @@
           <Property Name="Updated" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
-        <EntityType Name="T_ExchangeRate">
-          <Key>
-            <PropertyRef Name="ExchangeRateId" />
-          </Key>
-          <Property Name="ExchangeRateId" Type="int" Nullable="false" />
-          <Property Name="Year" Type="int" Nullable="false" />
-          <Property Name="Rate" Type="decimal" Precision="15" Scale="2" Nullable="false" />
-          <Property Name="Created" Type="datetime2" Precision="0" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Updated" Type="datetime2" Precision="0" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
-        </EntityType>
         <EntityType Name="T_Good">
           <Key>
             <PropertyRef Name="GoodId" />
@@ -208,7 +209,12 @@
           <Property Name="LastWeekExpense" Type="decimal" Precision="15" Scale="2" />
           <Property Name="FishOrMeat" Type="bit" Nullable="false" />
           <Property Name="EnoughFood" Type="bit" Nullable="false" />
+          <Property Name="TabletsSource" Type="int" Nullable="false" />
+          <Property Name="LastWeekDesease" Type="int" Nullable="false" />
           <Property Name="SkinDesease" Type="bit" Nullable="false" />
+          <Property Name="MosquitoNetSource" Type="int" Nullable="false" />
+          <Property Name="MosquitoNetUser" Type="int" Nullable="false" />
+          <Property Name="SavingType" Type="int" Nullable="false" />
           <Property Name="PaidWorkersQty" Type="int" Nullable="false" />
           <Property Name="PaidWorkersTimes" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Created" Type="datetime2" Precision="0" Nullable="false" />
@@ -385,7 +391,6 @@
           <Property Name="RoofType" Type="int" Nullable="false" />
           <Property Name="WallType" Type="int" Nullable="false" />
           <Property Name="SoilType" Type="int" Nullable="false" />
-          <Property Name="RoomQty" Type="int" />
           <Property Name="IsOwner" Type="bit" Nullable="false" />
           <Property Name="Rent" Type="decimal" Precision="15" Scale="2" />
           <Property Name="ArrivalDate" Type="date" />
@@ -396,6 +401,7 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Updated" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="RoomQty" Type="int" />
         </EntityType>
         <EntityType Name="T_HouseHoldRevenue">
           <Key>
@@ -429,7 +435,7 @@
           </Key>
           <Property Name="LACId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LAC_ID" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="LACName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LACName" Type="nvarchar" MaxLength="20" />
           <Property Name="LACRequestId" Type="int" Nullable="false" />
           <Property Name="LACStatus" Type="int" Nullable="false" />
           <Property Name="Realcosts" Type="decimal" Precision="15" Scale="2" Nullable="false" />
@@ -457,7 +463,7 @@
           <Property Name="LACRequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Requestid" Type="int" Nullable="false" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ProjectCostCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ProjectCostCode" Type="nvarchar" MaxLength="30" />
           <Property Name="WorkDescription" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="AccessScheduledDate" Type="date" Nullable="false" />
           <Property Name="RegionId" Type="int" Nullable="false" />
@@ -549,12 +555,26 @@
           <Property Name="NewValue" Type="varchar(max)" />
           <Property Name="LoggedDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="T_MarketSurvey">
+          <Key>
+            <PropertyRef Name="MarketSurveyId" />
+          </Key>
+          <Property Name="MarketSurveyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MarketSurveyName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="ClosedDate" Type="datetime2" Precision="0" />
+          <Property Name="Created" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Updated" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
         <EntityType Name="T_MarketSurveyProduct">
           <Key>
             <PropertyRef Name="MarketSurveyProductId" />
           </Key>
           <Property Name="MarketSurveyProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Market" Type="int" Nullable="false" />
+          <Property Name="MarketSurveyId" Type="int" Nullable="false" />
+          <Property Name="MarketId" Type="int" Nullable="false" />
           <Property Name="SurveyDate" Type="date" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="UOMId" Type="int" Nullable="false" />
@@ -625,7 +645,7 @@
           <Property Name="Surveyor" Type="int" />
           <Property Name="SurveyGPS" Type="nvarchar" MaxLength="50" />
           <Property Name="SurveyCamera" Type="nvarchar" MaxLength="50" />
-          <Property Name="FileNumber" Type="int" Nullable="false" />
+          <Property Name="FileNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Comments" Type="nvarchar" MaxLength="500" />
           <Property Name="Created" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
@@ -730,10 +750,40 @@
           </Key>
           <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="SecondaryCulture" Type="int" />
+          <Property Name="PlantPerHa" Type="int" />
+          <Property Name="ProductType" Type="int" />
+          <Property Name="ProductPerKg" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="YearMaturity" Type="int" />
+          <Property Name="SeedlingCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="English" Type="nvarchar" MaxLength="30" />
           <Property Name="Swahili" Type="nvarchar" MaxLength="30" />
           <Property Name="Sanga" Type="nvarchar" MaxLength="30" />
           <Property Name="AssetTypeId" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Updated" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ProductRate">
+          <Key>
+            <PropertyRef Name="ProductRateId" />
+          </Key>
+          <Property Name="ProductRateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Created" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Updated" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Created" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Updated" Type="datetime2" Precision="0" Nullable="false" />
@@ -914,6 +964,30 @@
           <Property Name="Updated" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
+        <Association Name="FK__T_MarketS__Statu__1EF99443">
+          <End Role="T_List" Type="Self.T_List" Multiplicity="1" />
+          <End Role="T_MarketSurvey" Type="Self.T_MarketSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_List">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="T_MarketSurvey">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_AnnualRate_T_List_RateType">
+          <End Role="T_List" Type="Self.T_List" Multiplicity="0..1" />
+          <End Role="T_AnnualRate" Type="Self.T_AnnualRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_List">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="T_AnnualRate">
+              <PropertyRef Name="RateType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_T_Approval_T_Employee_Approver">
           <End Role="T_Employee" Type="Self.T_Employee" Multiplicity="1" />
           <End Role="T_Approval" Type="Self.T_Approval" Multiplicity="*" />
@@ -963,10 +1037,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_T_AssetRate_T_ExchangeRate_ExchangeRateId">
-          <End Role="T_ExchangeRate" Type="Self.T_ExchangeRate" Multiplicity="1" />
+          <End Role="T_AnnualRate" Type="Self.T_AnnualRate" Multiplicity="1" />
           <End Role="T_AssetRate" Type="Self.T_AssetRate" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="T_ExchangeRate">
+            <Principal Role="T_AnnualRate">
               <PropertyRef Name="ExchangeRateId" />
             </Principal>
             <Dependent Role="T_AssetRate">
@@ -1934,7 +2008,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_T_MarketSurveyProduct_T_List_Market">
+        <Association Name="FK_T_MarketSurveyProduct_T_List_MarketId">
           <End Role="T_List" Type="Self.T_List" Multiplicity="1" />
           <End Role="T_MarketSurveyProduct" Type="Self.T_MarketSurveyProduct" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1942,7 +2016,19 @@
               <PropertyRef Name="ListId" />
             </Principal>
             <Dependent Role="T_MarketSurveyProduct">
-              <PropertyRef Name="Market" />
+              <PropertyRef Name="MarketSurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_MarketSurveyProduct_T_MarketSurvey_MarketSurveyId">
+          <End Role="T_MarketSurvey" Type="Self.T_MarketSurvey" Multiplicity="1" />
+          <End Role="T_MarketSurveyProduct" Type="Self.T_MarketSurveyProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_MarketSurvey">
+              <PropertyRef Name="MarketSurveyId" />
+            </Principal>
+            <Dependent Role="T_MarketSurveyProduct">
+              <PropertyRef Name="MarketSurveyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2231,6 +2317,18 @@
             </Principal>
             <Dependent Role="T_Point">
               <PropertyRef Name="LandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_Product_T_ProductType_ProductType">
+          <End Role="T_ProductType" Type="Self.T_ProductType" Multiplicity="0..1" />
+          <End Role="T_Product" Type="Self.T_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="T_Product">
+              <PropertyRef Name="ProductType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2715,6 +2813,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="RAPSystemModelStoreContainer">
+          <EntitySet Name="T_AnnualRate" EntityType="Self.T_AnnualRate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Approval" EntityType="Self.T_Approval" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Approver" EntityType="Self.T_Approver" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_AssetRate" EntityType="Self.T_AssetRate" Schema="dbo" store:Type="Tables" />
@@ -2726,7 +2825,6 @@
           <EntitySet Name="T_Department" EntityType="Self.T_Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_EconomicActivity" EntityType="Self.T_EconomicActivity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Employee" EntityType="Self.T_Employee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="T_ExchangeRate" EntityType="Self.T_ExchangeRate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Good" EntityType="Self.T_Good" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_HouseHold" EntityType="Self.T_HouseHold" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_HouseHoldAttachment" EntityType="Self.T_HouseHoldAttachment" Schema="dbo" store:Type="Tables" />
@@ -2750,6 +2848,7 @@
           <EntitySet Name="T_List" EntityType="Self.T_List" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Location" EntityType="Self.T_Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Log" EntityType="Self.T_Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_MarketSurvey" EntityType="Self.T_MarketSurvey" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_MarketSurveyProduct" EntityType="Self.T_MarketSurveyProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_PAP" EntityType="Self.T_PAP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_PAPAttachment" EntityType="Self.T_PAPAttachment" Schema="dbo" store:Type="Tables" />
@@ -2762,6 +2861,8 @@
           <EntitySet Name="T_PersonRole" EntityType="Self.T_PersonRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Point" EntityType="Self.T_Point" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Product" EntityType="Self.T_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ProductRate" EntityType="Self.T_ProductRate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ProductType" EntityType="Self.T_ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Property" EntityType="Self.T_Property" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_PropertyAttachment" EntityType="Self.T_PropertyAttachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Region" EntityType="Self.T_Region" Schema="dbo" store:Type="Tables" />
@@ -2772,6 +2873,14 @@
           <EntitySet Name="T_UOM" EntityType="Self.T_UOM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Village" EntityType="Self.T_Village" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_WorkFlow" EntityType="Self.T_WorkFlow" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__T_MarketS__Statu__1EF99443" Association="Self.FK__T_MarketS__Statu__1EF99443">
+            <End Role="T_List" EntitySet="T_List" />
+            <End Role="T_MarketSurvey" EntitySet="T_MarketSurvey" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_AnnualRate_T_List_RateType" Association="Self.FK_T_AnnualRate_T_List_RateType">
+            <End Role="T_List" EntitySet="T_List" />
+            <End Role="T_AnnualRate" EntitySet="T_AnnualRate" />
+          </AssociationSet>
           <AssociationSet Name="FK_T_Approval_T_Employee_Approver" Association="Self.FK_T_Approval_T_Employee_Approver">
             <End Role="T_Employee" EntitySet="T_Employee" />
             <End Role="T_Approval" EntitySet="T_Approval" />
@@ -2789,7 +2898,7 @@
             <End Role="T_Approver" EntitySet="T_Approver" />
           </AssociationSet>
           <AssociationSet Name="FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" Association="Self.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId">
-            <End Role="T_ExchangeRate" EntitySet="T_ExchangeRate" />
+            <End Role="T_AnnualRate" EntitySet="T_AnnualRate" />
             <End Role="T_AssetRate" EntitySet="T_AssetRate" />
           </AssociationSet>
           <AssociationSet Name="FK_T_AssetRate_T_Product_ProductId" Association="Self.FK_T_AssetRate_T_Product_ProductId">
@@ -3112,8 +3221,12 @@
             <End Role="T_Region" EntitySet="T_Region" />
             <End Role="T_Location" EntitySet="T_Location" />
           </AssociationSet>
-          <AssociationSet Name="FK_T_MarketSurveyProduct_T_List_Market" Association="Self.FK_T_MarketSurveyProduct_T_List_Market">
+          <AssociationSet Name="FK_T_MarketSurveyProduct_T_List_MarketId" Association="Self.FK_T_MarketSurveyProduct_T_List_MarketId">
             <End Role="T_List" EntitySet="T_List" />
+            <End Role="T_MarketSurveyProduct" EntitySet="T_MarketSurveyProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_MarketSurveyProduct_T_MarketSurvey_MarketSurveyId" Association="Self.FK_T_MarketSurveyProduct_T_MarketSurvey_MarketSurveyId">
+            <End Role="T_MarketSurvey" EntitySet="T_MarketSurvey" />
             <End Role="T_MarketSurveyProduct" EntitySet="T_MarketSurveyProduct" />
           </AssociationSet>
           <AssociationSet Name="FK_T_MarketSurveyProduct_T_Product_ProductId" Association="Self.FK_T_MarketSurveyProduct_T_Product_ProductId">
@@ -3211,6 +3324,10 @@
           <AssociationSet Name="FK_T_Point_T_Land_LandId" Association="Self.FK_T_Point_T_Land_LandId">
             <End Role="T_Land" EntitySet="T_Land" />
             <End Role="T_Point" EntitySet="T_Point" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_Product_T_ProductType_ProductType" Association="Self.FK_T_Product_T_ProductType_ProductType">
+            <End Role="T_ProductType" EntitySet="T_ProductType" />
+            <End Role="T_Product" EntitySet="T_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_T_Property_T_AssetType_PropertyType" Association="Self.FK_T_Property_T_AssetType_PropertyType">
             <End Role="T_AssetType" EntitySet="T_AssetType" />
@@ -3377,6 +3494,21 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RAPSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_AnnualRate">
+          <Key>
+            <PropertyRef Name="ExchangeRateId" />
+          </Key>
+          <Property Name="ExchangeRateId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Rate" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="RateType" Type="Int32" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="T_List" Relationship="Self.FK_T_AnnualRate_T_List_RateType" FromRole="T_AnnualRate" ToRole="T_List" />
+          <NavigationProperty Name="T_AssetRate" Relationship="Self.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" FromRole="T_AnnualRate" ToRole="T_AssetRate" />
+        </EntityType>
         <EntityType Name="T_Approval">
           <Key>
             <PropertyRef Name="ApprovalId" />
@@ -3445,7 +3577,7 @@
           <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="T_ExchangeRate" Relationship="Self.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" FromRole="T_AssetRate" ToRole="T_ExchangeRate" />
+          <NavigationProperty Name="T_AnnualRate" Relationship="Self.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" FromRole="T_AssetRate" ToRole="T_AnnualRate" />
           <NavigationProperty Name="T_Product" Relationship="Self.FK_T_AssetRate_T_Product_ProductId" FromRole="T_AssetRate" ToRole="T_Product" />
           <NavigationProperty Name="T_UOM" Relationship="Self.FK_T_AssetRate_T_UOM_PriceUOM" FromRole="T_AssetRate" ToRole="T_UOM" />
           <NavigationProperty Name="T_UOM1" Relationship="Self.FK_T_AssetRate_T_UOM_UOMId" FromRole="T_AssetRate" ToRole="T_UOM" />
@@ -3582,19 +3714,6 @@
           <NavigationProperty Name="T_Request" Relationship="Self.FK_T_Request_T_Employee_Requestor" FromRole="T_Employee" ToRole="T_Request" />
           <NavigationProperty Name="T_WorkFlow" Relationship="Self.FK_T_WorkFlow_T_Employee_Handler" FromRole="T_Employee" ToRole="T_WorkFlow" />
         </EntityType>
-        <EntityType Name="T_ExchangeRate">
-          <Key>
-            <PropertyRef Name="ExchangeRateId" />
-          </Key>
-          <Property Name="ExchangeRateId" Type="Int32" Nullable="false" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="Rate" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
-          <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="T_AssetRate" Relationship="Self.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" FromRole="T_ExchangeRate" ToRole="T_AssetRate" />
-        </EntityType>
         <EntityType Name="T_Good">
           <Key>
             <PropertyRef Name="GoodId" />
@@ -3622,7 +3741,12 @@
           <Property Name="LastWeekExpense" Type="Decimal" Precision="15" Scale="2" />
           <Property Name="FishOrMeat" Type="Boolean" Nullable="false" />
           <Property Name="EnoughFood" Type="Boolean" Nullable="false" />
+          <Property Name="TabletsSource" Type="Int32" Nullable="false" />
+          <Property Name="LastWeekDesease" Type="Int32" Nullable="false" />
           <Property Name="SkinDesease" Type="Boolean" Nullable="false" />
+          <Property Name="MosquitoNetSource" Type="Int32" Nullable="false" />
+          <Property Name="MosquitoNetUser" Type="Int32" Nullable="false" />
+          <Property Name="SavingType" Type="Int32" Nullable="false" />
           <Property Name="PaidWorkersQty" Type="Int32" Nullable="false" />
           <Property Name="PaidWorkersTimes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
@@ -3861,6 +3985,7 @@
           <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoomQty" Type="Int32" />
           <NavigationProperty Name="T_HouseHold" Relationship="Self.FK_T_HouseholdResidence_T_HouseHold_HouseholdId" FromRole="T_HouseHoldResidence" ToRole="T_HouseHold" />
           <NavigationProperty Name="T_List" Relationship="Self.FK_T_HouseholdResidence_T_List_ArrivalReason" FromRole="T_HouseHoldResidence" ToRole="T_List" />
           <NavigationProperty Name="T_List1" Relationship="Self.FK_T_HouseholdResidence_T_List_RoofType" FromRole="T_HouseHoldResidence" ToRole="T_List" />
@@ -3868,7 +3993,6 @@
           <NavigationProperty Name="T_List3" Relationship="Self.FK_T_HouseholdResidence_T_List_ToiletType" FromRole="T_HouseHoldResidence" ToRole="T_List" />
           <NavigationProperty Name="T_List4" Relationship="Self.FK_T_HouseholdResidence_T_List_Wall_Type" FromRole="T_HouseHoldResidence" ToRole="T_List" />
           <NavigationProperty Name="T_Residence" Relationship="Self.FK_T_HouseholdResidence_T_Residence_ResidenceId" FromRole="T_HouseHoldResidence" ToRole="T_Residence" />
-          <Property Name="RoomQty" Type="Int32" />
         </EntityType>
         <EntityType Name="T_HouseHoldRevenue">
           <Key>
@@ -3905,7 +4029,8 @@
             <PropertyRef Name="LACId" />
           </Key>
           <Property Name="LACId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LACName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LAC_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LACName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="LACRequestId" Type="Int32" Nullable="false" />
           <Property Name="LACStatus" Type="Int32" Nullable="false" />
           <Property Name="Realcosts" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
@@ -3933,7 +4058,6 @@
           <NavigationProperty Name="T_LandLAC" Relationship="Self.FK_T_LandLAC_T_LAC_LAC_ID" FromRole="T_LAC" ToRole="T_LandLAC" />
           <NavigationProperty Name="T_PAPLAC" Relationship="Self.FK_T_PAPLAC_T_Lac_LACId" FromRole="T_LAC" ToRole="T_PAPLAC" />
           <NavigationProperty Name="T_Property" Relationship="Self.FK_T_Property_T_LAC_LACId" FromRole="T_LAC" ToRole="T_Property" />
-          <Property Name="LAC_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="T_LACRequest">
           <Key>
@@ -3942,7 +4066,7 @@
           <Property Name="LACRequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Requestid" Type="Int32" Nullable="false" />
           <Property Name="ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProjectCostCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProjectCostCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="WorkDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AccessScheduledDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RegionId" Type="Int32" Nullable="false" />
@@ -4028,6 +4152,7 @@
           <Property Name="ListName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ListValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ListLabel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="T_AnnualRate" Relationship="Self.FK_T_AnnualRate_T_List_RateType" FromRole="T_List" ToRole="T_AnnualRate" />
           <NavigationProperty Name="T_Approval" Relationship="Self.FK_T_Approval_T_List_ApprovalStatus" FromRole="T_List" ToRole="T_Approval" />
           <NavigationProperty Name="T_Attachment" Relationship="Self.FK_T_Attachment_T_List_RequestAttachmentType" FromRole="T_List" ToRole="T_Attachment" />
           <NavigationProperty Name="T_Good" Relationship="Self.FK_T_Good_T_List_GoodType" FromRole="T_List" ToRole="T_Good" />
@@ -4051,8 +4176,9 @@
           <NavigationProperty Name="T_LAC" Relationship="Self.FK_T_LAC_T_List_LACStatus" FromRole="T_List" ToRole="T_LAC" />
           <NavigationProperty Name="T_Land" Relationship="Self.FK_T_Land_T_List_Land_Status" FromRole="T_List" ToRole="T_Land" />
           <NavigationProperty Name="T_Land1" Relationship="Self.FK_T_Land_T_List_LandCategory" FromRole="T_List" ToRole="T_Land" />
+          <NavigationProperty Name="T_MarketSurvey" Relationship="Self.FK__T_MarketS__Statu__1EF99443" FromRole="T_List" ToRole="T_MarketSurvey" />
           <NavigationProperty Name="T_PersonRole" Relationship="Self.FK_T_EmployeeRole_T_List_Role" FromRole="T_List" ToRole="T_PersonRole" />
-          <NavigationProperty Name="T_MarketSurveyProduct" Relationship="Self.FK_T_MarketSurveyProduct_T_List_Market" FromRole="T_List" ToRole="T_MarketSurveyProduct" />
+          <NavigationProperty Name="T_MarketSurveyProduct" Relationship="Self.FK_T_MarketSurveyProduct_T_List_MarketId" FromRole="T_List" ToRole="T_MarketSurveyProduct" />
           <NavigationProperty Name="T_PAPLAC" Relationship="Self.FK_T_PAPLAC_T_List_PaymentPreference" FromRole="T_List" ToRole="T_PAPLAC" />
           <NavigationProperty Name="T_Person" Relationship="Self.FK_T_Person_T_List_Status" FromRole="T_List" ToRole="T_Person" />
           <NavigationProperty Name="T_Person1" Relationship="Self.FK_T_Person_T_List_VulnerabilityTypeId" FromRole="T_List" ToRole="T_Person" />
@@ -4101,12 +4227,28 @@
           <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="LoggedDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="T_MarketSurvey">
+          <Key>
+            <PropertyRef Name="MarketSurveyId" />
+          </Key>
+          <Property Name="MarketSurveyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MarketSurveyName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="ClosedDate" Type="DateTime" Precision="0" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="T_List" Relationship="Self.FK__T_MarketS__Statu__1EF99443" FromRole="T_MarketSurvey" ToRole="T_List" />
+          <NavigationProperty Name="T_MarketSurveyProduct" Relationship="Self.FK_T_MarketSurveyProduct_T_MarketSurvey_MarketSurveyId" FromRole="T_MarketSurvey" ToRole="T_MarketSurveyProduct" />
+        </EntityType>
         <EntityType Name="T_MarketSurveyProduct">
           <Key>
             <PropertyRef Name="MarketSurveyProductId" />
           </Key>
           <Property Name="MarketSurveyProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Market" Type="Int32" Nullable="false" />
+          <Property Name="MarketSurveyId" Type="Int32" Nullable="false" />
+          <Property Name="MarketId" Type="Int32" Nullable="false" />
           <Property Name="SurveyDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="UOMId" Type="Int32" Nullable="false" />
@@ -4120,7 +4262,8 @@
           <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="T_List" Relationship="Self.FK_T_MarketSurveyProduct_T_List_Market" FromRole="T_MarketSurveyProduct" ToRole="T_List" />
+          <NavigationProperty Name="T_List" Relationship="Self.FK_T_MarketSurveyProduct_T_List_MarketId" FromRole="T_MarketSurveyProduct" ToRole="T_List" />
+          <NavigationProperty Name="T_MarketSurvey" Relationship="Self.FK_T_MarketSurveyProduct_T_MarketSurvey_MarketSurveyId" FromRole="T_MarketSurveyProduct" ToRole="T_MarketSurvey" />
           <NavigationProperty Name="T_Product" Relationship="Self.FK_T_MarketSurveyProduct_T_Product_ProductId" FromRole="T_MarketSurveyProduct" ToRole="T_Product" />
           <NavigationProperty Name="T_UOM" Relationship="Self.FK_T_MarketSurveyProduct_T_UOM_UOMId" FromRole="T_MarketSurveyProduct" ToRole="T_UOM" />
         </EntityType>
@@ -4193,7 +4336,7 @@
           <Property Name="Surveyor" Type="Int32" />
           <Property Name="SurveyGPS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SurveyCamera" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FileNumber" Type="Int32" Nullable="false" />
+          <Property Name="FileNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
@@ -4328,6 +4471,12 @@
           </Key>
           <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SecondaryCulture" Type="Int32" />
+          <Property Name="PlantPerHa" Type="Int32" />
+          <Property Name="ProductType" Type="Int32" />
+          <Property Name="ProductPerKg" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="YearMaturity" Type="Int32" />
+          <Property Name="SeedlingCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="English" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Swahili" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Sanga" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
@@ -4338,6 +4487,32 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="T_AssetRate" Relationship="Self.FK_T_AssetRate_T_Product_ProductId" FromRole="T_Product" ToRole="T_AssetRate" />
           <NavigationProperty Name="T_MarketSurveyProduct" Relationship="Self.FK_T_MarketSurveyProduct_T_Product_ProductId" FromRole="T_Product" ToRole="T_MarketSurveyProduct" />
+          <NavigationProperty Name="T_ProductType" Relationship="Self.FK_T_Product_T_ProductType_ProductType" FromRole="T_Product" ToRole="T_ProductType" />
+        </EntityType>
+        <EntityType Name="T_ProductRate">
+          <Key>
+            <PropertyRef Name="ProductRateId" />
+          </Key>
+          <Property Name="ProductRateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="T_Product" Relationship="Self.FK_T_Product_T_ProductType_ProductType" FromRole="T_ProductType" ToRole="T_Product" />
         </EntityType>
         <EntityType Name="T_Property">
           <Key>
@@ -4586,6 +4761,30 @@
           <NavigationProperty Name="T_List" Relationship="Self.FK_T_WorkFlow_T_List_ActionType" FromRole="T_WorkFlow" ToRole="T_List" />
           <NavigationProperty Name="T_List1" Relationship="Self.FK_T_WorkFlow_T_List_RequestType" FromRole="T_WorkFlow" ToRole="T_List" />
         </EntityType>
+        <Association Name="FK_T_AnnualRate_T_List_RateType">
+          <End Role="T_List" Type="Self.T_List" Multiplicity="0..1" />
+          <End Role="T_AnnualRate" Type="Self.T_AnnualRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_List">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="T_AnnualRate">
+              <PropertyRef Name="RateType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_AssetRate_T_ExchangeRate_ExchangeRateId">
+          <End Role="T_AnnualRate" Type="Self.T_AnnualRate" Multiplicity="1" />
+          <End Role="T_AssetRate" Type="Self.T_AssetRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_AnnualRate">
+              <PropertyRef Name="ExchangeRateId" />
+            </Principal>
+            <Dependent Role="T_AssetRate">
+              <PropertyRef Name="ExchangeRateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_T_Approval_T_Employee_Approver">
           <End Role="T_Employee" Type="Self.T_Employee" Multiplicity="1" />
           <End Role="T_Approval" Type="Self.T_Approval" Multiplicity="*" />
@@ -4643,18 +4842,6 @@
             </Principal>
             <Dependent Role="T_Delegation">
               <PropertyRef Name="ApproverId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_T_AssetRate_T_ExchangeRate_ExchangeRateId">
-          <End Role="T_ExchangeRate" Type="Self.T_ExchangeRate" Multiplicity="1" />
-          <End Role="T_AssetRate" Type="Self.T_AssetRate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="T_ExchangeRate">
-              <PropertyRef Name="ExchangeRateId" />
-            </Principal>
-            <Dependent Role="T_AssetRate">
-              <PropertyRef Name="ExchangeRateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5786,6 +5973,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__T_MarketS__Statu__1EF99443">
+          <End Role="T_List" Type="Self.T_List" Multiplicity="1" />
+          <End Role="T_MarketSurvey" Type="Self.T_MarketSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_List">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="T_MarketSurvey">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_T_EmployeeRole_T_List_Role">
           <End Role="T_List" Type="Self.T_List" Multiplicity="1" />
           <End Role="T_PersonRole" Type="Self.T_PersonRole" Multiplicity="*" />
@@ -5798,7 +5997,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_T_MarketSurveyProduct_T_List_Market">
+        <Association Name="FK_T_MarketSurveyProduct_T_List_MarketId">
           <End Role="T_List" Type="Self.T_List" Multiplicity="1" />
           <End Role="T_MarketSurveyProduct" Type="Self.T_MarketSurveyProduct" Multiplicity="*" />
           <ReferentialConstraint>
@@ -5806,7 +6005,7 @@
               <PropertyRef Name="ListId" />
             </Principal>
             <Dependent Role="T_MarketSurveyProduct">
-              <PropertyRef Name="Market" />
+              <PropertyRef Name="MarketSurveyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6062,6 +6261,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_T_MarketSurveyProduct_T_MarketSurvey_MarketSurveyId">
+          <End Role="T_MarketSurvey" Type="Self.T_MarketSurvey" Multiplicity="1" />
+          <End Role="T_MarketSurveyProduct" Type="Self.T_MarketSurveyProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_MarketSurvey">
+              <PropertyRef Name="MarketSurveyId" />
+            </Principal>
+            <Dependent Role="T_MarketSurveyProduct">
+              <PropertyRef Name="MarketSurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_T_MarketSurveyProduct_T_Product_ProductId">
           <End Role="T_Product" Type="Self.T_Product" Multiplicity="1" />
           <End Role="T_MarketSurveyProduct" Type="Self.T_MarketSurveyProduct" Multiplicity="*" />
@@ -6290,6 +6501,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_T_Product_T_ProductType_ProductType">
+          <End Role="T_ProductType" Type="Self.T_ProductType" Multiplicity="0..1" />
+          <End Role="T_Product" Type="Self.T_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="T_Product">
+              <PropertyRef Name="ProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_T_Property_T_UOM_StructureUOM">
           <End Role="T_UOM" Type="Self.T_UOM" Multiplicity="0..1" />
           <End Role="T_Property" Type="Self.T_Property" Multiplicity="*" />
@@ -6387,6 +6610,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="RAPSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_AnnualRate" EntityType="Self.T_AnnualRate" />
           <EntitySet Name="T_Approval" EntityType="Self.T_Approval" />
           <EntitySet Name="T_Approver" EntityType="Self.T_Approver" />
           <EntitySet Name="T_AssetRate" EntityType="Self.T_AssetRate" />
@@ -6398,7 +6622,6 @@
           <EntitySet Name="T_Department" EntityType="Self.T_Department" />
           <EntitySet Name="T_EconomicActivity" EntityType="Self.T_EconomicActivity" />
           <EntitySet Name="T_Employee" EntityType="Self.T_Employee" />
-          <EntitySet Name="T_ExchangeRate" EntityType="Self.T_ExchangeRate" />
           <EntitySet Name="T_Good" EntityType="Self.T_Good" />
           <EntitySet Name="T_HouseHold" EntityType="Self.T_HouseHold" />
           <EntitySet Name="T_HouseHoldAttachment" EntityType="Self.T_HouseHoldAttachment" />
@@ -6422,6 +6645,7 @@
           <EntitySet Name="T_List" EntityType="Self.T_List" />
           <EntitySet Name="T_Location" EntityType="Self.T_Location" />
           <EntitySet Name="T_Log" EntityType="Self.T_Log" />
+          <EntitySet Name="T_MarketSurvey" EntityType="Self.T_MarketSurvey" />
           <EntitySet Name="T_MarketSurveyProduct" EntityType="Self.T_MarketSurveyProduct" />
           <EntitySet Name="T_PAP" EntityType="Self.T_PAP" />
           <EntitySet Name="T_PAPAttachment" EntityType="Self.T_PAPAttachment" />
@@ -6434,6 +6658,8 @@
           <EntitySet Name="T_PersonRole" EntityType="Self.T_PersonRole" />
           <EntitySet Name="T_Point" EntityType="Self.T_Point" />
           <EntitySet Name="T_Product" EntityType="Self.T_Product" />
+          <EntitySet Name="T_ProductRate" EntityType="Self.T_ProductRate" />
+          <EntitySet Name="T_ProductType" EntityType="Self.T_ProductType" />
           <EntitySet Name="T_Property" EntityType="Self.T_Property" />
           <EntitySet Name="T_PropertyAttachment" EntityType="Self.T_PropertyAttachment" />
           <EntitySet Name="T_Region" EntityType="Self.T_Region" />
@@ -6444,6 +6670,14 @@
           <EntitySet Name="T_UOM" EntityType="Self.T_UOM" />
           <EntitySet Name="T_Village" EntityType="Self.T_Village" />
           <EntitySet Name="T_WorkFlow" EntityType="Self.T_WorkFlow" />
+          <AssociationSet Name="FK_T_AnnualRate_T_List_RateType" Association="Self.FK_T_AnnualRate_T_List_RateType">
+            <End Role="T_List" EntitySet="T_List" />
+            <End Role="T_AnnualRate" EntitySet="T_AnnualRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" Association="Self.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId">
+            <End Role="T_AnnualRate" EntitySet="T_AnnualRate" />
+            <End Role="T_AssetRate" EntitySet="T_AssetRate" />
+          </AssociationSet>
           <AssociationSet Name="FK_T_Approval_T_Employee_Approver" Association="Self.FK_T_Approval_T_Employee_Approver">
             <End Role="T_Employee" EntitySet="T_Employee" />
             <End Role="T_Approval" EntitySet="T_Approval" />
@@ -6463,10 +6697,6 @@
           <AssociationSet Name="FK_T_Delegation_T_Approver_ApproverId" Association="Self.FK_T_Delegation_T_Approver_ApproverId">
             <End Role="T_Approver" EntitySet="T_Approver" />
             <End Role="T_Delegation" EntitySet="T_Delegation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_T_AssetRate_T_ExchangeRate_ExchangeRateId" Association="Self.FK_T_AssetRate_T_ExchangeRate_ExchangeRateId">
-            <End Role="T_ExchangeRate" EntitySet="T_ExchangeRate" />
-            <End Role="T_AssetRate" EntitySet="T_AssetRate" />
           </AssociationSet>
           <AssociationSet Name="FK_T_AssetRate_T_Product_ProductId" Association="Self.FK_T_AssetRate_T_Product_ProductId">
             <End Role="T_Product" EntitySet="T_Product" />
@@ -6844,11 +7074,15 @@
             <End Role="T_Village" EntitySet="T_Village" />
             <End Role="T_LandVillage" EntitySet="T_LandVillage" />
           </AssociationSet>
+          <AssociationSet Name="FK__T_MarketS__Statu__1EF99443" Association="Self.FK__T_MarketS__Statu__1EF99443">
+            <End Role="T_List" EntitySet="T_List" />
+            <End Role="T_MarketSurvey" EntitySet="T_MarketSurvey" />
+          </AssociationSet>
           <AssociationSet Name="FK_T_EmployeeRole_T_List_Role" Association="Self.FK_T_EmployeeRole_T_List_Role">
             <End Role="T_List" EntitySet="T_List" />
             <End Role="T_PersonRole" EntitySet="T_PersonRole" />
           </AssociationSet>
-          <AssociationSet Name="FK_T_MarketSurveyProduct_T_List_Market" Association="Self.FK_T_MarketSurveyProduct_T_List_Market">
+          <AssociationSet Name="FK_T_MarketSurveyProduct_T_List_MarketId" Association="Self.FK_T_MarketSurveyProduct_T_List_MarketId">
             <End Role="T_List" EntitySet="T_List" />
             <End Role="T_MarketSurveyProduct" EntitySet="T_MarketSurveyProduct" />
           </AssociationSet>
@@ -6936,6 +7170,10 @@
             <End Role="T_Region" EntitySet="T_Region" />
             <End Role="T_Location" EntitySet="T_Location" />
           </AssociationSet>
+          <AssociationSet Name="FK_T_MarketSurveyProduct_T_MarketSurvey_MarketSurveyId" Association="Self.FK_T_MarketSurveyProduct_T_MarketSurvey_MarketSurveyId">
+            <End Role="T_MarketSurvey" EntitySet="T_MarketSurvey" />
+            <End Role="T_MarketSurveyProduct" EntitySet="T_MarketSurveyProduct" />
+          </AssociationSet>
           <AssociationSet Name="FK_T_MarketSurveyProduct_T_Product_ProductId" Association="Self.FK_T_MarketSurveyProduct_T_Product_ProductId">
             <End Role="T_Product" EntitySet="T_Product" />
             <End Role="T_MarketSurveyProduct" EntitySet="T_MarketSurveyProduct" />
@@ -7012,6 +7250,10 @@
             <End Role="T_Point" EntitySet="T_Point" />
             <End Role="T_Village" EntitySet="T_Village" />
           </AssociationSet>
+          <AssociationSet Name="FK_T_Product_T_ProductType_ProductType" Association="Self.FK_T_Product_T_ProductType_ProductType">
+            <End Role="T_ProductType" EntitySet="T_ProductType" />
+            <End Role="T_Product" EntitySet="T_Product" />
+          </AssociationSet>
           <AssociationSet Name="FK_T_Property_T_UOM_StructureUOM" Association="Self.FK_T_Property_T_UOM_StructureUOM">
             <End Role="T_UOM" EntitySet="T_UOM" />
             <End Role="T_Property" EntitySet="T_Property" />
@@ -7051,6 +7293,20 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="RAPSystemModelStoreContainer" CdmEntityContainer="RAPSystemEntities">
+          <EntitySetMapping Name="T_AnnualRate">
+            <EntityTypeMapping TypeName="RAPSystemModel.T_AnnualRate">
+              <MappingFragment StoreEntitySet="T_AnnualRate">
+                <ScalarProperty Name="ExchangeRateId" ColumnName="ExchangeRateId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="RateType" ColumnName="RateType" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="T_Approval">
             <EntityTypeMapping TypeName="RAPSystemModel.T_Approval">
               <MappingFragment StoreEntitySet="T_Approval">
@@ -7228,19 +7484,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="T_ExchangeRate">
-            <EntityTypeMapping TypeName="RAPSystemModel.T_ExchangeRate">
-              <MappingFragment StoreEntitySet="T_ExchangeRate">
-                <ScalarProperty Name="ExchangeRateId" ColumnName="ExchangeRateId" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Created" ColumnName="Created" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Updated" ColumnName="Updated" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="T_Good">
             <EntityTypeMapping TypeName="RAPSystemModel.T_Good">
               <MappingFragment StoreEntitySet="T_Good">
@@ -7266,7 +7509,12 @@
                 <ScalarProperty Name="LastWeekExpense" ColumnName="LastWeekExpense" />
                 <ScalarProperty Name="FishOrMeat" ColumnName="FishOrMeat" />
                 <ScalarProperty Name="EnoughFood" ColumnName="EnoughFood" />
+                <ScalarProperty Name="TabletsSource" ColumnName="TabletsSource" />
+                <ScalarProperty Name="LastWeekDesease" ColumnName="LastWeekDesease" />
                 <ScalarProperty Name="SkinDesease" ColumnName="SkinDesease" />
+                <ScalarProperty Name="MosquitoNetSource" ColumnName="MosquitoNetSource" />
+                <ScalarProperty Name="MosquitoNetUser" ColumnName="MosquitoNetUser" />
+                <ScalarProperty Name="SavingType" ColumnName="SavingType" />
                 <ScalarProperty Name="PaidWorkersQty" ColumnName="PaidWorkersQty" />
                 <ScalarProperty Name="PaidWorkersTimes" ColumnName="PaidWorkersTimes" />
                 <ScalarProperty Name="Created" ColumnName="Created" />
@@ -7448,7 +7696,6 @@
           <EntitySetMapping Name="T_HouseHoldResidence">
             <EntityTypeMapping TypeName="RAPSystemModel.T_HouseHoldResidence">
               <MappingFragment StoreEntitySet="T_HouseHoldResidence">
-                <ScalarProperty Name="RoomQty" ColumnName="RoomQty" />
                 <ScalarProperty Name="HouseholdResidenceId" ColumnName="HouseholdResidenceId" />
                 <ScalarProperty Name="HouseholdId" ColumnName="HouseholdId" />
                 <ScalarProperty Name="ResidenceId" ColumnName="ResidenceId" />
@@ -7465,6 +7712,7 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Updated" ColumnName="Updated" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="RoomQty" ColumnName="RoomQty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7499,8 +7747,8 @@
           <EntitySetMapping Name="T_LAC">
             <EntityTypeMapping TypeName="RAPSystemModel.T_LAC">
               <MappingFragment StoreEntitySet="T_LAC">
-                <ScalarProperty Name="LAC_ID" ColumnName="LAC_ID" />
                 <ScalarProperty Name="LACId" ColumnName="LACId" />
+                <ScalarProperty Name="LAC_ID" ColumnName="LAC_ID" />
                 <ScalarProperty Name="LACName" ColumnName="LACName" />
                 <ScalarProperty Name="LACRequestId" ColumnName="LACRequestId" />
                 <ScalarProperty Name="LACStatus" ColumnName="LACStatus" />
@@ -7630,11 +7878,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_MarketSurvey">
+            <EntityTypeMapping TypeName="RAPSystemModel.T_MarketSurvey">
+              <MappingFragment StoreEntitySet="T_MarketSurvey">
+                <ScalarProperty Name="MarketSurveyId" ColumnName="MarketSurveyId" />
+                <ScalarProperty Name="MarketSurveyName" ColumnName="MarketSurveyName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClosedDate" ColumnName="ClosedDate" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="T_MarketSurveyProduct">
             <EntityTypeMapping TypeName="RAPSystemModel.T_MarketSurveyProduct">
               <MappingFragment StoreEntitySet="T_MarketSurveyProduct">
                 <ScalarProperty Name="MarketSurveyProductId" ColumnName="MarketSurveyProductId" />
-                <ScalarProperty Name="Market" ColumnName="Market" />
+                <ScalarProperty Name="MarketSurveyId" ColumnName="MarketSurveyId" />
+                <ScalarProperty Name="MarketId" ColumnName="MarketId" />
                 <ScalarProperty Name="SurveyDate" ColumnName="SurveyDate" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="UOMId" ColumnName="UOMId" />
@@ -7821,10 +8084,42 @@
               <MappingFragment StoreEntitySet="T_Product">
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SecondaryCulture" ColumnName="SecondaryCulture" />
+                <ScalarProperty Name="PlantPerHa" ColumnName="PlantPerHa" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="ProductPerKg" ColumnName="ProductPerKg" />
+                <ScalarProperty Name="YearMaturity" ColumnName="YearMaturity" />
+                <ScalarProperty Name="SeedlingCost" ColumnName="SeedlingCost" />
                 <ScalarProperty Name="English" ColumnName="English" />
                 <ScalarProperty Name="Swahili" ColumnName="Swahili" />
                 <ScalarProperty Name="Sanga" ColumnName="Sanga" />
                 <ScalarProperty Name="AssetTypeId" ColumnName="AssetTypeId" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ProductRate">
+            <EntityTypeMapping TypeName="RAPSystemModel.T_ProductRate">
+              <MappingFragment StoreEntitySet="T_ProductRate">
+                <ScalarProperty Name="ProductRateId" ColumnName="ProductRateId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ProductType">
+            <EntityTypeMapping TypeName="RAPSystemModel.T_ProductType">
+              <MappingFragment StoreEntitySet="T_ProductType">
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
                 <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Updated" ColumnName="Updated" />

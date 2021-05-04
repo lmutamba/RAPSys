@@ -12,10 +12,10 @@ namespace RAPSys.Models.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class T_ExchangeRate
+    public partial class T_AnnualRate
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public T_ExchangeRate()
+        public T_AnnualRate()
         {
             this.T_AssetRate = new HashSet<T_AssetRate>();
         }
@@ -23,11 +23,13 @@ namespace RAPSys.Models.Model
         public int ExchangeRateId { get; set; }
         public int Year { get; set; }
         public decimal Rate { get; set; }
+        public Nullable<int> RateType { get; set; }
         public System.DateTime Created { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime Updated { get; set; }
         public string UpdatedBy { get; set; }
     
+        public virtual T_List T_List { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<T_AssetRate> T_AssetRate { get; set; }
     }

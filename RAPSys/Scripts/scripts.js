@@ -974,21 +974,6 @@ $(document).ready(function () {
         //console.log(householdID);
         formData = new FormData();
 
-        //if (householdID == null || householdID < 1) {
-        //    $.alert({
-        //        icon: 'fa fa-spinner fa-spin',
-        //        type: 'blue',
-        //        theme: 'dark',
-        //        title: 'Information',
-        //        content: 'This PAP has never been surveyed. You can not collect Land Data for a non-surveyed PAP ',
-        //        backgroundDismiss: false,
-        //        backgroundDismissAnimation: 'glow',
-        //    });
-        //}
-        //else {
-            
-        //}
-
         $("#collectLandModal input[type='text']").val('');
         $("#collectLandModal input[type='radio'], #collectLandModal input[type='checkbox']").prop('checked', false);
         $("#collectLandModal select").val('-1');
@@ -1507,7 +1492,7 @@ function getPAP(id) {
 function getPAPOwner(id) {
     $(id).autocomplete({
         source: function (request, response) {
-            console.log(request.term);
+            //console.log(request.term);
             $.ajax({
                 type: "POST",
                 url: "/Helper/GetPAP/",
@@ -1530,7 +1515,7 @@ function getPAPOwner(id) {
 function getCultureType(id) {
     $(id).autocomplete({
         source: function (request, response) {
-            console.log(request.term);
+            //console.log(request.term);
             $.ajax({
                 type: "POST",
                 url: "/Helper/GetCultureType/",
@@ -1667,7 +1652,6 @@ function dateDiffDays(currentDate, actionDate) {
 $("#newLandRequestModal #projectCreateRequest").on("click", function () {
     let projectName = $("#newLandRequestModal #projectName").val();
     let projectDescription = $("#newLandRequestModal #projectDescription").val();
-    let projectCostCode = $("#newLandRequestModal #projectCostCode").val();
     let projectDate = $("#newLandRequestModal #projectDate").val();
     let urgent = $("#newLandRequestModal #projectUrgent").prop('checked');
     let contactPerson = $("#newLandRequestModal #projectContactPerson").val();
@@ -1690,9 +1674,6 @@ $("#newLandRequestModal #projectCreateRequest").on("click", function () {
     if (contactPerson == "" || contactPerson == null)
         errors.push("Please specify the Contact Person");
 
-    if (projectCostCode == "" || projectCostCode == null)
-        errors.push("Define a correct Cost Code for this project");
-
     if (!Date.parse(projectDate))
         errors.push("You did not provide a valid start Date");
 
@@ -1703,13 +1684,6 @@ $("#newLandRequestModal #projectCreateRequest").on("click", function () {
     var diffDays = dateDiffDays(currentDate, projectDate2);
     if (diffDays < 7) 
         errors.push("You can not submit a request less than 7 days prior the project schedule date!");
-    
-
-    //if (fileMAP == null || fileMAP == "")
-    //    errors.push("Please upload the project file for this project");
-
-    //if (fileMAP.files.length === 0)
-    //    errors.push("You need to upload either a MAP file or a GPS file");
 
     if (errors.length > 0) {
         var errorMessage = "<ul>";
@@ -1723,18 +1697,11 @@ $("#newLandRequestModal #projectCreateRequest").on("click", function () {
     else {
         var formData = new FormData();
 
-        //var fileNameAFE;
-        //if (fileAFE.files.length > 0) {
-        //    fileNameAFE = fileAFE.files[0].name;
-        //    formData.append(fileNameAFE, fileAFE.files[0]);
-        //}
-
         var fileNameMAP;
         if (fileMAP.files.length > 0) {
             fileNameMAP = fileMAP.files[0].name;
             formData.append(fileNameMAP, fileMAP.files[0]);
         }
-        //alert(fileNameMAP);
 
         var fileNameGPS;
         if (fileGPS.files.length > 0) {
@@ -1743,7 +1710,6 @@ $("#newLandRequestModal #projectCreateRequest").on("click", function () {
         }
 
         formData.append('ProjectName', projectName);
-        formData.append('ProjectCostCode', projectCostCode);
         formData.append('WorkDescription', projectDescription);
         formData.append('AccessScheduledDate', projectDate);
         formData.append('IsUrgent', urgent);
@@ -1911,7 +1877,6 @@ $("#newLandRequestModal #projectUpdateRequest").on("click", function () {
     let projectId = $("#newLandRequestModal #LandRequestId").val();
     let projectName = $("#newLandRequestModal #projectName").val();
     let projectDescription = $("#newLandRequestModal #projectDescription").val();
-    let projectCostCode = $("#newLandRequestModal #projectCostCode").val();
     let projectDate = $("#newLandRequestModal #projectDate").val();
     let urgent = $("#newLandRequestModal #projectUrgent").prop('checked');
     let contactPerson = $("#newLandRequestModal #projectContactPerson").val();
@@ -1939,12 +1904,6 @@ $("#newLandRequestModal #projectUpdateRequest").on("click", function () {
 
     if (contactPerson == "" || contactPerson == null)
         errors.push("Please specify the Contact Person");
-
-    //if (attachment == "" || attachment == null)
-    //    errors.push("Please attach all documents - AFE, MAP, GPS");
-
-    //if (location == "" || location == null || location == -1)
-    //    errors.push("Define a correct location for this project");
 
     if (!Date.parse(projectDate))
         errors.push("You did not provide a valid start Date");
@@ -1992,7 +1951,6 @@ $("#newLandRequestModal #projectUpdateRequest").on("click", function () {
 
         formData.append('LacRequestID', projectId);
         formData.append('ProjectName', projectName);
-        formData.append('ProjectCostCode', projectCostCode);
         formData.append('WorkDescription', projectDescription);
         formData.append('AccessScheduledDate', projectDate);
         formData.append('IsUrgent', urgent);
@@ -2916,7 +2874,6 @@ function LoadLandRequest() {
                     '<input type="hidden" class="requestId" value="' + item.RequestId + '"/>' +
                     '</td>' +
                     '<td>' + item.ProjectName + '</td>' +
-                    '<td>' + item.ProjectCostCode + '</td>' +
                     '<td>' + item.RegionName + '</td>' +
                     '<td>' + item.AccessDateString + '</td>' +
                     '<td>' + item.ContactPerson + '</td>' +
@@ -3940,41 +3897,53 @@ function LoadPAPDetails(papID, modalName) {
 }
 
 function LoadOwnerLacDetails(papID, lacID, modal) {
-    let pap = papID.split('(')[1];
-    pap = pap.split(')')[0];
+    if ((papID != null || papID != "") && papID.includes("(")) {
+        let pap = papID.split('(')[1];
+        pap = pap.split(')')[0];
 
-    console.log("PAP ID " + papID + " PAP " + pap + " Modal Name " + modal + " LAC ID " + lacID);
-    
-    if (pap != null || pap != "") {
-        $.ajax({
-            type: "GET",
-            url: "/Community/LoadPapDetailsLac/",
-            data: { PersonID: pap, LacID: lacID },
-            success: function (data) {
-                console.log(data);
-                $('#' + modal + ' #ownerFirstName').val(data.FirstName);
-                $('#' + modal + ' #ownerLastName').val(data.LastName);
-                $('#' + modal + ' #ownerPrimaryResidence').val(data.ResidenceName).prop('disabled', true);
-                $('#' + modal + ' #ownerPicture').fileinput('disable');
-                $('#' + modal + ' #ownerPhotoID').val(data.PhotoID).prop('disabled', true);
-                $('#' + modal + ' #ownerMiddleName').val(data.MiddleName).prop('disabled', true);
-                if (data.FileNumber == "" || data.FileNumber == null)
-                    $('#' + modal + ' #ownerFileID').val(data.FileNumber).prop('disabled', false);
-                else
-                    $('#' + modal + ' #ownerFileID').val(data.FileNumber).prop('disabled', true);
-                $('#' + modal + ' #ownerPersonId').val(data.PersonId).prop('disabled', true);
-            },
-            error: function (error) {
-                console.log(error);
-                $("#" + modal).modal("hide");
-                $.alert({
-                    icon: 'fas fa-exclamation-triangle',
-                    title: "Alert",
-                    content: "Something went wrong. If this persists, please contact the administrator",
-                    type: "red"
-                });
-            }
-        });
+        if (pap != null || pap != "") {
+            
+            $.ajax({
+                type: "GET",
+                url: "/Community/LoadPapDetailsLac/",
+                data: { PersonID: pap, LacID: lacID },
+                success: function (data) {
+                    $('#' + modal + ' #ownerFirstName').val(data.FirstName);
+                    $('#' + modal + ' #ownerLastName').val(data.LastName);
+
+                    if (data.ResidenceName == "" || data.ResidenceName == null)
+                        $('#' + modal + ' #ownerPrimaryResidence').val(data.ResidenceName).prop('disabled', false);
+                    else
+                        $('#' + modal + ' #ownerPrimaryResidence').val(data.ResidenceName).prop('disabled', true);
+
+                    if (data.PhotoID == "0" || data.PhotoID == null || data.PhotoID == "" || data.PhotoID < 1) {
+                        $('#' + modal + ' #ownerPicture').fileinput('enable');
+                        $('#' + modal + ' #ownerPhotoID').val(data.PhotoID).prop('disabled', false);
+                    }
+                    else {
+                        $('#' + modal + ' #ownerPicture').fileinput('disable');
+                        $('#' + modal + ' #ownerPhotoID').val(data.PhotoID).prop('disabled', true);
+                    }
+
+                    $('#' + modal + ' #ownerMiddleName').val(data.MiddleName).prop('disabled', true);
+                    if (data.FileNumber == "" || data.FileNumber == null)
+                        $('#' + modal + ' #ownerFileID').val(data.FileNumber).prop('disabled', false);
+                    else
+                        $('#' + modal + ' #ownerFileID').val(data.FileNumber).prop('disabled', true);
+                    $('#' + modal + ' #ownerPersonId').val(data.PersonId).prop('disabled', true);
+                },
+                error: function (error) {
+                    console.log(error);
+                    $("#" + modal).modal("hide");
+                    $.alert({
+                        icon: 'fas fa-exclamation-triangle',
+                        title: "Alert",
+                        content: "Something went wrong. If this persists, please contact the administrator",
+                        type: "red"
+                    });
+                }
+            });
+        }
     }
 }
 
@@ -3989,15 +3958,12 @@ function LoadPAPLacDetails(papID, lacID, modal) {
         }
     }
 
-    //console.log("PAP ID " + papID + " PAP " + pap + " Modal Name " + modal + " LAC ID " + lacID);
-
-    if (pap != "") {//pap != null || 
+    if (pap != "") {
         $.ajax({
             type: "GET",
             url: "/Community/LoadPapDetailsLac/",
             data: { PersonID: pap, LacID: lacID },
             success: function (data) {
-                console.log(data);
                 if (modal == 'addPAPPropertiesModal') {
                     if (data.FileNumber == "" || data.FileNumber == null)
                         $('#addPAPPropertiesModal #fileID').val(data.FileNumber).prop('disabled', false);
@@ -4440,7 +4406,7 @@ $("#addPAPLACModal #ownershipType").on("change", function () {
 $('#addPAPLACModal').on("click", "#addGoods", function (e) {
     e.preventDefault();
     var errors = [];
-    let user = ($('#addPAPLACModal input[name="ownershipType"]:checked').val() == null ? "PU" : $('#addPAPLACModal input[name="ownershipType"]:checked').val());
+    let user = ($('#addPAPLACModal input[name="owner"]:checked').val() == null ? "PU" : $('#addPAPLACModal input[name="owner"]:checked').val());
 
     if ($('#addPAPLACModal #gpsID').val() == null || $('#addPAPLACModal #gpsID').val() == "")
         errors.push("Please specify the GPS point");
@@ -4452,11 +4418,11 @@ $('#addPAPLACModal').on("click", "#addGoods", function (e) {
         errors.push("Please add the picture ID");
     if (isNaN($('#addPAPLACModal #goodType').val()) || $('#addPAPLACModal #goodType').val() == "")
         errors.push("Please specify a valid property type");
-    if (user == 'U' && ($('#addPAPLACModal #ownerFirstName').val() == null || $('#addPAPLACModal #ownerFirstName').val() == ""))
+    if ((user == 'U' || user == 'P') && ($('#addPAPLACModal #ownerFirstName').val() == null || $('#addPAPLACModal #ownerFirstName').val() == ""))
         errors.push("Please specify Owner First Name");
-    if (user == 'U' && ($('#addPAPLACModal #ownerLastName').val() == null || $('#addPAPLACModal #ownerLastName').val() == ""))
+    if ((user == 'U' || user == 'P') && ($('#addPAPLACModal #ownerLastName').val() == null || $('#addPAPLACModal #ownerLastName').val() == ""))
         errors.push("Please specify Owner Last Name");
-    if (user == 'U' && ($('#addPAPLACModal #ownerFileID').val() == null || $('#addPAPLACModal #ownerFileID').val() == ""))
+    if ((user == 'U' || user == 'P') && ($('#addPAPLACModal #ownerFileID').val() == null || $('#addPAPLACModal #ownerFileID').val() == ""))
         errors.push("Please specify Owner file ID");
 
     if ($('#addPAPLACModal #fieldType').val() == null || $('#addPAPLACModal #fieldType').val() == "")
@@ -4489,8 +4455,6 @@ $('#addPAPLACModal').on("click", "#addGoods", function (e) {
         $("#addPAPLACModal #tableGoodsError").html(errorMessage).show(250);
     }
     else {
-        //var user = $('#addPAPLACModal #ownershipType').prop('checked') ? 'U' : 'PU';
-        let user = ($('#addPAPLACModal input[name="ownershipType"]:checked').val() == null ? "PU" : $('#addPAPLACModal input[name="ownershipType"]:checked').val());
         var tr = "";
         tr += '<tr>' +
             '<td>' + $('#addPAPLACModal #gpsID').val() + '</td>' +
@@ -4507,7 +4471,7 @@ $('#addPAPLACModal').on("click", "#addGoods", function (e) {
             '<td style="display:none">' + $('#addPAPLACModal #ownerMiddleName').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerLastName').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerPrimaryResidence').val() + '</td>' +
-            '<td style="display:none">' + $('#addPAPLACModal #ownerPrimaryResidence option:selected').text() + '</td>' +
+            '<td style="display:none">' + $('#addPAPLACModal #ownerPrimaryResidence').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerPhotoID').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerFileID').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerPicture').val() + '</td>' +
@@ -4537,12 +4501,14 @@ $('#addPAPLACModal').on("click", "#addGoods", function (e) {
             '<td>' + '<a href="#" class="btn btn-danger" id="removeGoods" onclick="removeRow(this);" title="Remove"><i class="fas fa-trash-alt danger"></i></a> ' + '</td>' +
             '</tr>';
         $("#propertiesTable tbody").append(tr);
-        $('#addPAPLACModal #gpsID, #addPAPLACModal #goodPictureID, #addPAPLACModal #pointEasting, #addPAPLACModal #pointNorthing, #addPAPLACModal #pointElevation, #addPAPLACModal #goodPhoto, #addPAPLACModal #cultureName, #addPAPLACModal #cultureSurface, #addPAPLACModal #ownerFirstName, #addPAPLACModal #ownerMiddleName, #addPAPLACModal #ownerLastName, #addPAPLACModal #ownerPhotoID, #addPAPLACModal #ownerFileID, #addPAPLACModal #goodComments').val('');
-        $("#addPAPLACModal #goodType, #addPAPLACModal #fieldType, #addPAPLACModal #ownerPrimaryResidence").val("-1");
+        $('#addPAPLACModal #gpsID, #addPAPLACModal #goodPictureID, #addPAPLACModal #pointEasting, #addPAPLACModal #pointNorthing, #addPAPLACModal #pointElevation, #addPAPLACModal #goodPhoto, #addPAPLACModal #cultureName, #addPAPLACModal #cultureSurface, #addPAPLACModal #ownerFirstName, #addPAPLACModal #ownerMiddleName, #addPAPLACModal #ownerLastName, #addPAPLACModal #ownerPhotoID, #addPAPLACModal #ownerFileID, #addPAPLACModal #goodComments, #addPAPLACModal #ownerPersonId').val('');
+        $("#addPAPLACModal #goodType, #addPAPLACModal #fieldType").val("-1");
         $('#addPAPLACModal #goodPhoto, #addPAPLACModal #ownerPicture').fileinput('clear');
         $('#addPAPLACModal #ownershipType').prop("checked", false);
+        $('#addPAPLACModal #ownerPrimaryResidence, #addPAPLACModal #ownerPhotoID, #addPAPLACModal #ownerMiddleName, #addPAPLACModal #ownerFileID, #addPAPLACModal #ownerPersonId').prop('disabled', false);
+        $('#addPAPLACModal #ownerPicture').fileinput('enable');
         $("#addPAPLACModal .hiden").hide();
-        $('#addPAPLACModal #gpsID').focus();
+        $('#addPAPLACModal #gpsID').focus(); 
     }
     return false;
 });
@@ -4550,7 +4516,7 @@ $('#addPAPLACModal').on("click", "#addGoods", function (e) {
 $('#addPAPLACModal').on("click", "#addStructure", function (e) {
     e.preventDefault();
     var errors = [];
-    let user = ($('#addPAPLACModal input[name="ownershipType"]:checked').val() == null ? "PU" : $('#addPAPLACModal input[name="ownershipType"]:checked').val());
+    let user = ($('#addPAPLACModal input[name="owner"]:checked').val() == null ? "PU" : $('#addPAPLACModal input[name="owner"]:checked').val());
 
     if ($('#addPAPLACModal #gpsID').val() == null || $('#addPAPLACModal #gpsID').val() == "")
         errors.push("Please specify the GPS point");
@@ -4562,11 +4528,11 @@ $('#addPAPLACModal').on("click", "#addStructure", function (e) {
         errors.push("Please add the picture ID");
     if (isNaN($('#addPAPLACModal #goodType').val()) || $('#addPAPLACModal #goodType').val() == "")
         errors.push("Please specify a valid property type");
-    if (user == 'U' && ($('#addPAPLACModal #ownerFirstName').val() == null || $('#addPAPLACModal #ownerFirstName').val() == ""))
+    if ((user == 'U' || user == 'P') && ($('#addPAPLACModal #ownerFirstName').val() == null || $('#addPAPLACModal #ownerFirstName').val() == ""))
         errors.push("Please specify Owner First Name");
-    if (user == 'U' && ($('#addPAPLACModal #ownerLastName').val() == null || $('#addPAPLACModal #ownerLastName').val() == ""))
+    if ((user == 'U' || user == 'P') && ($('#addPAPLACModal #ownerLastName').val() == null || $('#addPAPLACModal #ownerLastName').val() == ""))
         errors.push("Please specify Owner Last Name");
-    if (user == 'U' && ($('#addPAPLACModal #ownerFileID').val() == null || $('#addPAPLACModal #ownerFileID').val() == ""))
+    if ((user == 'U' || user == 'P') && ($('#addPAPLACModal #ownerFileID').val() == null || $('#addPAPLACModal #ownerFileID').val() == ""))
         errors.push("Please specify Owner file ID");
 
     if ($("#addPAPLACModal #structureCode").val() == "" || $("#addPAPLACModal #structureCode").val() == null || isNaN($("#addPAPLACModal #structureCode").val()))
@@ -4590,7 +4556,7 @@ $('#addPAPLACModal').on("click", "#addStructure", function (e) {
 
     let ownerPhoto = $("#addPAPLACModal #ownerPicture")[0];
     let ownerPhotoFile = ownerPhoto.files;
-    let goodPhoto = $("#addPAPLACModal #goodPhoto")[0];//#structurePhoto
+    let goodPhoto = $("#addPAPLACModal #goodPhoto")[0];
     let goodPhotoFile = goodPhoto.files;
 
     if (goodPhoto.files.length > 0)
@@ -4624,7 +4590,7 @@ $('#addPAPLACModal').on("click", "#addStructure", function (e) {
             '<td style="display:none">' + $('#addPAPLACModal #ownerMiddleName').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerLastName').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerPrimaryResidence').val() + '</td>' +
-            '<td style="display:none">' + $('#addPAPLACModal #ownerPrimaryResidence option:selected').text() + '</td>' +
+            '<td style="display:none">' + $('#addPAPLACModal #ownerPrimaryResidence').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerPhotoID').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerFileID').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerPicture').val() + '</td>' +
@@ -4655,10 +4621,12 @@ $('#addPAPLACModal').on("click", "#addStructure", function (e) {
             '</tr>';
 
         $("#propertiesTable tbody").append(tr);
-        $('#addPAPLACModal #gpsID, #addPAPLACModal #goodPictureID, #addPAPLACModal #pointEasting, #addPAPLACModal #pointNorthing, #addPAPLACModal #pointElevation, #addPAPLACModal #goodPhoto, #addPAPLACModal #ownerFirstName, #addPAPLACModal #ownerMiddleName, #addPAPLACModal #ownerLastName, #addPAPLACModal #ownerPhotoID, #addPAPLACModal #ownerFileID, #addPAPLACModal #structureLength, #addPAPLACModal #structureWidth, #addPAPLACModal #structurePiece, #addPAPLACModal #structureComments').val('');
-        $("#addPAPLACModal #goodType, #addPAPLACModal #ownerPrimaryResidence, #addPAPLACModal #structureCode, #addPAPLACModal #toitCode, #addPAPLACModal #murCode, #addPAPLACModal #solCode, #addPAPLACModal #structureUsage").val("-1");
+        $('#addPAPLACModal #gpsID, #addPAPLACModal #goodPictureID, #addPAPLACModal #pointEasting, #addPAPLACModal #pointNorthing, #addPAPLACModal #pointElevation, #addPAPLACModal #goodPhoto, #addPAPLACModal #ownerFirstName, #addPAPLACModal #ownerMiddleName, #addPAPLACModal #ownerLastName, #addPAPLACModal #ownerPhotoID, #addPAPLACModal #ownerFileID, #addPAPLACModal #structureLength, #addPAPLACModal #structureWidth, #addPAPLACModal #structurePiece, #addPAPLACModal #structureComments, #addPAPLACModal #ownerPersonId').val('');
+        $("#addPAPLACModal #goodType, #addPAPLACModal #structureCode, #addPAPLACModal #toitCode, #addPAPLACModal #murCode, #addPAPLACModal #solCode, #addPAPLACModal #structureUsage").val("-1");
         $('#addPAPLACModal #goodPhoto, #addPAPLACModal #ownerPicture').fileinput('clear');
         $('#addPAPLACModal #ownershipType').prop("checked", false);
+        $('#addPAPLACModal #ownerPrimaryResidence, #addPAPLACModal #ownerPhotoID, #addPAPLACModal #ownerMiddleName, #addPAPLACModal #ownerFileID, #addPAPLACModal #ownerPersonId').prop('disabled', false);
+        $('#addPAPLACModal #ownerPicture').fileinput('enable');
         $("#addPAPLACModal .hiden").hide();
         $('#addPAPLACModal #gpsID').focus();
     }
@@ -4668,8 +4636,8 @@ $('#addPAPLACModal').on("click", "#addStructure", function (e) {
 $('#addPAPLACModal').on("click", "#addTree", function (e) {
     e.preventDefault();
     var errors = [];
-    let user = ($('#addPAPLACModal input[name="ownershipType"]:checked').val() == null ? "PU" : $('#addPAPLACModal input[name="ownershipType"]:checked').val());
-
+    let user = ($('#addPAPLACModal input[name="owner"]:checked').val() == null ? "PU" : $('#addPAPLACModal input[name="owner"]:checked').val());
+    
     if ($('#addPAPLACModal #gpsID').val() == null || $('#addPAPLACModal #gpsID').val() == "")
         errors.push("Please specify the GPS point");
     if ($('#addPAPLACModal #pointEasting').val() == null || $('#addPAPLACModal #pointEasting').val() == "")
@@ -4680,11 +4648,11 @@ $('#addPAPLACModal').on("click", "#addTree", function (e) {
         errors.push("Please add the picture ID");
     if (isNaN($('#addPAPLACModal #goodType').val()) || $('#addPAPLACModal #goodType').val() == "")
         errors.push("Please specify a valid property type");
-    if (user == 'U' && ($('#addPAPLACModal #ownerFirstName').val() == null || $('#addPAPLACModal #ownerFirstName').val() == ""))
+    if ((user == 'U' || user == 'P') && ($('#addPAPLACModal #ownerFirstName').val() == null || $('#addPAPLACModal #ownerFirstName').val() == ""))
         errors.push("Please specify Owner First Name");
-    if (user == 'U' && ($('#addPAPLACModal #ownerLastName').val() == null || $('#addPAPLACModal #ownerLastName').val() == ""))
+    if ((user == 'U' || user == 'P') && ($('#addPAPLACModal #ownerLastName').val() == null || $('#addPAPLACModal #ownerLastName').val() == ""))
         errors.push("Please specify Owner Last Name");
-    if (user == 'U' && ($('#addPAPLACModal #ownerFileID').val() == null || $('#addPAPLACModal #ownerFileID').val() == ""))
+    if ((user == 'U' || user == 'P') && ($('#addPAPLACModal #ownerFileID').val() == null || $('#addPAPLACModal #ownerFileID').val() == ""))
         errors.push("Please specify Owner file ID");
 
     if ($('#addPAPLACModal #treeName').val() == null || $('#addPAPLACModal #treeName').val() == "")
@@ -4696,7 +4664,7 @@ $('#addPAPLACModal').on("click", "#addTree", function (e) {
 
     let ownerPhoto = $("#addPAPLACModal #ownerPicture")[0];
     let ownerPhotoFile = ownerPhoto.files;
-    let goodPhoto = $("#addPAPLACModal #goodPhoto")[0];//#treePhoto
+    let goodPhoto = $("#addPAPLACModal #goodPhoto")[0];
     let goodPhotoFile = goodPhoto.files;
 
     if (goodPhoto.files.length > 0)
@@ -4731,7 +4699,7 @@ $('#addPAPLACModal').on("click", "#addTree", function (e) {
             '<td style="display:none">' + $('#addPAPLACModal #ownerMiddleName').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerLastName').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerPrimaryResidence').val() + '</td>' +
-            '<td style="display:none">' + $('#addPAPLACModal #ownerPrimaryResidence option:selected').text() + '</td>' +
+            '<td style="display:none">' + $('#addPAPLACModal #ownerPrimaryResidence').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerPhotoID').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerFileID').val() + '</td>' +
             '<td style="display:none">' + $('#addPAPLACModal #ownerPicture').val() + '</td>' +
@@ -4763,10 +4731,12 @@ $('#addPAPLACModal').on("click", "#addTree", function (e) {
 
         $("#propertiesTable tbody").append(tr);
 
-        $('#addPAPLACModal #gpsID, #addPAPLACModal #goodPictureID, #addPAPLACModal #pointEasting, #addPAPLACModal #pointNorthing, #addPAPLACModal #pointElevation, #addPAPLACModal #treeName, #addPAPLACModal #treeQty, #addPAPLACModal #ownerFirstName, #addPAPLACModal #ownerMiddleName, #addPAPLACModal #ownerLastName, #addPAPLACModal #ownerPhotoID, #addPAPLACModal #ownerFileID, #addPAPLACModal #treeComments').val('');
-        $('#addPAPLACModal #goodType, #addPAPLACModal #treeMaturity, #addPAPLACModal #ownerPrimaryResidence').val('-1');
+        $('#addPAPLACModal #gpsID, #addPAPLACModal #goodPictureID, #addPAPLACModal #pointEasting, #addPAPLACModal #pointNorthing, #addPAPLACModal #pointElevation, #addPAPLACModal #treeName, #addPAPLACModal #treeQty, #addPAPLACModal #ownerFirstName, #addPAPLACModal #ownerMiddleName, #addPAPLACModal #ownerLastName, #addPAPLACModal #ownerPhotoID, #addPAPLACModal #ownerFileID, #addPAPLACModal #treeComments, #addPAPLACModal #ownerPersonId').val('');
+        $('#addPAPLACModal #goodType, #addPAPLACModal #treeMaturity').val('-1');
         $('#addPAPLACModal #goodPhoto, #addPAPLACModal #ownerPicture').fileinput('clear');
         $('#addPAPLACModal #ownershipType').prop("checked", false);
+        $('#addPAPLACModal #ownerPrimaryResidence, #addPAPLACModal #ownerPhotoID, #addPAPLACModal #ownerMiddleName, #addPAPLACModal #ownerFileID, #addPAPLACModal #ownerPersonId').prop('disabled', false);
+        $('#addPAPLACModal #ownerPicture').fileinput('enable');
         $("#addPAPLACModal .hiden").hide();
         $('#addPAPLACModal #gpsID').focus();
     }
@@ -4775,7 +4745,7 @@ $('#addPAPLACModal').on("click", "#addTree", function (e) {
 
 $('#addPAPLACModal #ownerFirstName').on('blur', function () {
     let papID = $('#addPAPLACModal #ownerFirstName').val();
-    let lacID = $('#addPAPLACModal #propertyLacID').val();
+    let lacID = $('#addPAPLACModal #lacID').val();
     LoadOwnerLacDetails(papID, lacID, "addPAPLACModal");
 });
 
@@ -4818,7 +4788,8 @@ function resetModal(modalName) {
     if (modalName == "addPAPLACModal") {
         let lacID = $("#addPAPLACModal #lacID").val();
         $("#addPAPLACModal #loader").hide();
-        $('#addPAPLACModal').find("input,textarea").val('');
+        $("#addPAPLACModal .reset").val('');
+        $('#addPAPLACModal input[name=owner]').prop('checked', false);
         $('#addPAPLACModal').find("select").val('-1');
         $('#addPAPLACModal #goodPhoto, #addPAPLACModal #PAPphoto, #addPAPLACModal #structurePhoto, #addPAPLACModal #treePhoto, #addPAPLACModal #ownerPicture').fileinput('clear');
         $('#addPAPLACModal #ownershipType').prop("checked", false);
@@ -4975,8 +4946,8 @@ function convertTableToArray(tableName) {
                     obj.TreeMaturityName = cols[35];
                     obj.TreeQty = cols[36];
                     obj.Comments = cols[37];
-                    obj.SurfaceUOM = cols[38];
-                    obj.SurfaceUOMName = cols[39];
+                    obj.SurfaceUOM = cols[39];
+                    obj.SurfaceUOMName = cols[40];
                     dataToPost.push(obj);
                 }
             }
@@ -5131,8 +5102,6 @@ function insertPAPLAC() {
 
     var errors = [];
 
-    //console.log("Lac ID " + lacID + " - Surveyor Code " + surveyor + " - Survey Date " + surveyorDate + " - GPS ID " + surveyGPS);
-
     if (isNaN(lacID) || lacID == null || lacID == "")
         errors.push("Please refresh the page, because this Lac ID doesn't exist!");
     if (!surveyor || surveyor === "" || surveyor.length === 0 || !surveyor.trim())
@@ -5220,6 +5189,7 @@ function insertPAPLAC() {
                     $("#addPAPLACModal #papSurveyorError").html(errorMessage).show(250);
                 } else {
                     $("#addPAPLACModal #loader").hide();
+                    resetModal("addPAPLACModal");
                     $.notify("An error occured while inserting PAP with property", "error");
                     console.log(response[1]);
                 }
@@ -5919,7 +5889,7 @@ $("#addPAPPropertiesModal").on("click", "#savePapProperties", function () {
 
     var errors = [];
 
-    console.log("Lac ID " + lacID + " - Surveyor Code " + surveyor + " - Survey Date " + surveyorDate + " -GPS ID " + surveyGPS);
+    //console.log("Lac ID " + lacID + " - Surveyor Code " + surveyor + " - Survey Date " + surveyorDate + " -GPS ID " + surveyGPS);
 
     if (isNaN(lacID) || lacID == null || lacID == "")
         errors.push("Please refresh the page, because this Lac ID doesn't exist!");

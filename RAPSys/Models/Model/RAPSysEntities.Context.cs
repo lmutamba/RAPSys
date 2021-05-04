@@ -25,6 +25,7 @@ namespace RAPSys.Models.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<T_AnnualRate> T_AnnualRate { get; set; }
         public virtual DbSet<T_Approval> T_Approval { get; set; }
         public virtual DbSet<T_Approver> T_Approver { get; set; }
         public virtual DbSet<T_AssetRate> T_AssetRate { get; set; }
@@ -36,7 +37,6 @@ namespace RAPSys.Models.Model
         public virtual DbSet<T_Department> T_Department { get; set; }
         public virtual DbSet<T_EconomicActivity> T_EconomicActivity { get; set; }
         public virtual DbSet<T_Employee> T_Employee { get; set; }
-        public virtual DbSet<T_ExchangeRate> T_ExchangeRate { get; set; }
         public virtual DbSet<T_Good> T_Good { get; set; }
         public virtual DbSet<T_HouseHold> T_HouseHold { get; set; }
         public virtual DbSet<T_HouseHoldAttachment> T_HouseHoldAttachment { get; set; }
@@ -60,6 +60,7 @@ namespace RAPSys.Models.Model
         public virtual DbSet<T_List> T_List { get; set; }
         public virtual DbSet<T_Location> T_Location { get; set; }
         public virtual DbSet<T_Log> T_Log { get; set; }
+        public virtual DbSet<T_MarketSurvey> T_MarketSurvey { get; set; }
         public virtual DbSet<T_MarketSurveyProduct> T_MarketSurveyProduct { get; set; }
         public virtual DbSet<T_PAP> T_PAP { get; set; }
         public virtual DbSet<T_PAPAttachment> T_PAPAttachment { get; set; }
@@ -72,6 +73,8 @@ namespace RAPSys.Models.Model
         public virtual DbSet<T_PersonRole> T_PersonRole { get; set; }
         public virtual DbSet<T_Point> T_Point { get; set; }
         public virtual DbSet<T_Product> T_Product { get; set; }
+        public virtual DbSet<T_ProductRate> T_ProductRate { get; set; }
+        public virtual DbSet<T_ProductType> T_ProductType { get; set; }
         public virtual DbSet<T_Property> T_Property { get; set; }
         public virtual DbSet<T_PropertyAttachment> T_PropertyAttachment { get; set; }
         public virtual DbSet<T_Region> T_Region { get; set; }
